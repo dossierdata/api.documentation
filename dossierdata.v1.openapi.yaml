@@ -271,7 +271,8 @@ paths:
         - Addresses
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -357,7 +358,8 @@ paths:
         - Customers
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
       security:
         - oauth2: ['customer:basic']
     post:
@@ -443,7 +445,8 @@ paths:
         - Customers
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
       requestBody:
         $ref: "#/components/requestBodies/XMLAXMessage"
   /customer/{customer_id}/ax_message:
@@ -481,7 +484,8 @@ paths:
         - Dossiers
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -567,7 +571,8 @@ paths:
         - EmailAccount
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -653,7 +658,8 @@ paths:
         - Letters
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -739,7 +745,8 @@ paths:
         - Lock
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -825,7 +832,8 @@ paths:
         - Mortgages
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -911,7 +919,8 @@ paths:
         - MortgageParts
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -941,7 +950,8 @@ paths:
         - MortgageParts
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/MortgageId'
   /mortgagePart/{mortgagePart_id}:
     get:
@@ -1012,7 +1022,8 @@ paths:
         - MortgageProgress
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1098,7 +1109,8 @@ paths:
         - Damages
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1184,7 +1196,8 @@ paths:
         - Documents
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1270,7 +1283,8 @@ paths:
         - Emails
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1356,7 +1370,8 @@ paths:
         - Tasks
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1442,7 +1457,8 @@ paths:
         - Templates
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1528,7 +1544,8 @@ paths:
         - Notes
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1614,7 +1631,8 @@ paths:
         - Signals
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1698,7 +1716,8 @@ paths:
         - Accounts
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1784,7 +1803,8 @@ paths:
         - Offices
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -1868,7 +1888,8 @@ paths:
         - Searches
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPagePagination'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
     post:
       responses:
         200:
@@ -5326,7 +5347,7 @@ components:
             total_pages: 1
             links: []
   parameters:
-    PerPagePagination:
+    PerPage:
       name: perPage
       in: query
       description: The maximum number of objects to return
@@ -5335,6 +5356,15 @@ components:
       schema:
         type: integer
         default: 15
+    Page:
+      name: page
+      in: query
+      description: The page number
+      required: false
+      example: "1"
+      schema:
+        type: integer
+        default: 1
     JsonHeader:
       name: Accept
       in: header
