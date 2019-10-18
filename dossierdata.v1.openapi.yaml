@@ -358,6 +358,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPagePagination'
+      security:
+        - oauth2: ['customer:basic']
     post:
       responses:
         200:
