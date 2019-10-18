@@ -2169,6 +2169,7 @@ components:
   securitySchemes:
     oauth2:
       type: oauth2
+      scheme: bearer
       flows:
         authorizationCode:
           authorizationUrl: https://test.ddat.nl/api/v1/oauth/authorize
