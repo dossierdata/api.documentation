@@ -2012,46 +2012,46 @@ tags:
       + `/oauth/authorize`
 
       + `/oauth/access_token`
+  - name: Accounts
+    description: Endpoint for Account resource management
   - name: Addresses
     description: Endpoint for Address resource management
   - name: Customers
     description: Endpoint for Customer resource management
-  - name: Dossiers
-    description: Endpoint for Findesk Dossier resource management
-  - name: EmailAccount
-    description: Endpoint for EmailAccount resource management
-  - name: Letters
-    description: Endpoint for Letter resource management
-  - name: Lock
-    description: Endpoint for Lock resource management
-  - name: Mortgages
-    description: Endpoint for Mortgage resource management
-  - name: MortgageParts
-    description: Endpoint for MortgagePart resource management
-  - name: MortgageProgress
-    description: Endpoint for MortgageProgress resource management
   - name: Damages
     description: Endpoint for Damage resource management
   - name: Documents
     description: Endpoint for Document resource management
+  - name: Dossiers
+    description: Endpoint for Findesk Dossier resource management
+  - name: EmailAccount
+    description: Endpoint for EmailAccount resource management
   - name: Emails
     description: Endpoint for Email resource management
-  - name: Tasks
-    description: Endpoint for Task resource management
-  - name: Templates
-    description: Endpoint for Template resource management
+  - name: HDN
+    description: Endpoint for HDN functions
+  - name: Letters
+    description: Endpoint for Letter resource management
+  - name: Lock
+    description: Endpoint for Lock resource management
+  - name: MortgageParts
+    description: Endpoint for MortgagePart resource management
+  - name: MortgageProgress
+    description: Endpoint for MortgageProgress resource management
+  - name: Mortgages
+    description: Endpoint for Mortgage resource management
   - name: Notes
     description: Endpoint for Note resource management
-  - name: Signals
-    description: Endpoint for signal resource management
-  - name: Accounts
-    description: Endpoint for Account resource management
   - name: Offices
     description: Endpoint for Office resource management
   - name: Searches
     description: Endpoint for Search resource management
-  - name: HDN
-    description: Endpoint for HDN functions
+  - name: Signals
+    description: Endpoint for signal resource management
+  - name: Tasks
+    description: Endpoint for Task resource management
+  - name: Templates
+    description: Endpoint for Template resource management
 servers:
   - url: https://{subdomain}.ddat.nl/api/v1
     variables:
