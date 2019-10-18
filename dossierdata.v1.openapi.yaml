@@ -385,7 +385,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -438,7 +437,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body7"
+        $ref: "#/components/requestBodies/Address"
   "/address/{address_id}":
     get:
       responses:
@@ -527,7 +526,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body7"
+        $ref: "#/components/requestBodies/Address"
     delete:
       responses:
         "200":
@@ -588,7 +587,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -1075,7 +1073,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -1190,7 +1187,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -1233,7 +1229,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body8"
+        $ref: "#/components/requestBodies/Dossier"
   "/dossier/{dossier_id}":
     get:
       responses:
@@ -1322,7 +1318,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body8"
+        $ref: "#/components/requestBodies/Dossier"
     delete:
       responses:
         "200":
@@ -1383,7 +1379,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -1437,7 +1432,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body9"
+        $ref: "#/components/requestBodies/EmailAccount"
   "/emailAccount/{emailAccount_id}":
     get:
       responses:
@@ -1526,7 +1521,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body9"
+        $ref: "#/components/requestBodies/EmailAccount"
     delete:
       responses:
         "200":
@@ -1587,7 +1582,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -1636,7 +1630,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body10"
+        $ref: "#/components/requestBodies/Letter"
   "/letter/{letter_id}":
     get:
       responses:
@@ -1725,7 +1719,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body10"
+        $ref: "#/components/requestBodies/Letter"
     delete:
       responses:
         "200":
@@ -1786,7 +1780,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -1829,7 +1822,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body11"
+        $ref: "#/components/requestBodies/Lock"
   "/lock/{lock_id}":
     get:
       responses:
@@ -1918,7 +1911,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body11"
+        $ref: "#/components/requestBodies/Lock"
     delete:
       responses:
         "200":
@@ -1979,7 +1972,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -2090,7 +2082,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body4"
+        $ref: "#/components/requestBodies/Mortgage"
   "/mortgage/{mortgage_id}":
     get:
       responses:
@@ -2179,7 +2171,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body4"
+        $ref: "#/components/requestBodies/Mortgage"
     delete:
       responses:
         "200":
@@ -2240,7 +2232,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -2312,7 +2303,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body3"
+        $ref: "#/components/requestBodies/MortgagePart"
   "/mortgagePart/{mortgagePart_id}":
     get:
       responses:
@@ -2401,7 +2392,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body3"
+        $ref: "#/components/requestBodies/MortgagePart"
     delete:
       responses:
         "200":
@@ -2462,7 +2453,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -2512,7 +2502,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body12"
+        $ref: "#/components/requestBodies/MortgageProgress"
   "/mortgageProgress/{mortgageProgress_id}":
     get:
       responses:
@@ -2601,7 +2591,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body12"
+        $ref: "#/components/requestBodies/MortgageProgress"
     delete:
       responses:
         "200":
@@ -2662,7 +2652,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -2735,7 +2724,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body13"
+        $ref: "#/components/requestBodies/Damage"
   "/damage/{damage_id}":
     get:
       responses:
@@ -2824,7 +2813,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body13"
+        $ref: "#/components/requestBodies/Damage"
     delete:
       responses:
         "200":
@@ -2885,7 +2874,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -2936,7 +2924,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body6"
+        $ref: "#/components/requestBodies/Document"
   "/document/{document_id}":
     get:
       responses:
@@ -3025,7 +3013,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body6"
+        $ref: "#/components/requestBodies/Document"
     delete:
       responses:
         "200":
@@ -3086,7 +3074,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -3127,7 +3114,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body14"
+        $ref: "#/components/requestBodies/Email"
   "/email/{email_id}":
     get:
       responses:
@@ -3216,7 +3203,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body14"
+        $ref: "#/components/requestBodies/Email"
     delete:
       responses:
         "200":
@@ -3277,7 +3264,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -3328,7 +3314,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body2"
+        $ref: "#/components/requestBodies/Template"
   "/template/{template_id}":
     get:
       responses:
@@ -3417,7 +3403,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body2"
+        $ref: "#/components/requestBodies/Template"
     delete:
       responses:
         "200":
@@ -3478,7 +3464,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -3530,7 +3515,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body15"
+        $ref: "#/components/requestBodies/Note"
   "/note/{note_id}":
     get:
       responses:
@@ -3619,7 +3604,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body15"
+        $ref: "#/components/requestBodies/Note"
     delete:
       responses:
         "200":
@@ -3680,7 +3665,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -3730,7 +3714,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body"
+        $ref: "#/components/requestBodies/Signal"
   "/signal/{signal_id}":
     get:
       responses:
@@ -3819,7 +3803,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body"
+        $ref: "#/components/requestBodies/Signal"
     delete:
       responses:
         "200":
@@ -3880,7 +3864,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -3930,7 +3913,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body16"
+        $ref: "#/components/requestBodies/Account"
   "/account/{account_id}":
     get:
       responses:
@@ -4019,7 +4002,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body16"
+        $ref: "#/components/requestBodies/Account"
     delete:
       responses:
         "200":
@@ -4082,7 +4065,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -4134,7 +4116,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body17"
+        $ref: "#/components/requestBodies/Office"
   "/office/{office_id}":
     get:
       responses:
@@ -4223,7 +4205,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body17"
+        $ref: "#/components/requestBodies/Office"
     delete:
       responses:
         "200":
@@ -4286,7 +4268,6 @@ paths:
                     type: object
                     properties:
                       pagination:
-                        type: object
                         $ref: '#/components/schemas/Pagination'
               examples:
                 response:
@@ -4333,7 +4314,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body5"
+        $ref: "#/components/requestBodies/Search"
   "/search/{search_id}":
     get:
       responses:
@@ -4422,7 +4403,7 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/Body5"
+        $ref: "#/components/requestBodies/Search"
     delete:
       responses:
         "200":
@@ -4683,13 +4664,13 @@ tags:
   - name: HDN
     description: All calls for HDN functions
 servers:
-  - url: "{subdomain}.ddat.nl/api/v1"
+  - url: https://{subdomain}.ddat.nl/api/v1
     variables:
       subdomain:
-        default: unknown
+        default: yourofficesubdomain
 components:
   requestBodies:
-    Body:
+    Signal:
       content:
         application/json:
           schema:
@@ -4736,7 +4717,7 @@ components:
               finished_at: 01-01-2018 12:00:00
               created_at: 01-01-2018 12:00:00
               updated_at: 01-01-2018 12:00:00
-    Body2:
+    Template:
       content:
         application/json:
           schema:
@@ -4787,7 +4768,7 @@ components:
               updated_at: "2019-01-02 12:00:00"
               deleted_at: "2019-01-03 12:00:00"
               agency_id: 1
-    Body3:
+    MortgagePart:
       content:
         application/json:
           schema:
@@ -4924,7 +4905,7 @@ components:
               national_mortgage_guarantee: true
               coverage_percentage: 1
               rate_based_on: 1
-    Body4:
+    Mortgage:
       content:
         application/json:
           schema:
@@ -5217,7 +5198,7 @@ components:
               loan_to_value: 1
               risk_class: 1
               risk_class_type: 1
-    Body5:
+    Search:
       content:
         application/json:
           schema:
@@ -5252,7 +5233,7 @@ components:
               public: true
               created_at: "2019-01-01 12:00:00"
               updated_at: "2019-01-02 12:00:00"
-    Body6:
+    Document:
       content:
         application/json:
           schema:
@@ -5285,9 +5266,6 @@ components:
               filesize:
                 type: number
                 description: Bestandsgrootte van het document (in bytes)
-              decoded:
-                type: boolean
-                description: Is het document gedecodeerd?
               user_id:
                 type: number
                 description: ID van gebruiker
@@ -5303,7 +5281,7 @@ components:
               filesize: 1000
               decoded: true
               user_id: 1
-    Body7:
+    Address:
       content:
         application/json:
           schema:
@@ -5354,7 +5332,7 @@ components:
               lat: 53.219708
               lng: 6.558785
               country: Netherlands
-    Body8:
+    Dossier:
       content:
         application/json:
           schema:
@@ -5375,7 +5353,7 @@ components:
               uuid: 1
               customer_id: "700004"
               status: AA-BB-12
-    Body9:
+    EmailAccount:
       content:
         application/json:
           schema:
@@ -5450,7 +5428,7 @@ components:
               auto_match: false
               auto_process: false
               process_email_account_folder_id: 0
-    Body10:
+    Letter:
       content:
         application/json:
           schema:
@@ -5501,7 +5479,7 @@ components:
               for_instance_id: 1
               category_id: 1
               template_id: 1
-    Body11:
+    Lock:
       content:
         application/json:
           schema:
@@ -5524,7 +5502,7 @@ components:
               lockable_type: test
               lockable_id: 1
               user_id: 1
-    Body12:
+    MortgageProgress:
       content:
         application/json:
           schema:
@@ -5573,7 +5551,7 @@ components:
               date: 01-01-2018
               created_at: test
               updated_at: test
-    Body13:
+    Damage:
       content:
         application/json:
           schema:
@@ -5714,19 +5692,19 @@ components:
               casco_at: "1"
               deductible_at: "1"
               estimated: 1
-    Body14:
+    Email:
       content:
         application/json:
           schema:
             type: object
             properties: {}
             example: {}
-    Body15:
+    Note:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Note'
-    Body16:
+    Account:
       content:
         application/json:
           schema:
@@ -5777,7 +5755,7 @@ components:
               primary: true
               created_at: "4"
               updated_at: "4"
-    Body17:
+    Office:
       content:
         application/json:
           schema:
@@ -5839,9 +5817,45 @@ components:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: /
-          tokenUrl: /
-          scopes: {}
+          authorizationUrl: https://test.ddat.nl/api/v1/oauth/authorize
+          tokenUrl: https://test.ddat.nl/api/v1/oauth/access_token
+          scopes:
+            'account:full': Rekeningen inzien
+            'address:basic': Basis adresgegevens
+            'address:coordinates': Adres coordinaten
+            'address:create': Nieuwe adressen aanmaken
+            'customer:basic': Basisgegevens van een klant
+            'customer:contact': Contactgegevens van een klant
+            'customer:create': Nieuwe klanten aanmaken
+            'customer:create_insurance_lead': Nieuwe polis leads aanmaken
+            'customer:create_lead': Nieuwe leads aanmaken
+            'customer:create_mortgage_lead': Nieuwe hypotheek leads aanmaken
+            'customer:full': Alle gegevens van een klant
+            'damage_person:address': Schade betrokken persoon adres
+            'damage_person:agency': Schade betrokken persoon maatschappij
+            'damage_person:basic': Schade betrokken persoon
+            'damage:agency': Schade maatschappij
+            'damage:basic': Basisgegevens van een schade
+            'damage:full': Alle gegevens van een schade
+            'document:full': Documenten
+            'dossier:full': Dossiers
+            'email_account:basic': Basisgegevens van e-mailaccounts
+            'email_account:full': Alle gegevens van e-mailaccounts
+            'email:full': Emails
+            'hdn_ax': AX berichten overzicht
+            'hdn_ax:create': Opslaan van nieuwe AX berichten
+            'hdn_ax:show': AX bericht statussen
+            'letter:full': Brieven
+            'lock:full': Locks
+            'mortgage_part:full': Hypotheek leningdelen
+            'mortgage_progress:full': Hypotheek voortgang
+            'mortgage:basic': Basisgegevens hypotheek
+            'mortgage:full': Alle gegevens hypotheek
+            'note:full': Notities
+            'office:full': Kantoren
+            'search:full': Zoekopdrachten
+            'signal:full': Signalen
+            'template:full': Templates
   schemas:
     Authorize: {}
     Callback: {}
