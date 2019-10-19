@@ -1442,6 +1442,197 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TaskId'
+  /calendar:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedCalendars'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all Calendars.
+      tags:
+        - Calendars
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Create a new resource
+      description: ""
+      tags:
+        - Tasks
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/Calendar"
+  /calendar/{calendar_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Calendar'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Calendars
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CalendarId'
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Update a resource
+      description: ""
+      tags:
+        - Tasks
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CalendarId'
+      requestBody:
+        $ref: "#/components/requestBodies/Task"
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - Tasks
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CalendarId'
+  /calendar/event:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedCalendarEvents'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all Tasks.
+      tags:
+        - CalendarEvents
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Create a new resource
+      description: ""
+      tags:
+        - Tasks
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/CalendarEvent"
+  /calendar/{calendar_id)/events:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedCalendarEvents'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all Calendar Events.
+      tags:
+        - CalendarEvents
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+  /calendar/event/{event_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/CalendarEvent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - CalendarEvents
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CalendarEventId'
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Update a resource
+      description: ""
+      tags:
+        - CalendarEvents
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CalendarEventId'
+      requestBody:
+        $ref: "#/components/requestBodies/CalendarEvent"
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - CalendarEvents
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CalendarEventId'
   /template:
     get:
       responses:
@@ -2039,6 +2230,10 @@ tags:
     description: Endpoint for Account resource management
   - name: Addresses
     description: Endpoint for Address resource management
+  - name: Calendars
+    description: Endpoint for Calendar resource management
+  - name: CalendarEvents
+    description: Endpoint for Calendar Event resource management
   - name: Customers
     description: Endpoint for Customer resource management
   - name: Damages
@@ -2187,6 +2382,16 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/OfferteAanvraag'
+    Calendar:
+       content:
+         application/json:
+           schema:
+             $ref: '#/components/schemas/Calendar'
+    CalendarEvent:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CalendarEvent'
   securitySchemes:
     oauth2:
       type: oauth2
@@ -3537,6 +3742,38 @@ components:
           type: object
       description: >
         An AX message that follows the HDN standard. For the full xsd contact [info@dossierdata.nl](mailto:info@dossierdata.nl)
+    Calendar:
+      type: object
+      properties:
+        id:
+          type: number
+        user_id:
+          type: number
+          description: The user id of the owner of the calendar
+        name:
+          type: string
+    CalendarEvent:
+      type: object
+      properties:
+        id:
+          type: number
+        calendar_id:
+          type: number
+          description: The id of the calendar to which this event belongs
+        time_start:
+          type: string
+          description: Date time value of the start time
+        time_end:
+          type: string
+          description: Date time value of the end time
+        customer_id:
+          type: number
+        location:
+          type: string
+        description:
+          type: string
+        summary:
+          type: string
     CategoryEnum:
       type: number
       enum:
@@ -4358,6 +4595,66 @@ components:
           examples:
             PaginatedTasksExample:
               $ref: '#/components/examples/PaginatedTasksExample'
+    Calendar:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Calendar'
+          examples:
+            PaginatedTasksExample:
+              $ref: '#/components/examples/CalendarExample'
+    PaginatedCalendars:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Calendar'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedTasksExample:
+              $ref: '#/components/examples/PaginatedCalendarsExample'
+    CalendarEvent:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/CalendarEvent'
+          examples:
+            PaginatedTasksExample:
+              $ref: '#/components/examples/CalendarEventExample'
+    PaginatedCalendarEvents:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CalendarEvent'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedTasksExample:
+              $ref: '#/components/examples/PaginatedCalendarEventsExample'
   examples:
     BadRequestExample:
       summary: 400 Bad Request. Probably the access token was not provided
@@ -5346,6 +5643,72 @@ components:
             current: 1
             total_pages: 1
             links: []
+    CalendarExample:
+      value:
+        data:
+          - id: 1
+            name: My calendar
+            user_id: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    PaginatedCalendarsExample:
+      value:
+        data:
+          - id: 1
+            name: My calendar
+            user_id: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    CalendarEventExample:
+      value:
+        data:
+          - id: 1
+            calendar_id: 1
+            customer_id: 1234
+            description: My evnt
+            summary: Detailled event description
+            location: The location of the event
+            time_start: "2019-01-01 12:00:00"
+            time_end: "2019-01-02 12:00:00"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    PaginatedCalendarEventsExample:
+      value:
+        data:
+          - id: 1
+            calendar_id: 1
+            customer_id: 1234
+            description: My evnt
+            summary: Detailled event description
+            location: The location of the event
+            time_start: "2019-01-01 12:00:00"
+            time_end: "2019-01-02 12:00:00"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
   parameters:
     PerPage:
       name: perPage
@@ -5539,6 +5902,22 @@ components:
       name: task_id
       in: path
       description: The id of the task
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CalendarEventId:
+      name: event_id
+      in: path
+      description: The id of the event
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CalendarId:
+      name: calendar_id
+      in: path
+      description: The id of the calendar
       required: true
       example: "1"
       schema:
