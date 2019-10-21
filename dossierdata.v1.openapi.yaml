@@ -2240,6 +2240,27 @@ paths:
       security:
         - oauth2:
             - portal_invitation:delete
+  /portal_invitation/by_token/{portalInvitation_token}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PortalInvitation'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: Show a portal invitation by its token
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PortalInvitationToken'
+      security:
+        - oauth2:
+            - portal_invitation:show
   /portal_invitation/by_customer/{customer_id}:
     get:
       responses:
@@ -6235,6 +6256,14 @@ components:
       example: "1"
       schema:
         type: integer
+    PortalInvitationToken:
+      name: portalInvitation_token
+      in: path
+      description: The token of the portal invitation
+      required: true
+      example: "oTicierOsEuGAlDruNDELERCulGABASkIDeClINERMiSPENTATErEvIGhANDIeLAIRepTORsycHawnSiBleDpieNGOUSCONiDIAS"
+      schema:
+        type: string
     SearchId:
       name: search_id
       in: path
