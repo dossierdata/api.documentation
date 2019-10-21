@@ -3080,6 +3080,9 @@ components:
         - lastName
         - dateOfBirth
       properties:
+        id:
+          type: number
+          description: The id of the customer
         initials:
           type: string
           description: Initials of the customer
