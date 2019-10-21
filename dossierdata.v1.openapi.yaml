@@ -5476,6 +5476,7 @@ components:
       summary: 200 OK
       value:
         data:
+          id: 1234
           initials: AB
           firstName: Albert
           suffix: de
@@ -5515,7 +5516,8 @@ components:
     PaginatedCustomersExample:
       value:
         data:
-          - initials: AB
+          - id: 1234
+            initials: AB
             firstName: Albert
             suffix: de
             lastName: Vries
