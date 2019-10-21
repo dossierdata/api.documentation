@@ -268,7 +268,7 @@ paths:
       summary: List all resources
       description: Get a paginated list of all Addresses.
       tags:
-        - Addresses
+        - Address
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -284,7 +284,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Addresses
+        - Address
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -303,7 +303,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Addresses
+        - Address
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AddressId'
@@ -320,7 +320,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Addresses
+        - Address
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AddressId'
@@ -339,7 +339,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Addresses
+        - Address
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AddressId'
@@ -355,13 +355,16 @@ paths:
       summary: List all resources
       description: Get a paginated list of all Customers.
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
       security:
-        - oauth2: ['customer:full', 'customer:basic', 'customer:contact']
+        - oauth2:
+            - customer:full
+            - customer:basic
+            - customer:contact
     post:
       responses:
         200:
@@ -373,13 +376,14 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/Customer"
       security:
-        - oauth2: ['customer:create']
+        - oauth2:
+            - customer:create
   /customer/lead:
     post:
       responses:
@@ -392,13 +396,14 @@ paths:
       summary: Create a new customer of the type lead
       description: ""
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/CustomerLead"
       security:
-        - oauth2: ['customer:create_lead']
+        - oauth2:
+            - customer:create_lead
   /customer/open/{customer_id_or_uuid}:
     get:
       responses:
@@ -413,12 +418,13 @@ paths:
       summary: Open
       description: Get uri to the dashboard of customer
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerIdOrUUId'
       security:
-        - oauth2: ['customer:full']
+        - oauth2:
+            - customer:full
   /customer/mortgage_lead:
     post:
       responses:
@@ -431,13 +437,14 @@ paths:
       summary: Create mortgage lead
       description: ""
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/CustomerLead"
       security:
-        - oauth2: ['customer:create_mortgage_lead']
+        - oauth2:
+            - customer:create_mortgage_lead
   /customer/ax_message:
     post:
       responses:
@@ -450,7 +457,7 @@ paths:
       summary: Find existing customers that match the details of the provided ax message
       description: ""
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -458,7 +465,30 @@ paths:
       requestBody:
         $ref: "#/components/requestBodies/XMLAXMessage"
       security:
-        - oauth2: ['customer:full']
+        - oauth2:
+            - customer:full
+  /customer/by_relation_number:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Customer'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Find a customer by a relation number
+      description: ""
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/RelationNumber"
+      security:
+        - oauth2:
+            - customer:full
   /customer/{customer_id}:
     get:
       responses:
@@ -473,12 +503,13 @@ paths:
       summary: Show a resource
       description: Show a customer
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
       security:
-        - oauth2: ['customer:full']
+        - oauth2:
+            - customer:full
     put:
       responses:
         200:
@@ -492,14 +523,15 @@ paths:
       summary: Update a resource
       description: Update a customer
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
       requestBody:
         $ref: "#/components/requestBodies/Customer"
       security:
-        - oauth2: ['customer:full']
+        - oauth2:
+            - customer:full
     delete:
       responses:
         200:
@@ -513,12 +545,13 @@ paths:
       summary: Delete a resource
       description: Delete a customer
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
       security:
-        - oauth2: ['customer:full']
+        - oauth2:
+            - customer:full
   /customer/{customer_id}/ax_message:
     put:
       responses:
@@ -533,12 +566,15 @@ paths:
       summary: Update a resource
       description: Update a customer with the data from an AX Message.
       tags:
-        - Customers
+        - Customer
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
       requestBody:
         $ref: "#/components/requestBodies/XMLAXMessage"
+      security:
+        - oauth2:
+            - customer:full
   /dossier:
     get:
       responses:
@@ -551,7 +587,7 @@ paths:
       summary: List all resources
       description: Get a paginated list of all Dossiers.
       tags:
-        - Dossiers
+        - Dossier
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -567,7 +603,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Dossiers
+        - Dossier
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -586,7 +622,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Dossiers
+        - Dossier
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DossierId'
@@ -603,7 +639,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Dossiers
+        - Dossier
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DossierId'
@@ -622,7 +658,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Dossiers
+        - Dossier
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DossierId'
@@ -638,7 +674,7 @@ paths:
       summary: List all resources
       description: Get a list of all EmailAccounts.
       tags:
-        - EmailAccount
+        - Email account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -654,7 +690,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - EmailAccount
+        - Email account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -673,7 +709,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - EmailAccount
+        - Email account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/EmailAccountId'
@@ -690,7 +726,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - EmailAccount
+        - Email account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/EmailAccountId'
@@ -709,7 +745,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - EmailAccount
+        - Email account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/EmailAccountId'
@@ -725,7 +761,7 @@ paths:
       summary: List all resources
       description: Get a list of all Letters.
       tags:
-        - Letters
+        - Letter
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -741,7 +777,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Letters
+        - Letter
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -760,7 +796,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Letters
+        - Letter
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/LetterId'
@@ -777,7 +813,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Letters
+        - Letter
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/LetterId'
@@ -796,7 +832,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Letters
+        - Letter
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/LetterId'
@@ -899,7 +935,7 @@ paths:
       summary: List all resources
       description: Get a list of all Mortgages.
       tags:
-        - Mortgages
+        - Mortgage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -915,7 +951,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Mortgages
+        - Mortgage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -934,7 +970,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Mortgages
+        - Mortgage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageId'
@@ -951,7 +987,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Mortgages
+        - Mortgage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageId'
@@ -970,7 +1006,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Mortgages
+        - Mortgage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageId'
@@ -986,7 +1022,7 @@ paths:
       summary: List all resources
       description: Get a list of all mortgageParts.
       tags:
-        - MortgageParts
+        - Mortgage part
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1000,7 +1036,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - MortgageParts
+        - Mortgage part
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1017,7 +1053,7 @@ paths:
       summary: List all resources by mortgage
       description: Get a list of mortgageParts by a mortgage.
       tags:
-        - MortgageParts
+        - Mortgage part
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1037,7 +1073,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - MortgageParts
+        - Mortgage part
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgagePartId'
@@ -1054,7 +1090,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - MortgageParts
+        - Mortgage part
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgagePartId'
@@ -1073,7 +1109,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - MortgageParts
+        - Mortgage part
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgagePartId'
@@ -1089,7 +1125,7 @@ paths:
       summary: List all resources
       description: Get a list of all MortgageProgresses.
       tags:
-        - MortgageProgress
+        - Mortgage progress
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1105,7 +1141,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - MortgageProgress
+        - Mortgage progress
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1124,7 +1160,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - MortgageProgress
+        - Mortgage progress
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageProgressId'
@@ -1141,7 +1177,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - MortgageProgress
+        - Mortgage progress
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageProgressId'
@@ -1160,7 +1196,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - MortgageProgress
+        - Mortgage progress
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageProgressId'
@@ -1176,7 +1212,7 @@ paths:
       summary: List all resources
       description: Get a list of all Damages.
       tags:
-        - Damages
+        - Damage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1192,7 +1228,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Damages
+        - Damage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1211,7 +1247,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Damages
+        - Damage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DamageId'
@@ -1228,7 +1264,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Damages
+        - Damage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DamageId'
@@ -1247,7 +1283,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Damages
+        - Damage
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DamageId'
@@ -1263,7 +1299,7 @@ paths:
       summary: List all resources
       description: Get a list of all Documents.
       tags:
-        - Documents
+        - Document
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1279,7 +1315,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Documents
+        - Document
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1298,7 +1334,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Documents
+        - Document
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DocumentId'
@@ -1315,7 +1351,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Documents
+        - Document
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DocumentId'
@@ -1334,7 +1370,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Documents
+        - Document
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DocumentId'
@@ -1350,7 +1386,7 @@ paths:
       summary: List all resources
       description: Get a list of all Emails.
       tags:
-        - Emails
+        - Email
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1366,7 +1402,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Emails
+        - Email
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1385,7 +1421,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Emails
+        - Email
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/EmailId'
@@ -1402,7 +1438,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Emails
+        - Email
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/EmailId'
@@ -1421,7 +1457,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Emails
+        - Email
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/EmailId'
@@ -1437,7 +1473,7 @@ paths:
       summary: List all resources
       description: Get a list of all Tasks.
       tags:
-        - Tasks
+        - Task
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1453,7 +1489,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Tasks
+        - Task
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1472,7 +1508,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Tasks
+        - Task
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TaskId'
@@ -1489,7 +1525,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Tasks
+        - Task
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TaskId'
@@ -1508,7 +1544,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Tasks
+        - Task
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TaskId'
@@ -1524,7 +1560,7 @@ paths:
       summary: List all resources
       description: Get a list of all Calendars.
       tags:
-        - Calendars
+        - Calendar
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1540,7 +1576,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Calendars
+        - Calendar
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1559,7 +1595,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Calendars
+        - Calendar
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CalendarId'
@@ -1576,7 +1612,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Calendars
+        - Calendar
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CalendarId'
@@ -1595,7 +1631,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Calendars
+        - Calendar
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CalendarId'
@@ -1611,7 +1647,7 @@ paths:
       summary: List all resources
       description: Get a list of all Tasks.
       tags:
-        - CalendarEvents
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1627,7 +1663,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Tasks
+        - Task
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1644,7 +1680,7 @@ paths:
       summary: List all resources
       description: Get a list of all Calendar Events.
       tags:
-        - CalendarEvents
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1663,7 +1699,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - CalendarEvents
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CalendarEventId'
@@ -1680,7 +1716,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - CalendarEvents
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CalendarEventId'
@@ -1699,7 +1735,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - CalendarEvents
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CalendarEventId'
@@ -1715,7 +1751,7 @@ paths:
       summary: List all resources
       description: Get a list of all Templates.
       tags:
-        - Templates
+        - Template
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1731,7 +1767,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Templates
+        - Template
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1750,7 +1786,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Templates
+        - Template
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TemplateId'
@@ -1767,7 +1803,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Templates
+        - Template
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TemplateId'
@@ -1786,7 +1822,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Templates
+        - Template
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TemplateId'
@@ -1802,7 +1838,7 @@ paths:
       summary: List all resources
       description: Get a list of all Notes.
       tags:
-        - Notes
+        - Note
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1818,7 +1854,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Notes
+        - Note
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1837,7 +1873,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Notes
+        - Note
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/NoteId'
@@ -1854,7 +1890,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Notes
+        - Note
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/NoteId'
@@ -1873,7 +1909,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Notes
+        - Note
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/NoteId'
@@ -1889,7 +1925,7 @@ paths:
       summary: List all resources
       description: Get a list of all Signals.
       tags:
-        - Signals
+        - Signal
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1905,7 +1941,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Signals
+        - Signal
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -1924,7 +1960,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Signals
+        - Signal
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SignalId'
@@ -1941,7 +1977,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Signals
+        - Signal
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SignalId'
@@ -1960,7 +1996,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Signals
+        - Signal
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SignalId'
@@ -1976,7 +2012,7 @@ paths:
       summary: List all resources
       description: Get a list of all Accounts.
       tags:
-        - Accounts
+        - Account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -1992,7 +2028,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Accounts
+        - Account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -2011,7 +2047,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Accounts
+        - Account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AccountId'
@@ -2028,7 +2064,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Accounts
+        - Account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AccountId'
@@ -2047,7 +2083,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Accounts
+        - Account
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AccountId'
@@ -2063,7 +2099,7 @@ paths:
       summary: List all resources
       description: Get a list of all Offices.
       tags:
-        - Offices
+        - Office
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -2079,7 +2115,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Offices
+        - Office
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -2098,7 +2134,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Offices
+        - Office
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/OfficeId'
@@ -2115,7 +2151,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Offices
+        - Office
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/OfficeId'
@@ -2134,7 +2170,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Offices
+        - Office
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/OfficeId'
@@ -2284,6 +2320,210 @@ paths:
       security:
         - oauth2:
             - portal_invitation:index
+  /relation_number:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedRelationNumbers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all portal relation number types.
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - relation_number:index
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Create a new resource
+      description: Create a new portal invitation.
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/RelationNumber"
+      security:
+        - oauth2:
+            - relation_number:create
+  /relation_number/{relationNumber_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/RelationNumber'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/RelationNumberId'
+      security:
+        - oauth2:
+            - relation_number:show
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Update a resource
+      description: ""
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/RelationNumberId'
+      requestBody:
+        $ref: "#/components/requestBodies/RelationNumber"
+      security:
+        - oauth2:
+            - relation_number:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/RelationNumberId'
+      security:
+        - oauth2:
+            - relation_number:delete
+  /relation_number_type:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedRelationNumberTypes'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all portal relation number types.
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - relation_number_type:index
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Create a new resource
+      description: Create a new portal invitation.
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/RelationNumberType"
+      security:
+        - oauth2:
+            - relation_number_type:create
+  /relation_number_type/{relationNumberType_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/RelationNumberType'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/RelationNumberTypeId'
+      security:
+        - oauth2:
+            - relation_number_type:show
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Update a resource
+      description: ""
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/RelationNumberTypeId'
+      requestBody:
+        $ref: "#/components/requestBodies/RelationNumberType"
+      security:
+        - oauth2:
+            - relation_number_type:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - Relation number
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/RelationNumberTypeId'
+      security:
+        - oauth2:
+            - relation_number_type:delete
   /search:
     get:
       responses:
@@ -2296,7 +2536,7 @@ paths:
       summary: List all resources
       description: Get a list of all Searches.
       tags:
-        - Searches
+        - Search
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -2312,7 +2552,7 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Searches
+        - Search
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -2331,7 +2571,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Searches
+        - Search
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SearchId'
@@ -2348,7 +2588,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Searches
+        - Search
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SearchId'
@@ -2367,7 +2607,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Searches
+        - Search
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SearchId'
@@ -2446,51 +2686,53 @@ tags:
       + `/oauth/authorize`
 
       + `/oauth/access_token`
-  - name: Accounts
+  - name: Account
     description: Endpoint for Account resource management
-  - name: Addresses
+  - name: Address
     description: Endpoint for Address resource management
-  - name: Calendars
+  - name: Calendar
     description: Endpoint for Calendar resource management
-  - name: CalendarEvents
+  - name: Calendar event
     description: Endpoint for Calendar Event resource management
-  - name: Customers
+  - name: Customer
     description: Endpoint for Customer resource management
-  - name: Damages
+  - name: Damage
     description: Endpoint for Damage resource management
-  - name: Documents
+  - name: Document
     description: Endpoint for Document resource management
-  - name: Dossiers
+  - name: Dossier
     description: Endpoint for Findesk Dossier resource management
-  - name: EmailAccount
+  - name: Email account
     description: Endpoint for EmailAccount resource management
-  - name: Emails
+  - name: Email
     description: Endpoint for Email resource management
   - name: HDN
     description: Endpoint for HDN functions
-  - name: Letters
+  - name: Letter
     description: Endpoint for Letter resource management
   - name: Lock
     description: Endpoint for Lock resource management
-  - name: MortgageParts
+  - name: Mortgage part
     description: Endpoint for MortgagePart resource management
-  - name: MortgageProgress
+  - name: Mortgage progress
     description: Endpoint for MortgageProgress resource management
-  - name: Mortgages
+  - name: Mortgage
     description: Endpoint for Mortgage resource management
-  - name: Notes
+  - name: Note
     description: Endpoint for Note resource management
-  - name: Offices
+  - name: Office
     description: Endpoint for Office resource management
   - name: Portal invitations
     description: Endpoint for Portal invitations resource management
-  - name: Searches
+  - name: Relation number
+    description: Endpoint for Portal invitations resource management
+  - name: Search
     description: Endpoint for Search resource management
-  - name: Signals
+  - name: Signal
     description: Endpoint for signal resource management
-  - name: Tasks
+  - name: Task
     description: Endpoint for Task resource management
-  - name: Templates
+  - name: Template
     description: Endpoint for Template resource management
 servers:
   - url: https://{subdomain}.ddat.nl/api/v1
@@ -2640,6 +2882,32 @@ components:
               valid_until:
                 type: string
                 description: Date time string until when the invite is valid. Set to null if the invite must never expire.
+    RelationNumber:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - number
+              - relation_number_type_id
+            properties:
+              number:
+                type: string
+                description: The relation number
+              relation_number_type_id:
+                type: number
+                description: The is of the relation number type
+    RelationNumberType:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                description: The name of the relation number type
   securitySchemes:
     oauth2:
       type: oauth2
@@ -2687,6 +2955,16 @@ components:
             'portal_invitation:show': Show a portal invitation
             'portal_invitation:update': Update a portal invitation
             'portal_invitation:delete': Delete a portal invitation
+            'relation_number:index': List all relation numbers
+            'relation_number:create': Create a relation number
+            'relation_number:show': Show a relation number
+            'relation_number:update': Update a relation number
+            'relation_number:delete': Delete a relation number
+            'relation_number_type:index': List all relation number types
+            'relation_number_type:create': Create a relation number type
+            'relation_number_type:show': Show a relation number type
+            'relation_number_type:update': Update a relation number type
+            'relation_number_type:delete': Delete a relation number type
             'search:full': Zoekopdrachten
             'signal:full': Signalen
             'template:full': Templates
@@ -3877,6 +4155,43 @@ components:
             active and has not been used by the customer.
       description: >
         A portal invitation is a model which keeps track invites for the portal.
+    RelationNumber:
+      type: object
+      required:
+        - relation_number_type_id
+      properties:
+        id:
+          type: number
+          description: Internal id of the relation number type
+        number:
+          type: string
+          description: The identifier of the relation number
+        relation_number_type_id:
+          type: number
+          description: The id of the relation number type
+        numberable_type:
+          type: string
+          description: The type of object to which the relation number is attached, e.g. `customer`
+        numberable_id:
+          type: number
+          description: The id of object to which the relation number is attached
+        created_at:
+          type: string
+          description: The datetime when the relation number was created
+        updated_at:
+          type: string
+          description: The datetime when the relation number was alst updated
+    RelationNumberType:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: number
+          description: ID of the relation number type
+        name:
+          type: string
+          description: Name of the relation number type
     Office:
       type: object
       required:
@@ -4993,6 +5308,66 @@ components:
           examples:
             PaginatedPortalInvitationsExample:
               $ref: '#/components/examples/PaginatedPortalInvitationsExample'
+    RelationNumber:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/RelationNumber'
+          examples:
+            PaginatedRelationNumberTypesExample:
+              $ref: '#/components/examples/RelationNumberExample'
+    PaginatedRelationNumbers:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelationNumber'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedRelationNumberTypesExample:
+              $ref: '#/components/examples/PaginatedRelationNumbersExample'
+    RelationNumberType:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/RelationNumberType'
+          examples:
+            RelationNumberTypeExample:
+              $ref: '#/components/examples/RelationNumberTypeExample'
+    PaginatedRelationNumberTypes:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelationNumberType'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedRelationNumberTypesExample:
+              $ref: '#/components/examples/PaginatedRelationNumberTypesExample'
   examples:
     BadRequestExample:
       summary: 400 Bad Request. Probably the access token was not provided
@@ -6075,6 +6450,52 @@ components:
             current: 1
             total_pages: 1
             links: []
+    RelationNumberExample:
+      value:
+        data:
+          id: 1
+          number: 'external_relation_number_123'
+          numberable_type: 'customer'
+          numberable_id: '1234'
+          relation_number_type_id: 1
+          created_at: '2019-01-01 12:00:00'
+          update_at: '2019-01-02 12:00:00'
+    PaginatedRelationNumbersExample:
+      value:
+        data:
+          - id: 1
+            number: 'external_relation_number_123'
+            numberable_type: 'customer'
+            numberable_id: '1234'
+            relation_number_type_id: 1
+            created_at: '2019-01-01 12:00:00'
+            update_at: '2019-01-02 12:00:00'
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    RelationNumberTypeExample:
+      value:
+        data:
+          id: 1
+          name: 'Relation number type name'
+    PaginatedRelationNumberTypesExample:
+      value:
+        data:
+          - id: 1
+            name: 'Relation number type name'
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
   parameters:
     PerPage:
       name: perPage
@@ -6264,6 +6685,22 @@ components:
       example: "oTicierOsEuGAlDruNDELERCulGABASkIDeClINERMiSPENTATErEvIGhANDIeLAIRepTORsycHawnSiBleDpieNGOUSCONiDIAS"
       schema:
         type: string
+    RelationNumberId:
+      name: relationNumber_id
+      in: path
+      description: The id of the relation number
+      required: true
+      example: "1"
+      schema:
+        type: number
+    RelationNumberTypeId:
+      name: relationNumberType_id
+      in: path
+      description: The id of the relation number type
+      required: true
+      example: "1"
+      schema:
+        type: number
     SearchId:
       name: search_id
       in: path
