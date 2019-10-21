@@ -361,7 +361,7 @@ paths:
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
       security:
-        - oauth2: ['customer:basic']
+        - oauth2: ['customer:full', 'customer:basic', 'customer:contact']
     post:
       responses:
         200:
@@ -378,6 +378,8 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/Customer"
+      security:
+        - oauth2: ['customer:create']
   /customer/lead:
     post:
       responses:
@@ -395,6 +397,8 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/CustomerLead"
+      security:
+        - oauth2: ['customer:create_lead']
   /customer/open/{customer_id_or_uuid}:
     get:
       responses:
@@ -413,6 +417,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerIdOrUUId'
+      security:
+        - oauth2: ['customer:full']
   /customer/mortgage_lead:
     post:
       responses:
@@ -430,6 +436,8 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/CustomerLead"
+      security:
+        - oauth2: ['customer:create_mortgage_lead']
   /customer/ax_message:
     post:
       responses:
@@ -449,6 +457,68 @@ paths:
         - $ref: '#/components/parameters/Page'
       requestBody:
         $ref: "#/components/requestBodies/XMLAXMessage"
+      security:
+        - oauth2: ['customer:full']
+  /customer/{customer_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Customer'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: Show a customer
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
+      security:
+        - oauth2: ['customer:full']
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Update a resource
+      description: Update a customer
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
+      requestBody:
+        $ref: "#/components/requestBodies/Customer"
+      security:
+        - oauth2: ['customer:full']
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: Delete a customer
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
+      security:
+        - oauth2: ['customer:full']
   /customer/{customer_id}/ax_message:
     put:
       responses:
@@ -1828,6 +1898,8 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
       summary: Create a new resource
@@ -2000,6 +2072,8 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
       summary: Create a new resource
@@ -2064,6 +2138,108 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/OfficeId'
+  /portal_invitation:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedPortalInvitations'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all portal invitations.
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - portal_invitation:index
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Create a new resource
+      description: Create a new portal invitation.
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/CreatePortalInvitation"
+      security:
+        - oauth2:
+            - portal_invitation:create
+  /portal_invitation/{portalInvitation_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PortalInvitation'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PortalInvitationId'
+      security:
+        - oauth2:
+            - portal_invitation:show
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Update a resource
+      description: ""
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PortalInvitationId'
+      requestBody:
+        $ref: "#/components/requestBodies/PortalInvitation"
+      security:
+        - oauth2:
+            - portal_invitation:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PortalInvitationId'
+      security:
+        - oauth2:
+            - portal_invitation:delete
   /search:
     get:
       responses:
@@ -2262,6 +2438,8 @@ tags:
     description: Endpoint for Note resource management
   - name: Offices
     description: Endpoint for Office resource management
+  - name: Portal invitations
+    description: Endpoint for Portal invitations resource management
   - name: Searches
     description: Endpoint for Search resource management
   - name: Signals
@@ -2383,15 +2561,41 @@ components:
           schema:
             $ref: '#/components/schemas/OfferteAanvraag'
     Calendar:
-       content:
-         application/json:
-           schema:
-             $ref: '#/components/schemas/Calendar'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Calendar'
     CalendarEvent:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/CalendarEvent'
+    PortalInvitation:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PortalInvitation'
+    CreatePortalInvitation:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - customer_id
+              - send_email
+              - type
+            properties:
+              customer_id:
+                type: number
+                description: The id of the customer of the invite
+              send_email:
+                type: boolean
+                description: A boolean to indicate if DossierData should send an email for the invite
+              type:
+                $ref: '#/components/schemas/PortalInvitationTypeEnum'
+              valid_until:
+                type: string
+                description: Date time string until when the invite is valid. Set to null if the invite must never expire.
   securitySchemes:
     oauth2:
       type: oauth2
@@ -2434,6 +2638,11 @@ components:
             'mortgage:full': Alle gegevens hypotheek
             'note:full': Notities
             'office:full': Kantoren
+            'portal_invitation:index': List all portal invitations
+            'portal_invitation:create': Create a portal invitation
+            'portal_invitation:show': Show a portal invitation
+            'portal_invitation:update': Update a portal invitation
+            'portal_invitation:delete': Delete a portal invitation
             'search:full': Zoekopdrachten
             'signal:full': Signalen
             'template:full': Templates
@@ -3593,6 +3802,37 @@ components:
       description: >
         An account is a bank account of a customer. It contains some basic details and is mostly used to attach
         documents to. An account can also be shared between two customers vie the `joint_id` relation.
+    PortalInvitation:
+      type: object
+      required:
+        - customer_id
+        - send_email
+        - type
+      properties:
+        id:
+          type: number
+          description: ID of portal invitation
+        customer_id:
+          type: number
+          description: The id of the customer of the invite
+        send_email:
+          type: boolean
+          description: A boolean to indicate if DossierData should send an email for the invite
+        type:
+          $ref: '#/components/schemas/PortalInvitationTypeEnum'
+        token:
+          type: string
+          description: When the invite is created this is the token with which the customer can access the portal
+        valid_until:
+          type: string
+          description: Date time string until when the invite is valid. Set to null if the invite must never expire.
+        active:
+          type: boolean
+          description: >
+            A boolean to indicate if the invite has been used. If this is `true` that means that the invite is still
+            active and has not been used by the customer.
+      description: >
+        A portal invitation is a model which keeps track invites for the portal.
     Office:
       type: object
       required:
@@ -3909,6 +4149,17 @@ components:
           - `null`: Unknown
           - `0`: Female
           - `1`: Male
+    PortalInvitationTypeEnum:
+      type: string
+      enum:
+        - 'full'
+        - 'assessment'
+        - 'source_data'
+      description: >
+        An enum that describes all types of portal invitations.
+          - `full`: This is an invite for the entire portal process which included the source data and an assessment
+          - `assessment`: This is an invite for the assessment process
+          - `source_data`: This is an invite for the source data process via iWize
   responses:
     BadRequest:
       description: Bad Request
@@ -4042,6 +4293,19 @@ components:
           examples:
             PaginatedAddressExample:
               $ref: '#/components/examples/PaginatedAddressesExample'
+    Customer:
+      description: A customer resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Customer'
+          examples:
+            CustomerExample:
+              $ref: '#/components/examples/CustomerExample'
     PaginatedCustomers:
       description: A paginated collection of the customer resource
       headers: {}
@@ -4606,7 +4870,7 @@ components:
               data:
                 $ref: '#/components/schemas/Calendar'
           examples:
-            PaginatedTasksExample:
+            CalendarExample:
               $ref: '#/components/examples/CalendarExample'
     PaginatedCalendars:
       description: OK
@@ -4623,7 +4887,7 @@ components:
               meta:
                 $ref: '#/components/schemas/Meta'
           examples:
-            PaginatedTasksExample:
+            PaginatedCalendarsExample:
               $ref: '#/components/examples/PaginatedCalendarsExample'
     CalendarEvent:
       description: OK
@@ -4636,7 +4900,7 @@ components:
               data:
                 $ref: '#/components/schemas/CalendarEvent'
           examples:
-            PaginatedTasksExample:
+            CalendarEventExample:
               $ref: '#/components/examples/CalendarEventExample'
     PaginatedCalendarEvents:
       description: OK
@@ -4653,8 +4917,38 @@ components:
               meta:
                 $ref: '#/components/schemas/Meta'
           examples:
-            PaginatedTasksExample:
+            PaginatedCalendarEventsExample:
               $ref: '#/components/examples/PaginatedCalendarEventsExample'
+    PortalInvitation:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/PortalInvitation'
+          examples:
+            PortalInvitationExample:
+              $ref: '#/components/examples/PortalInvitationExample'
+    PaginatedPortalInvitations:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PortalInvitation'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedPortalInvitationsExample:
+              $ref: '#/components/examples/PaginatedPortalInvitationsExample'
   examples:
     BadRequestExample:
       summary: 400 Bad Request. Probably the access token was not provided
@@ -5709,6 +6003,34 @@ components:
             current: 1
             total_pages: 1
             links: []
+    PortalInvitationExample:
+      value:
+        data:
+          id: 1
+          customer_id: 1234
+          send_email: false
+          type: 'full'
+          token: 'oTicierOsEuGAlDruNDELERCulGABASkIDeClINERMiSPENTATErEvIGhANDIeLAIRepTORsycHawnSiBleDpieNGOUSCONiDIAS'
+          valid_until: '2019-01-01 12:00:00'
+          active: true
+    PaginatedPortalInvitationsExample:
+      value:
+        data:
+          - id: 1
+            customer_id: 1234
+            send_email: false
+            type: 'full'
+            token: 'oTicierOsEuGAlDruNDELERCulGABASkIDeClINERMiSPENTATErEvIGhANDIeLAIRepTORsycHawnSiBleDpieNGOUSCONiDIAS'
+            valid_until: '2019-01-01 12:00:00'
+            active: true
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
   parameters:
     PerPage:
       name: perPage
@@ -5878,6 +6200,14 @@ components:
       name: office_id
       in: path
       description: The id of the office
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    PortalInvitationId:
+      name: portalInvitation_id
+      in: path
+      description: The id of the portal invitation
       required: true
       example: "1"
       schema:
