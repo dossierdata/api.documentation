@@ -2240,6 +2240,29 @@ paths:
       security:
         - oauth2:
             - portal_invitation:delete
+  /portal_invitation/by_customer/{customer_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedPortalInvitations'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: List all resource
+      description: List all portal invitations for a specific customer
+      tags:
+        - Portal invitations
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - portal_invitation:index
   /search:
     get:
       responses:
