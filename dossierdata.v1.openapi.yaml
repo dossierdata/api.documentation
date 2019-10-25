@@ -343,6 +343,24 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AddressId'
+  /address/by_customer/{customer_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedAddresses'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Address
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
   /customer:
     get:
       responses:
@@ -3375,39 +3393,42 @@ components:
         id:
           type: number
           description: Id of the address
-        type:
-          type: number
-          description: Type of address
-        postcode:
-          type: string
-          description: Postal code of the address
-        houseNumber:
-          type: string
-          description: House number of the address
-        streetName:
-          type: string
-          description: Street name of the address
-        city:
-          type: string
-          description: City of the address
-        houseNumberAddition:
-          type: string
-          description: House number addition of the address
-        customer:
+        customer_id:
           type: number
           description: ID of the related customer
         active:
           type: boolean
           description: Is the address active?
+        from:
+          type: string
+          description: A date from which the address will be active according to ISO8601
+        type:
+          type: string
+          description: Type of address
+        postcode:
+          type: string
+          description: Postal code of the address
+        house_number:
+          type: string
+          description: House number of the address
+        house_number_addition:
+          type: string
+          description: House number addition of the address
+        street_name:
+          type: string
+          description: Street name of the address
+        city:
+          type: string
+          description: City of the address
+        country:
+          type: string
+          description: Country of the address
         lat:
           type: number
           description: Latitude of the address
         lng:
           type: number
           description: Longitude of the address
-        country:
-          type: string
-          description: Country of the address
     Document:
       type: object
       properties:
@@ -4043,9 +4064,9 @@ components:
         datetime: 01-01-2018
         category_id: 1
         entity_id: "3"
-        created_at: "2019-01-01 12:00:00"
-        updated_at: "2019-01-02 12:00:00"
-        deleted_at: "2019-01-03 12:00:00"
+        created_at: "2019-10-25T12:00:00+02:00"
+        updated_at: "2019-10-25T13:00:00+02:00"
+        deleted_at: "2019-10-25T14:00:00+02:00"
         user_id: "1"
         file: test
         call_event_id: test
@@ -4090,43 +4111,44 @@ components:
     Account:
       type: object
       required:
-        - type
-        - number
+        - account_type_id
         - customer_id
+        - number
       properties:
         id:
           type: number
           description: ID of account
-        type:
+        account_type_id:
           type: number
-          description: Type of account
+          description: Id of the account type
+        customer_id:
+          type: number
+          description: ID of customer of account
+        joint_id:
+          type: number
+          description: ID of the customer who is the joint account holder
         active:
           type: boolean
           description: Is account active?
         number:
           type: string
           description: Number of account
-        customer_id:
-          type: number
-          description: ID of customer of account
-        inzake:
+        description:
           type: string
           description: Subject
-        joint_id:
-          type: string
-          description: ID of joint of account
         primary:
           type: boolean
-          description: Is account primary?
+          description: Marks if this is the primary account. When an account is shared, two objects exist of which only one the the primary.
         created_at:
           type: string
-          description: Timestamp of creation
+          description: A datetime string according to ISO8601
         updated_at:
           type: string
-          description: Timestamp of latest update
+          description: A datetime string according to ISO8601
       description: >
         An account is a bank account of a customer. It contains some basic details and is mostly used to attach
-        documents to. An account can also be shared between two customers vie the `joint_id` relation.
+        documents to. An account can also be shared between two customers via the `joint_id` relation. When an account
+        is shared, two objects exist of which only one the primary account.
     PortalInvitation:
       type: object
       required:
@@ -5440,10 +5462,10 @@ components:
         data:
           type: 4
           postcode: 9712VL
-          houseNumber: "46"
-          streetName: Noorderhaven
+          house_number: "46"
+          street_name: Noorderhaven
           city: Groningen
-          houseNumberAddition: "``"
+          house_number_addition: "``"
           customer: 4482
           active: true
           lat: 53.219708
@@ -5455,10 +5477,10 @@ components:
         data:
           - type: 4
             postcode: 9712VL
-            houseNumber: "46"
-            streetName: Noorderhaven
+            house_number: "46"
+            street_name: Noorderhaven
             city: Groningen
-            houseNumberAddition: "``"
+            house_number_addition: "``"
             customer: 4482
             active: true
             lat: 53.219708
@@ -5844,8 +5866,8 @@ components:
             rente: 4
             rentevasteperiode: "10"
             einddatumRentevast: 01-01-2019
-            created_at: 01-01-2018 12:00:00
-            updated_at: 01-01-2018 12:00:00
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
             begindatumRentevast: 2018-01-01
             renteType: 1
             duur: 360
@@ -5887,8 +5909,8 @@ components:
             rente: 4
             rentevasteperiode: "10"
             einddatumRentevast: 01-01-2019
-            created_at: 01-01-2018 12:00:00
-            updated_at: 01-01-2018 12:00:00
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
             begindatumRentevast: 2018-01-01
             renteType: 1
             duur: 360
@@ -5928,8 +5950,8 @@ components:
           completed: true
           comment: Comment
           date: 01-01-2018
-          created_at: test
-          updated_at: test
+          created_at: "2019-10-25T12:00:00+02:00"
+          updated_at: "2019-10-25T13:00:00+02:00"
     PaginatedMortgageProgressExample:
       value:
         data:
@@ -5941,8 +5963,8 @@ components:
             completed: true
             comment: Comment
             date: 01-01-2018
-            created_at: test
-            updated_at: test
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
         meta:
           pagination:
             total: 1
@@ -6091,9 +6113,9 @@ components:
           type: 1
           primaryMail: test@test.nl
           category: 1
-          created_at: "2019-01-01 12:00:00"
-          updated_at: "2019-01-02 12:00:00"
-          deleted_at: "2019-01-03 12:00:00"
+          created_at: "2019-10-25T12:00:00+02:00"
+          updated_at: "2019-10-25T13:00:00+02:00"
+          deleted_at: "2019-10-25T14:00:00+02:00"
           agency_id: 1
     PaginatedTemplatesExample:
       value:
@@ -6105,9 +6127,9 @@ components:
             type: 1
             primaryMail: test@test.nl
             category: 1
-            created_at: "2019-01-01 12:00:00"
-            updated_at: "2019-01-02 12:00:00"
-            deleted_at: "2019-01-03 12:00:00"
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
+            deleted_at: "2019-10-25T14:00:00+02:00"
             agency_id: 1
         meta:
           pagination:
@@ -6126,9 +6148,9 @@ components:
           datetime: 01-01-2018
           category_id: 1
           entity_id: "3"
-          created_at: "2019-01-01 12:00:00"
-          updated_at: "2019-01-02 12:00:00"
-          deleted_at: "2019-01-03 12:00:00"
+          created_at: "2019-10-25T12:00:00+02:00"
+          updated_at: "2019-10-25T13:00:00+02:00"
+          deleted_at: "2019-10-25T14:00:00+02:00"
           user_id: "1"
           file: test
           call_event_id: test
@@ -6141,9 +6163,9 @@ components:
             datetime: 01-01-2018
             category_id: 1
             entity_id: "3"
-            created_at: "2019-01-01 12:00:00"
-            updated_at: "2019-01-02 12:00:00"
-            deleted_at: "2019-01-03 12:00:00"
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
+            deleted_at: "2019-10-25T14:00:00+02:00"
             user_id: "1"
             file: test
             call_event_id: test
@@ -6166,8 +6188,8 @@ components:
             comment: test
             finished_by: 1
             finished_at: 01-01-2018 12:00:00
-            created_at: 01-01-2018 12:00:00
-            updated_at: 01-01-2018 12:00:00
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
         meta:
           pagination:
             total: 1
@@ -6187,8 +6209,8 @@ components:
             comment: test
             finished_by: 1
             finished_at: 01-01-2018 12:00:00
-            created_at: 01-01-2018 12:00:00
-            updated_at: 01-01-2018 12:00:00
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
         meta:
           pagination:
             total: 1
@@ -6201,28 +6223,28 @@ components:
       value:
         data:
           id: 1
-          type: 4
+          account_type_id: 4
+          customer_id: 1234
+          joint_id: 1235
           active: true
-          number: "4"
-          customer_id: 4
-          inzake: "4"
-          joint_id: "1"
           primary: true
-          created_at: "4"
-          updated_at: "4"
+          number: "123456789"
+          description: "Description"
+          created_at: "2019-10-25T12:00:00+02:00"
+          updated_at: "2019-10-25T13:00:00+02:00"
     PaginatedAccountsExample:
       value:
         data:
           - id: 1
-            type: 4
+            account_type_id: 4
+            customer_id: 1234
+            joint_id: 1235
             active: true
             number: "4"
-            customer_id: 4
-            inzake: "4"
-            joint_id: "1"
+            description: "4"
             primary: true
-            created_at: "4"
-            updated_at: "4"
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
         meta:
           pagination:
             total: 1
@@ -6277,8 +6299,8 @@ components:
             content: test content
             user_id: 1
             public: true
-            created_at: "2019-01-01 12:00:00"
-            updated_at: "2019-01-02 12:00:00"
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
     PaginatedSearchesExample:
       value:
         data:
@@ -6287,8 +6309,8 @@ components:
             content: test content
             user_id: 1
             public: true
-            created_at: "2019-01-01 12:00:00"
-            updated_at: "2019-01-02 12:00:00"
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
         meta:
           pagination:
             total: 1
@@ -6305,7 +6327,7 @@ components:
           status: 1
           user_id: 1
           customer_id: 1
-          updated_at: 2017-01-30T12:00:00+02:00
+          updated_at: "2019-10-25T13:00:00+02:00"
     PaginatedAXMessagesExample:
       value:
         data:
@@ -6314,7 +6336,7 @@ components:
           status: 1
           user_id: 1
           customer_id: 1
-          updated_at: 2017-01-30T12:00:00+02:00
+          updated_at: "2019-10-25T13:00:00+02:00"
         meta:
           pagination:
             total: 1
@@ -6463,7 +6485,7 @@ components:
           numberable_type: 'customer'
           numberable_id: '1234'
           relation_number_type_id: 1
-          created_at: '2019-01-01 12:00:00'
+          created_at: "2019-10-25T12:00:00+02:00"
           update_at: '2019-01-02 12:00:00'
     PaginatedRelationNumbersExample:
       value:
@@ -6473,7 +6495,7 @@ components:
             numberable_type: 'customer'
             numberable_id: '1234'
             relation_number_type_id: 1
-            created_at: '2019-01-01 12:00:00'
+            created_at: "2019-10-25T12:00:00+02:00"
             update_at: '2019-01-02 12:00:00'
         meta:
           pagination:
