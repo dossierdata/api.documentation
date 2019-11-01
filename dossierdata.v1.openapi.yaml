@@ -3538,16 +3538,19 @@ components:
           description: Date of sync, format d/m/Y
         locked:
           type: boolean
-          description: Emailaccount locked?
+          description: Describes if the email account is locked for importing emails.
         auto_match:
           type: boolean
-          description: Auto match Emailaccount?
+          description: Describes if imported emails should automatically be matched to customers.
         auto_process:
           type: boolean
-          description: Auto process Emailaccount?
-        process_email_account_folder_id:
-          type: number
-          description: Branche code of insurance company
+          description: Describes if imported emails that were matched to customers should automatically be marked as processed.
+        process_matched:
+          type: boolean
+          description: Describes if emails which have been matched should be automatically marked as processed.
+        process_unmatched:
+          type: boolean
+          description: Describes if emails which have not been matched should be automatically marked as processed.
     EncryptionTypes:
       type: number
       enum:
