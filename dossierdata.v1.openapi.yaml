@@ -2908,13 +2908,26 @@ components:
             required:
               - number
               - relation_number_type_id
+              - numberable_type
+              - numberable_id
             properties:
               number:
                 type: string
-                description: The relation number
+                description: The identifier of the relation number
               relation_number_type_id:
                 type: number
-                description: The is of the relation number type
+                description: The id of the relation number type
+              numberable_type:
+                $ref: '#/components/schemas/MorphRelationTypeEnum'
+              numberable_id:
+                type: number
+                description: The id of object to which the relation number is attached
+              created_at:
+                type: string
+                description: The datetime when the relation number was created
+              updated_at:
+                type: string
+                description: The datetime when the relation number was last updated
     RelationNumberType:
       content:
         application/json:
@@ -4211,8 +4224,7 @@ components:
           type: number
           description: The id of the relation number type
         numberable_type:
-          type: string
-          description: The type of object to which the relation number is attached, e.g. `customer`
+          $ref: '#/components/schemas/MorphRelationTypeEnum'
         numberable_id:
           type: number
           description: The id of object to which the relation number is attached
@@ -4221,7 +4233,10 @@ components:
           description: The datetime when the relation number was created
         updated_at:
           type: string
-          description: The datetime when the relation number was alst updated
+          description: The datetime when the relation number was last updated
+      description: >
+        The RelationNumber model keeps track of external relation numbers and links them via a polymorphic relation to
+        other models in the database. You need to have a RelationNumberType before you can create this.
     RelationNumberType:
       type: object
       required:
@@ -4233,6 +4248,9 @@ components:
         name:
           type: string
           description: Name of the relation number type
+      description: >
+        The RelationNumberType model keeps track of all different relation types. If you have a new type of external
+        number that you want to keep track of you need to create a new RelationNumberType model first.
     Office:
       type: object
       required:
@@ -4560,6 +4578,48 @@ components:
           - `full`: This is an invite for the entire portal process which included the source data and an assessment
           - `assessment`: This is an invite for the assessment process
           - `source_data`: This is an invite for the source data process via iWize
+    MorphRelationTypeEnum:
+      type: string
+      enum:
+        - 'address'
+        - 'bank_account'
+        - 'current_living_condition'
+        - 'customer'
+        - 'credit'
+        - 'damage'
+        - 'income_benefit'
+        - 'income_company'
+        - 'income_employment'
+        - 'income_other'
+        - 'income_retirement'
+        - 'mortgage'
+        - 'mortgage_part'
+        - 'obligation'
+        - 'office'
+        - 'policy'
+        - 'possession'
+        - 'retirement'
+        - 'user'
+      description: >
+        An enum that describes all possible types for a polymorphic relationship.
+          - `account`: The (bank) Account model
+          - `address`: The Address model
+          - `current_living_condition`: The CurrentLivingCondition model
+          - `customer`: The Customer model
+          - `damage`: The Damage model
+          - `income_benefit`: The IncomeBenefit model
+          - `income_company`: The IncomeCompany model
+          - `income_employment`: The IncomeEmployment model
+          - `income_other`: The IncomeOther model
+          - `income_retirement`: The IncomeRetirement model
+          - `mortgage`: The Mortgage model
+          - `mortgage_part`: The MortgagePart model
+          - `obligation`: The Obligation model
+          - `office`: The Office model
+          - `policy`: The Policy model
+          - `possession`: The Possession model
+          - `retirement`: The Retirement model
+          - `user`: The User model
   responses:
     BadRequest:
       description: Bad Request
