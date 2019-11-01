@@ -4747,6 +4747,8 @@ components:
           schema:
             $ref: '#/components/schemas/BadRequest'
           examples:
+            UnauthorizedScopeExample:
+              $ref: '#/components/examples/BadScopeRequestExample'
             UnauthorizedExample:
               $ref: '#/components/examples/BadRequestExample'
     BadScopeRequest:
@@ -5590,17 +5592,22 @@ components:
               $ref: '#/components/examples/PaginatedRelationNumberTypesExample'
   examples:
     BadRequestExample:
-      summary: 400 Bad Request. Probably the access token was not provided
+      summary: 400 No access token
+      description: Your request is missing required oauth paramenters, check that the access_token is passed correctly
       value:
         error: invalid_request
         error_description: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "access token" parameter.
     BadScopeRequestExample:
-      summary: 400 Bad Request
+      summary: 400 Invalid scope(s)
+      description: Your access token doesn't have the correct scopes. You will probably need to request a new one which includes the scope(s) for this endpoint.
       value:
-        error: invalid_scope
-        error_description: The requested scope is invalid, unknown, or malformed. Check the "scope:example" scope.
+        success: false
+        error:
+          code: 400
+          message: Invalid scope(s) provided
     UnauthorizedExample:
       summary: 401 Unauthorized
+      description: Your client doesn't have access to this tenant or endpoint
       value:
         success: false
         error: access_denied
@@ -5613,6 +5620,7 @@ components:
         error_description: Client authorization failed.
     NotFoundExample:
       summary: 404 Not Found
+      description: The requested resource could not be found
       value:
         success: false
         error:
@@ -5620,14 +5628,19 @@ components:
           description: No query results for model [model] 1
     UnprocessableEntityExample:
       summary: 422 Unprocessable Entity
+      description: >-
+        There was a problem processing your request, this is because one or more values did not pass validation.
+
+
+        Check the `errors` element in the response for detailed descriptions about the validation rules that failed.
       value:
         success: false
         error:
           code: 1
           message: The given data was invalid.
           errors:
-            - property_name:
-                - Validation error
+            property_name:
+              - Validation error
     PaginationExample:
       summary: Pagination
       value:
