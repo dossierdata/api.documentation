@@ -281,6 +281,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -317,6 +319,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -391,6 +395,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -411,6 +417,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new customer of the type lead
       description: ""
       tags:
@@ -452,6 +460,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create mortgage lead
       description: ""
       tags:
@@ -472,6 +482,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Find existing customers that match the details of the provided ax message
       description: ""
       tags:
@@ -496,6 +508,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Find a customer by a relation number
       description: ""
       tags:
@@ -538,6 +552,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: Update a customer
       tags:
@@ -581,6 +597,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: Update a customer with the data from an AX Message.
       tags:
@@ -618,6 +636,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -654,6 +674,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -705,6 +727,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -741,6 +765,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -792,6 +818,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -828,6 +856,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -879,6 +909,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -915,6 +947,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -966,6 +1000,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1002,6 +1038,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1049,8 +1087,12 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1105,6 +1147,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1156,6 +1200,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1192,6 +1238,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1243,6 +1291,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1279,6 +1329,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1330,6 +1382,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1366,6 +1420,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1417,6 +1473,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1453,6 +1511,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1504,6 +1564,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1540,6 +1602,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1591,6 +1655,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1627,6 +1693,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1678,6 +1746,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1731,6 +1801,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1782,6 +1854,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1818,6 +1892,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1869,6 +1945,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1905,6 +1983,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -1956,6 +2036,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -1992,6 +2074,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2043,6 +2127,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -2079,6 +2165,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2130,6 +2218,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -2166,6 +2256,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2220,6 +2312,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: Create a new portal invitation.
       tags:
@@ -2262,6 +2356,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2366,6 +2462,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: Create a new portal invitation.
       tags:
@@ -2408,6 +2506,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2468,6 +2568,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: Create a new portal invitation.
       tags:
@@ -2510,6 +2612,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2567,6 +2671,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Create a new resource
       description: ""
       tags:
@@ -2603,6 +2709,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Update a resource
       description: ""
       tags:
@@ -2638,6 +2746,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
       summary: Queue
       description: >-
         Post an AX Message to be used to update a Customer. If none or multiple customers are matched, the AX Message
@@ -4334,7 +4444,13 @@ components:
           type: boolean
         error:
           type: object
-          description: A description of the error if available
+          properties:
+            code:
+              type: number
+              description: Code of the error
+            name:
+              type: string
+              description: A description of the error if available
       description: A resource we could not find
     Unauthorized:
       type: object
@@ -5501,15 +5617,17 @@ components:
         success: false
         error:
           code: 404
-          description: Not found
+          description: No query results for model [model] 1
     UnprocessableEntityExample:
       summary: 422 Unprocessable Entity
       value:
         success: false
         error:
-          - code: 1
-            type: generic_exception
-            errors: []
+          code: 1
+          message: The given data was invalid.
+          errors:
+            - property_name:
+                - Validation error
     PaginationExample:
       summary: Pagination
       value:
