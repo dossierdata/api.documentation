@@ -4553,7 +4553,6 @@ components:
         -calendar_id
         -time_start
         -time_end
-        -all_day
       properties:
         id:
           type: number
@@ -4578,9 +4577,6 @@ components:
         summary:
           type: string
           description: Summary of the event
-        all_day:
-          type: boolean
-          description: Describes if the event will take place all day or not
     CategoryEnum:
       type: number
       enum:
