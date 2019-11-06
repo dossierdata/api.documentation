@@ -1751,11 +1751,11 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Task
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
-        $ref: "#/components/requestBodies/CalendarEvent"
+        $ref: '#/components/requestBodies/CalendarEvent'
   /calendar/{calendar_id)/events:
     get:
       responses:
@@ -4549,6 +4549,11 @@ components:
           type: string
     CalendarEvent:
       type: object
+      required:
+        - calendar_id
+        - time_start
+        - time_end
+        - description
       properties:
         id:
           type: number
@@ -4563,12 +4568,22 @@ components:
           description: Date time value of the end time
         customer_id:
           type: number
+          description: The id of the customer for which the event is created
         location:
           type: string
+          description: The location at which the event takes palce
         description:
           type: string
+          description: Description of the event
         summary:
           type: string
+          description: Summary of the event
+        all_day:
+          type: boolean
+          description: Describes if the event takes place all day(default value is false)
+        is_visit:
+          type: boolean
+          description: Describes if customer is coming ot the office or if the advisor is going to the customer
     CategoryEnum:
       type: number
       enum:
