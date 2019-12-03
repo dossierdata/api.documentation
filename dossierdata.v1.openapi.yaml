@@ -1792,11 +1792,11 @@ paths:
       summary: Create a new resource
       description: ""
       tags:
-        - Task
+        - Calendar event
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
-        $ref: "#/components/requestBodies/CalendarEvent"
+        $ref: '#/components/requestBodies/CalendarEvent'
   /calendar/{calendar_id)/events:
     get:
       responses:
@@ -3914,7 +3914,99 @@ components:
         from the edit page.
     Email:
       type: object
-      properties: {}
+      required:
+        - subject
+      properties:
+        subject:
+          type: string
+          description: The subject of the email
+        from:
+          type: string
+          description: The email address from which the email is sent.
+        to:
+          type: string
+          description: The email address to which the email is sent.
+        cc:
+          type: string,
+          description: The additional email address to which the email is sent.
+        bcc:
+          type: string
+          description: The additional email address to which the email is sent, which is not seen by the "to" recipient.
+        user_id:
+          type: number
+          description: The id of the user which made the email.
+        template_id:
+          type: number
+          description: The id of the template that is used in the email.
+        customer_id:
+          type: number
+          description: The id of the customer about which the email is concerned.
+        parent_id:
+          type: number
+          description: The id of the parent email in the cases of replies and forwards.
+        sent:
+          type: boolean
+          description: Describes if this email was sent or received.
+        received:
+          type: boolean
+          description: Describes if this email was sent or received.
+        name:
+          type: string
+          description: The name of the email how it is displayed in DossierData.
+        date:
+          type: string
+          description: The date on which the email was received or sent.
+        message_id:
+          type: string
+          description: The id of the message.
+        in_reply_to:
+          type: string
+          description: the message id of the email to which this replies
+        category_id:
+          type: number
+          description: The id of the category in which this email should be saved.
+        size:
+          type: number
+          description: The size in kb of the message.
+        recent:
+          type: boolean
+          description: Describes if it is recent.
+        flagged:
+          type: boolean
+          description: Describes if it is flagged.
+        answered:
+          type: boolean
+          description: Describes if it is answered.
+        deleted:
+          type: boolean
+          description: Describes if the email has been deleted.
+        seen:
+          type: boolean
+          description: Describes if the email has been seen by a user.
+        draft:
+          type: boolean
+          description: Describes if the email is a draft.
+        has_attachment:
+          type: boolean
+          description: Describes if the email has attachments.
+        filesize:
+          type: number
+          description: The size of the attachments.
+        unmatched:
+          type: boolean
+          description: Describes if the email is unmatched.
+        processed:
+          type: boolean
+          description: Describes if the email is processed.
+        processed_by_id:
+          type: number
+          description: The id of the user which processed the email.
+        email_account_id:
+          type: number
+          description: The id of the email account to which this email is attached.
+        email_account_folder_id:
+          type: number
+          description: The id of the emaill account folder.
     Task:
       type: object
       required:
@@ -4696,6 +4788,11 @@ components:
           type: string
     CalendarEvent:
       type: object
+      required:
+        - calendar_id
+        - time_start
+        - time_end
+        - description
       properties:
         id:
           type: number
@@ -4710,12 +4807,22 @@ components:
           description: Date time value of the end time
         customer_id:
           type: number
+          description: The id of the customer for which the event is created
         location:
           type: string
+          description: The location at which the event takes palce
         description:
           type: string
+          description: Description of the event
         summary:
           type: string
+          description: Summary of the event
+        all_day:
+          type: boolean
+          description: Describes if the event takes place all day(default value is false)
+        is_visit:
+          type: boolean
+          description: Describes if customer is coming ot the office or if the advisor is going to the customer
     CategoryEnum:
       type: number
       enum:
