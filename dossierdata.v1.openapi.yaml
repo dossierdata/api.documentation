@@ -365,6 +365,47 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
+  /country:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedCountries'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a paginated list of all Countries.
+      tags:
+        - Country
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - country:index
+  /country/{country_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Country'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: Show a customer
+      tags:
+        - Country
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CountryId'
+      security:
+        - oauth2:
+            - country:show
   /customer:
     get:
       responses:
@@ -2822,6 +2863,8 @@ tags:
     description: Endpoint for Calendar resource management
   - name: Calendar event
     description: Endpoint for Calendar Event resource management
+  - name: Country
+    description: Endpoint for Country resource management
   - name: Customer
     description: Endpoint for Customer resource management
   - name: Damage
@@ -3235,121 +3278,225 @@ components:
             last:
               type: string
               description: Link to the last page
-    Customer:
+    Country:
       type: object
       required:
-        - firstName
-        - lastName
-        - dateOfBirth
+        - code
+        - name
       properties:
         id:
           type: number
-          description: The id of the customer
+          description: The id of the country
+        code:
+          type: string
+          description: Country code based on ISO 3166-2
+        name:
+          type: string
+          description: Name of the country
+    Customer:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - date_of_birth
+      properties:
+        id:
+          type: number
+          description: The id of the customer.
+        full_name:
+          type: string
+          description: Formatted full name of the customer, e.g. "Initials (First names) suffix Last name"
         initials:
           type: string
-          description: Initials of the customer
-        firstName:
+          description: Initials of the customer.
+        first_name:
           type: string
-          description: FirstName of the customer
+          description: FirstName of the customer.
         suffix:
           type: string
-          description: Suffix of the customer
-        lastName:
+          description: Suffix of the customer.
+        last_name:
           type: string
-          description: LastName of the customer
-        dateOfBirth:
+          description: LastName of the customer.
+        passed_away_at:
           type: string
-          description: Date of birth of the customer
-        phone:
-          type: string
-          description: Phonenumber of the customer
-        mobile:
-          type: string
-          description: Mobile phonenumber of the customer
+          description: The date the customer passed away according to ISO8601.
         sex:
           $ref: "#/components/schemas/GenderEnum"
-        emailaddress:
+        date_of_birth:
           type: string
-          description: Emailaddress of the customer
-        smoking:
-          type: boolean
-          description: Does the customer smoke?
-        martialStatus:
-          $ref: "#/components/schemas/MaritalStatusEnum"
-        mariedBefore:
-          type: boolean
-          description: Was the customer married befoer?
-        office:
-          type: number
-          description: The office of the customer
-        type:
-          $ref: "#/components/schemas/CustomerTypeEnum"
-        parent:
-          type: number
-          description: The parent customer_id of the customer
-        partner:
-          type: number
-          description: The id of the partner
-        houseOwned:
-          type: boolean
-          description: Does the customer own a house
-        advisor:
-          type: number
-          description: Id of the advisor of the customer
-        employer:
+          description: Date of birth of the customer according to ISO8601.
+        email_address:
           type: string
-          description: Employer of the customer
-        position:
+          description: Email address of the customer.
+        phone:
           type: string
-          description: Position at company of the customer
-        mailingEnabled:
-          type: boolean
-          description: Does the customer want to receive emails
-        salary:
-          type: number
-          description: The salary of the customer
+          description: The customer's primary phone number.
+        mobile:
+          type: string
+          description: The customer's primary mobile number.
+        phone_work:
+          type: string
+          description: The customer's business or work phone number.
         title:
           type: number
-          description: The title of the customer
-        accountNumber:
+          description: The title of the customer.
+        salutation:
+          description: The salutation which is put as the start of an email or letter to the customer
+          $ref: "#/components/schemas/SalutationEnum"
+        smoking:
+          type: boolean
+          description: Indicates whether the customer smokes.
+        parent_id:
+          type: number
+          description: The id of the customer of which this customer is the child. Note, if this is filled this customer
+            will become a part of the dossier of the customer which is referenced here.
+        partner_id:
+          type: number
+          description: The id of the customer of which this customer is the partner. Note, if this is filled this customer
+            will become a part of the dossier of the customer which is referenced here.
+        advisor_id:
+          type: number
+          description: Id of the user which is the advisor of the customer. Note, a user with the role "franchise" will
+            only be able to see customers for which he has been marked as the advisor.
+        account_manager_id:
+          type: number
+          description: The id of the user which is the account manager of the customer.
+        office_id:
+          type: number
+          description: The id of the office to which this customer belongs.
+        customer_lead_status_id:
+          type: number
+          description: The id of the lead status of the customer. Note, this only applies to customers which are created as
+            a lead.
+        nationality_country_id:
+          type: number
+          description: The id of the country which is the customer's nationality.
+        country_of_birth_id:
+          type: number
+          description: The id of the country in which the customer was born.
+        type:
+          $ref: "#/components/schemas/CustomerTypeEnum"
+        house_owned:
+          type: boolean
+          description: Indicates whether the customer owns a house.
+        property_value:
+          type: number
+          description: The property value of the house the customer owns.
+        tax_return_is_provided:
+          type: boolean
+          description: Indicates whether the customer's tax return has been provided to the advisor.
+        employer:
           type: string
-          description: The account of the customer
+          description: Name of the employer of the customer.
+        position:
+          type: string
+          description: Name of the position at company where the customer is employed.
+        notes:
+          type: string
+          description: Internal generic notes about the customer. Note, these are the notes which are also displayed on the
+            customer's dashboard.
+        mailing_enabled:
+          type: boolean
+          description: Indicates whether the customer wants to be contacted via email.
+        account_number:
+          type: string
+          description: The customer's account number at their bank.
         iban:
           type: string
-          description: The iban of the customer
-        businessname:
+          description: The iban account number of the customer
+        payroll:
+          type: number
+          description: The payroll of the customer.
+        studies:
+          type: boolean
+          description: Indicates whether the customer currently follows a study.
+        non_resident:
+          type: boolean
+          description: Indicates whether the customer lives at home or not. Note, this only applies if the customer has
+            been marked as a child of another customer.
+        education_level:
+          description: The education level of the customer.
+          $ref: "#/components/schemas/EducationLevelEnum"
+        disability_discount_years:
+          type: number
+          description: The number of disability discount years that the customer has.
+        married_before:
+          type: boolean
+          description: Indicates whether the customer was married before.
+        place_of_birth:
+          type: string
+          description: The customer's place of birth.
+        birth_name:
+          type: string
+          description: The last name given to the customer at birth.
+        birth_name_suffix:
+          type: string
+          description: The last name suffix given to the customer at birth, e.g. "van der".
+        gross_annual_employment_pension_amount:
+          type: number
+          description: The total gross annual amount of employment pension that the customer will receive from their
+            pension date.
+        gross_annual_annuity_pension_amount:
+          type: number
+          description: The total gross annual amount of annuity pension that the customer will receive from their
+            pension date.
+        gross_annual_partner_pension_amount:
+          type: number
+          description: The total gross annual amount of partner pension that the customer will receive from their
+            pension date.
+        salary:
+          type: number
+          description: The gross annual salary of the customer.
+        salary_date:
+          type: string
+          description: The date at which the customer's salary was last verified according to ISO8601.
+        retirement_income:
+          type: number
+          description: The gross annual retirement income of the customer.
+        retirement_income_date:
+          type: string
+          description: The date at which the customer's retirement income was last verified according to ISO8601.
+        marital_status:
+          $ref: "#/components/schemas/MaritalStatusEnum"
+        marital_date:
+          type: string
+          description: The date at which the customer's marital status last changed according to ISO8601.
+        marriage_dissolved_type:
+          description: The type of marriage which was dissolved according to ISO8601.
+          $ref: "#/components/schemas/MarriageDissolvedTypeEnum"
+        marriage_dissolved_at:
+          type: string
+          description: The date at which the customer's marriage was dissolved according to ISO8601.
+        customer_since:
+          type: string
+          description: The date since when this has been a customer according to ISO8601.
+        retirement_date:
+          type: string
+          description: The retirement date of the customer according to ISO8601. Note, if this is not filled but the date
+            of birth is we will try to automatically calculate this based on the latest regulations.
+        status_changed_at:
+          type: string
+          description: The date at which the type of the customer was last changed according to ISO8601, e.g. from active
+            to inactive.
+        last_opened_date:
+          type: string
+          description: The date at which the customer was last openened in the web app according to ISO8601.
+        business_name:
           type: string
           description: The name of the business of the customer
-        businesstype:
+        business_type:
           type: number
           description: The type of the business of the customer
-        kvkNumber:
+        kvk_number:
           type: string
           description: The kvk number of the customer
-        numberOfEmployees:
+        number_of_employees:
           type: number
           description: The number of employees of the customer
         revenue:
           type: number
           description: The revenue of the customer
-        payroll:
-          type: number
-          description: The payroll of the customer
-        retirement_income:
-          type: number
-          description: Retirement income of the customer
-        passed_away:
-          type: boolean
-          description: Did the customer pass away
-        passed_away_at:
-          type: string
-          description: The date the customer passed away, format d/m/Y
-        salary_date:
-          type: string
-          description: The date the customer gets their salary, format d/m/Y
-        retirement_income_date:
-          type: string
-          description: The date the customer gets their retirement income, format d/m/Y
     CustomerLead:
       type: object
       required:
@@ -4641,6 +4788,85 @@ components:
          - `1`: Important
          - `2`: Normal
          - `3`: Insignificant
+    SalutationEnum:
+      type: number
+      enum:
+        - null
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 99
+      description: >
+        An enum that describes all education level types.
+         - `null`: Empty
+         - `0` The Lord (De heer)
+         - `1` Mrs (Mevrouw)
+         - `2` Miss (Mejuffrouw)
+         - `3` Mr. Mrs (Dhr/Mevr)
+         - `4` Family (Familie)
+         - `5` The Ladies (De dames)
+         - `6` The Heritage Of (De erven van)
+         - `7` The Management Of (De directie van)
+         - `8` The Board Of (Het bestuur van)
+         - `9` The Firmants Of (De firmanten van)
+         - `10` Society (Maatschap)
+         - `11` Firma (Firma)
+         - `12` Foundation (Stichting)
+         - `13` Owners Association (Vereniging van eigenaren)
+         - `14` Vof (V.O.F.)
+         - `15` To The Attention Of (Ter attentie van)
+         - `99` Unknown (Onbekend)
+    EducationLevelEnum:
+      type: string
+      enum:
+        - null
+        - 'primary'
+        - 'secondary'
+        - 'pre_university'
+        - 'lower_vocational'
+        - 'secondary_vocational'
+        - 'higher_proffesional'
+        - 'postacedemic'
+        - 'unknown'
+      description: >
+        An enum that describes all education level types.
+         - `null`: Empty
+         - `primary`: Primary school (Lageronderwijs)
+         - `secondary`: Secondary school (Voortgezetonderwijs)
+         - `pre_university`: Pre university (VWO)
+         - `lower_vocational`: Lower vocational (LBO)
+         - `secondary_vocational`: Secondary vocational (MBO)
+         - `higher_proffesional`: Higher professional (HBO)
+         - `postacedemic`: Postacedemic (Postacademisch)
+         - `unknown`: Unknown
+    MarriageDissolvedTypeEnum:
+      type: string
+      enum:
+        - null
+        - 'marriage_divorce'
+        - 'registered_partnership_divorce'
+        - 'marriage_and_registered_partnership_divorce'
+        - 'deceased'
+      description: >
+        An enum that describes types of reasons/marriages which have been resolved.
+         - `null`: Unknown or empty
+         - `marriage_divorce`: Marriage divorced
+         - `registered_partnership_divorce`: Registered partnership divorced
+         - `marriage_and_registered_partnership_divorce`: Married and registered partnership divorced
+         - `deceased`: The partner deceased
     MaritalStatusEnum:
       type: number
       enum:
@@ -4892,6 +5118,36 @@ components:
           examples:
             PaginatedAddressExample:
               $ref: '#/components/examples/PaginatedAddressesExample'
+    Country:
+      description: A Country resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Country'
+          examples:
+            CountryExample:
+              $ref: '#/components/examples/CountryExample'
+    PaginatedCountries:
+      description: A paginated collection of the Country resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Country'
+              meta:
+                $ref: '#/components/schemas/Pagination'
+          examples:
+            PaginatedCountriesExample:
+              $ref: '#/components/examples/PaginatedCountriesExample'
     Customer:
       description: A customer resource
       headers: {}
@@ -5722,87 +5978,152 @@ components:
             current: 1
             total_pages: 1
             links: []
+    CountryExample:
+      summary: 200 OK
+      value:
+        data:
+          id: 1234
+          code: NL
+          name: Nederland
+    PaginatedCountriesExample:
+      value:
+        data:
+          - id: 1234
+            code: NL
+            name: Nederland
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
     CustomerExample:
       summary: 200 OK
       value:
         data:
           id: 1234
           initials: AB
-          firstName: Albert
+          first_name: Albert
           suffix: de
-          lastName: Vries
-          dateOfBirth: "``"
+          last_name: Vries
+          passed_away: false
+          passed_away_at: null
+          sex: 1
+          date_of_birth: "1959-06-18T00:00:00+01:00"
+          emailaddress: "ab.de.vries@test.nl"
           phone: "0512345678"
           mobile: "0612345678"
-          sex: "0"
-          emailaddress: ab.de.vries@test.nl
+          phone_work: "0512345678"
+          title: 'Beste '
+          salutation: 1
           smoking: false
-          martialStatus: "0"
-          mariedBefore: true
-          office: 1
-          type: "1"
-          parent: 2
-          partner: 3
-          houseOwned: false
-          advisor: 1
-          employer: Rapide Internet
-          position: Positie
-          mailingEnabled: false
-          salary: 123456
-          title: 1
-          accountNumber: "``"
-          iban: NL 12 ABCD 012345678
-          businessname: Rapide Internet
-          businesstype: 1
-          kvkNumber: "123456789"
-          numberOfEmployees: 2
-          revenue: 123456
-          payroll: 123456
-          retirement_income: 123456
-          passed_away: true
-          passed_away_at: "null"
-          salary_date: "null"
-          retirement_income_date: "null"
+          parent_id: null
+          secondary_parent_id: null
+          partner_id: null
+          advisor_id: 1234
+          account_manager_id: 1235
+          office_id: 1234
+          customer_lead_status_id: null
+          nationality_country_id: 184
+          country_of_birth_id: 184
+          type: 1
+          house_owned: true
+          property_value: 123456
+          tax_return_is_provided: true
+          employer: "DossierData"
+          position: "Software engineer"
+          notes: "Private internal notes, e.g. sensitive conversation topics"
+          mailing_enabled: true
+          account_number: '123654789'
+          iban: 'NL91ABNA0417164300'
+          payroll: 12345
+          studies: false
+          non_resident: null
+          education_level: 'higher_proffesional'
+          disability_discount_years: 12
+          married_before: false
+          place_of_birth: 'Groningen'
+          birth_name: 'Jong'
+          birth_name_affix: 'de'
+          gross_annual_employment_pension_amount: 12345
+          gross_annual_annuity_pension_amount: 12345
+          gross_annual_partner_pension_amount: 12345
+          salary: 12345
+          salary_date: "2019-11-30T00:00:00+01:00"
+          retirement_income: 12345
+          retirement_income_date: "2019-11-30T00:00:00+01:00"
+          marital_status: 0
+          marital_date: null
+          marriage_dissolved_type: null
+          marriage_dissolved_at: null
+          customer_since: "2019-11-30T00:00:00+01:00"
+          status_changed_at: "2019-11-30T00:00:00+01:00"
+          retirement_date: "2026-06-18T00:00:00+01:00"
+          last_opened_date: "2019-12-01T00:00:00+01:00"
     PaginatedCustomersExample:
       value:
         data:
           - id: 1234
             initials: AB
-            firstName: Albert
+            first_name: Albert
             suffix: de
-            lastName: Vries
-            dateOfBirth: "``"
+            last_name: Vries
+            passed_away: false
+            passed_away_at: null
+            sex: 1
+            date_of_birth: "1959-06-18T00:00:00+01:00"
+            emailaddress: "ab.de.vries@test.nl"
             phone: "0512345678"
             mobile: "0612345678"
-            sex: "0"
-            emailaddress: ab.de.vries@test.nl
+            phone_work: "0512345678"
+            title: 'Beste '
+            salutation: 1
             smoking: false
-            martialStatus: "0"
-            mariedBefore: true
-            office: 1
-            type: "1"
-            parent: 2
-            partner: 3
-            houseOwned: false
-            advisor: 1
-            employer: Rapide Internet
-            position: Positie
-            mailingEnabled: false
-            salary: 123456
-            title: 1
-            accountNumber: "``"
-            iban: NL 12 ABCD 012345678
-            businessname: Rapide Internet
-            businesstype: 1
-            kvkNumber: "123456789"
-            numberOfEmployees: 2
-            revenue: 123456
-            payroll: 123456
-            retirement_income: 123456
-            passed_away: true
-            passed_away_at: "null"
-            salary_date: "null"
-            retirement_income_date: "null"
+            parent_id: null
+            secondary_parent_id: null
+            partner_id: null
+            advisor_id: 1234
+            account_manager_id: 1235
+            office_id: 1234
+            customer_lead_status_id: null
+            nationality_country_id: 184
+            country_of_birth_id: 184
+            type: 1
+            house_owned: true
+            property_value: 123456
+            tax_return_is_provided: true
+            employer: "DossierData"
+            position: "Software engineer"
+            notes: "Private internal notes, e.g. sensitive conversation topics"
+            mailing_enabled: true
+            account_number: '123654789'
+            iban: 'NL91ABNA0417164300'
+            payroll: 12345
+            studies: false
+            non_resident: null
+            education_level: 'higher_proffesional'
+            disability_discount_years: 12
+            married_before: false
+            place_of_birth: 'Groningen'
+            birth_name: 'Jong'
+            birth_name_affix: 'de'
+            gross_annual_employment_pension_amount: 12345
+            gross_annual_annuity_pension_amount: 12345
+            gross_annual_partner_pension_amount: 12345
+            salary: 12345
+            salary_date: "2019-11-30T00:00:00+01:00"
+            retirement_income: 12345
+            retirement_income_date: "2019-11-30T00:00:00+01:00"
+            marital_status: 0
+            marital_date: null
+            marriage_dissolved_type: null
+            marriage_dissolved_at: null
+            customer_since: "2019-11-30T00:00:00+01:00"
+            status_changed_at: "2019-11-30T00:00:00+01:00"
+            retirement_date: "2026-06-18T00:00:00+01:00"
+            last_opened_date: "2019-12-01T00:00:00+01:00"
         meta:
           pagination:
             total: 1
@@ -6790,6 +7111,14 @@ components:
       name: address_id
       in: path
       description: The id of the address
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CountryId:
+      name: country_id
+      in: path
+      description: The ID or of the country.
       required: true
       example: "1"
       schema:
