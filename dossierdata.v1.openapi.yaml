@@ -2325,6 +2325,97 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/OfficeId'
+  /user:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all Users.
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a new resource
+      description: ""
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+  /user/{user_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Update a resource
+      description: ""
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
   /portal_invitation:
     get:
       responses:
@@ -2905,6 +2996,8 @@ tags:
     description: Endpoint for Task resource management
   - name: Template
     description: Endpoint for Template resource management
+  - name: User
+    description: Endpoint for User resource management
 servers:
   - url: https://{subdomain}.ddat.nl/api/v1
     variables:
@@ -3002,6 +3095,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Office'
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
     Customer:
       content:
         application/json:
@@ -4667,6 +4765,34 @@ components:
         an office manager or the owner of the office can change to which office a customer is assigned.
 
         Users can also choose to which offices they belong.
+    User:
+      type: object
+      required:
+        - username
+      properties:
+        id:
+          type: number
+          description: ID of user
+        first_name:
+          type: string
+          description: First name of the user
+        last_name:
+          type: number
+          description: Last name of the user
+        email:
+          type: string
+          description: Email address of the user
+        fullname:
+          type: string
+          description: Full name of the user
+        active:
+          type: boolean
+          description: Describes if the user is active (and can login)
+        preferred_office_id:
+          type: number
+          description: The user's preferred office id
+      description: >
+        An user model is a user of the application and can be marked as the advisor of a customer.
     Search:
       type: object
       properties:
@@ -5731,6 +5857,36 @@ components:
           examples:
             PaginatedOfficesExample:
               $ref: '#/components/examples/PaginatedOfficesExample'
+    User:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/User'
+          examples:
+            UserExample:
+              $ref: '#/components/examples/UserExample'
+    PaginatedUsers:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedUsersExample:
+              $ref: '#/components/examples/PaginatedUsersExample'
     Search:
       description: OK
       headers: {}
@@ -6943,6 +7099,36 @@ components:
             current: 1
             total_pages: 1
             links: []
+    UserExample:
+      value:
+        data:
+          - id: 1
+            username: "lucas"
+            email: "lucas@dossierdata.nl"
+            first_name: "Lucas"
+            last_name: "van der Have"
+            fullname: "Lucas van der Have"
+            preferred_office_id: 1
+            active: true
+    PaginatedUsersExample:
+      value:
+        data:
+          - id: 1
+            username: "lucas"
+            email: "lucas@dossierdata.nl"
+            first_name: "Lucas"
+            last_name: "van der Have"
+            fullname: "Lucas van der Have"
+            preferred_office_id: 1
+            active: true
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
     SearchExample:
       value:
         data:
@@ -7362,6 +7548,14 @@ components:
       name: office_id
       in: path
       description: The id of the office
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    UserId:
+      name: user_id
+      in: path
+      description: The id of the user
       required: true
       example: "1"
       schema:
