@@ -1,0 +1,2192 @@
+openapi: 3.0.0
+info:
+  title: DossierData Customer API
+  version: ""
+  description: Welcome to the **DossierData Customer API**. This API provides access to a all data
+    of you as a customer from a tenant within DossierData.
+paths:
+  /protected:
+    get:
+      responses:
+        200:
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                required:
+                  - status
+              examples:
+                response:
+                  value:
+                    status: ok
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Query Example
+      description: ""
+      tags:
+        - Authentication
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - name: token
+          in: query
+          description: ""
+          required: true
+          example: vr5HmMkzlxKE70W1y4MibiJUusZwZC25NOVBEx3BD1
+          schema:
+            type: string
+  /oauth/access_token#customer_password:
+    post:
+      responses:
+        200:
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Your new oauth access token
+                  token_type:
+                    type: string
+                    description: The token type
+                  expires_in:
+                    type: number
+                    description: The number of seconds this token is valid for
+                  refresh_token:
+                    type: string
+                    description: The refresh token that can be used to request a new access
+                      token when the old one expires or is about to expire.
+              examples:
+                response:
+                  value:
+                    access_token: A7NoRur7CJVbhRPGKjA2l4uCenFRgpR4klOgtMu0
+                    token_type: Bearer
+                    expires_in: 86400
+                    refresh_token: 7jQTFMTE9ZVpu5CvHdYPQgIBwdynu53qlagx7uLK
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Access token
+      description: Requesting the oauth access token.
+      tags:
+        - Authorization
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                  description: Your client id
+                client_secret:
+                  type: string
+                  description: Your client secret
+                grant_type:
+                  type: string
+                  description: The grant type
+                username:
+                  type: string
+                  description: The users username
+                password:
+                  type: string
+                  description: The ussers password
+              required:
+                - client_id
+                - client_secret
+                - grant_type
+                - username
+                - password
+                - scopes
+              example:
+                client_id: d5fb86ec-60a0-49fe-95710-3615d74843ac
+                client_secret: 4d768389b2e9e9d5584a165204d72235c3c75401
+                grant_type: customer_password
+                username: johndoe
+                password: secret
+                scope: customer_api:customer, customer_api:tenant
+  /oauth/access_token#refresh_token:
+    post:
+      responses:
+        200:
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Your new oauth access token
+                  token_type:
+                    type: string
+                    description: The token type
+                  expires_in:
+                    type: number
+                    description: The number of seconds this token is valid for
+                  refresh_token:
+                    type: string
+                    description: The refresh token that can be used to request a new access
+                      token when the old one expires or is about to expire.
+              examples:
+                response:
+                  value:
+                    access_token: A7NoRur7CJVbhRPGKjA2l4uCenFRgpR4klOgtMu0
+                    token_type: Bearer
+                    expires_in: 86400
+                    refresh_token: 7jQTFMTE9ZVpu5CvHdYPQgIBwdynu53qlagx7uLK
+        400:
+          $ref: '#/components/responses/BadScopeRequest'
+        401:
+          $ref: '#/components/responses/ClientUnauthorized'
+      summary: Refresh Token
+      description: Refreshing an oauth access token by the refresh token.
+      tags:
+        - Authorization
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  description: Specify the refresh grant type
+                refresh_token:
+                  type: string
+                  description: The refresh token provided to you when you first requested
+                    the access token.
+              required:
+                - grant_type
+                - refresh_token
+              example:
+                grant_type: refresh_token
+                refresh_token: 7jQTFMTE9ZVpu5CvHdYPQgIBwdynu53qlagx7uLK
+  /customer:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Customer'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a the current customer.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer
+tags:
+  - name: Authentication
+    description: >-
+      This section describes the authentication process.
+
+      ### OAuth2
+      Authentication is done based on OAuth2. Tokens have an expiration time of ***24 hours*** and can be refreshed
+      ***30 days*** after they were generated.
+
+      #### Client
+      To use the api you need to request an OAuth client with which you can request an access token.
+
+
+      In your request you need to supply the following:
+      * Company details
+      * A callback URL for OAuth
+      * A detailed description of what you plan to use the API for
+
+      Please send your OAuth Client request to `info@dossierdata.nl`.
+
+      #### Login
+      When you've received your client credentials, you can prompt your users for an access token access. They need to login
+      with their DossierData account and approve that your client can access their data. After this process you obtain an
+      access key.
+
+      ### Authentication
+      Requesting any endpoint except the authentication will require you to send an access token, this can be done in
+      two-ways. Either by Header of in the Query of the request.
+  - name: Authorization
+    description: |-
+      This section lists basic information about the authorization process.
+
+      The two requests that you need for the authorization process are:
+
+      + `/oauth/authorize`
+
+      + `/oauth/access_token`
+  - name: Customer
+    description: Endpoint for Customer resource management
+servers:
+  - url: https://{subdomain}.ddat.nl/api/customer
+    variables:
+      subdomain:
+        default: test
+components:
+  requestBodies:
+    Customer:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Customer'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://test.ddat.nl/api/v1/oauth/authorize
+          tokenUrl: https://test.ddat.nl/api/v1/oauth/access_token
+          scopes:
+            'customer_api:customer': Access to customer info
+            'customer_api:customer_messages': Access to message for customer
+            'customer_api:mortgages': Access to mortgages of customer
+            'customer_api:damages': Access to reported damages of customer
+            'customer_api:policies': Access to policies/insurances of customer
+            'customer_api:documents': Access to shared doucments fo customer
+            'customer_api:tenant': Access to customer api and tenant information
+  schemas:
+    Created:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success true or false
+        id:
+          type: string
+          description: Id of stored data (can be empty on array inserts)
+    Deleted:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success true or false
+        id:
+          type: string
+          description: Id of deleted data (can be empty on array inserts)
+    Updated:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success true or false
+        id:
+          type: string
+          description: Id of updated data (can be empty on array inserts)
+    Meta:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total number of objects
+        count:
+          type: number
+          description: Object on this page
+        per_page:
+          type: number
+          description: Object per page
+        current:
+          type: number
+          description: Current page number
+        total_pages:
+          type: number
+          description: Total number of pages
+        links:
+          type: object
+          description: Array of meta links
+          properties:
+            self:
+              type: string
+              description: Link to the current page
+            first:
+              type: string
+              description: Link to the first page
+            prev:
+              type: string
+              description: Link to the previous page
+            next:
+              type: string
+              description: Link to the next page
+            last:
+              type: string
+              description: Link to the last page
+    Customer:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - date_of_birth
+      properties:
+        id:
+          type: string
+          description: The id of the customer.
+        full_name:
+          type: string
+          description: Formatted full name of the customer, e.g. "Initials (First names) suffix Last name"
+        initials:
+          type: string
+          description: Initials of the customer.
+        first_name:
+          type: string
+          description: FirstName of the customer.
+        suffix:
+          type: string
+          description: Suffix of the customer.
+        last_name:
+          type: string
+          description: LastName of the customer.
+        date_of_birth:
+          type: string
+          description: Date of birth of the customer according to ISO8601.
+        age:
+          type: number
+          description: Age of the customer.
+        sex:
+          $ref: "#/components/schemas/GenderEnum"
+        marital_status:
+          $ref: "#/components/schemas/MaritalStatusEnum"
+        email_address:
+          type: string
+          description: Email address of the customer.
+        phone:
+          type: string
+          description: The customer's primary phone number.
+        mobile:
+          type: string
+          description: The customer's primary mobile number.
+        retirement_date:
+          type: string
+          description: Date of retrirement of the customer according to ISO8601.
+        username:
+          type: string
+          description: Username of the customer.
+    Damage:
+      type: object
+      required:
+        - customer_id
+      properties:
+        customer_id:
+          type: number
+          description: ID of customer
+        damage_number:
+          type: string
+          description: Number of damage
+        licenseplate:
+          type: string
+          description: License plate of car of the insuree involved in damage
+        policy_id:
+          type: number
+          description: ID of policy
+        insurance_branche_code:
+          type: number
+          description: Branche code of insurance company
+        policy_contractNumber:
+          type: string
+          description: Contract number of policy
+        insurance_agency_id:
+          type: number
+          description: ID of insurance agency
+        settled:
+          type: boolean
+          description: Is the damage settled?
+        date:
+          type: string
+          description: Date when damage occured
+        blame:
+          type: boolean
+          description: Is the insuree to blame?
+        cause:
+          type: string
+          description: Cause of the damage
+        notes:
+          type: string
+          description: Notes belonging to damage
+        agency_id:
+          type: number
+          description: ID of agency
+        agency_contact_id:
+          type: number
+          description: ID of contact of agency
+        agency_contact:
+          type: string
+          description: Name of agency contact
+        agency_phone:
+          type: string
+          description: Phone number of agency
+        agency_emailaddress:
+          type: string
+          description: Email address of agency
+        external_number:
+          type: string
+          description: External number of damage
+        wa:
+          type: number
+          description: Liability insurance
+        casco:
+          type: number
+          description: Insurance of object involved in damage (casco)
+        deductible:
+          type: number
+          description: Amount that is deductible
+        garage_id:
+          type: number
+          description: ID of garage involved
+        garage_contact_id:
+          type: number
+          description: ID of contact of garage involved
+        user_id:
+          type: number
+          description: ID of user
+        trackingNumber:
+          type: string
+          description: Tracking number
+        expert_id:
+          type: number
+          description: ID of expert involved
+        expert_case_number:
+          type: string
+          description: Case number of expert
+        pay_to:
+          type: number
+          description: Pay to
+        status:
+          type: number
+          description: Status
+        wa_at:
+          type: string
+          description: Liable at
+        casco_at:
+          type: string
+          description: Casco at
+        deductible_at:
+          type: string
+          description: Deductible at
+        estimated:
+          type: number
+          description: Estimation
+    Document:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Naam van het document
+        file:
+          type: string
+          description: Bestandslocatie van het document
+        type:
+          type: string
+          description: Documenttype
+        mime_type:
+          type: string
+          description: MIME-type van het document
+        customer_id:
+          type: number
+          description: ID van klant
+        documentcategory_id:
+          type: number
+          description: ID van categorie
+        extension:
+          type: string
+          description: Bestandsextensie van het document
+        migrated:
+          type: boolean
+          description: Is het document gemigreerd?
+        filesize:
+          type: number
+          description: Bestandsgrootte van het document (in bytes)
+        decoded:
+          type: boolean
+          description: Is het document gedecodeerd?
+        user_id:
+          type: number
+          description: ID van gebruiker
+    Mortgage:
+      type: object
+      required:
+        - customer_id
+      properties:
+        customer_id:
+          type: number
+          description: ID of the customer
+        hypotheeknummer:
+          type: string
+          description: Number of mortgage
+        koopsom:
+          type: number
+          description: Buying price of property
+        onderpandsgegevens:
+          type: string
+          description: Credentials of collateral
+        redenHypotheek:
+          type: string
+          description: Reason of mortgage
+        hoofdsomHypotheek:
+          type: number
+          description: Main sum mortgage
+        hypotheciareInschrijving:
+          type: string
+          description: Mortgage  registration
+        taxateur_id:
+          type: number
+          description: ID of appraiser
+        marktwaarde:
+          type: number
+          description: Market value of property
+        datumTaxatie:
+          type: string
+          description: Date of taxation
+        wozWaarde:
+          type: number
+          description: Cadastral value
+        wozDatum:
+          type: string
+          description: Date of cadastral
+        totaalSom:
+          type: number
+          description: Total sum
+        bouwdepot:
+          type: string
+          description: Building fund of mortgage
+        notaris_id:
+          type: number
+          description: ID of notary
+        passeerdatum:
+          type: string
+          description: Date when the mortgage papers are signed by the notary
+        verkopendMakelaar_id:
+          type: number
+          description: ID of realtor
+        geldverstrekker_id:
+          type: number
+          description: ID of company that gave the mortgage
+        label_id:
+          type: number
+          description: ID of label
+        nhg:
+          type: boolean
+          description: Is mortgage under Nationale Hypotheek Garantie (NHG)?
+        rate:
+          type: number
+          description: Rate of mortgage
+        rangorde:
+          type: number
+          description: Rank of mortgage
+        status:
+          type: number
+          description: Status of mortgage
+        getekend:
+          type: string
+          description: Date of signing
+        voor_verlenging:
+          type: string
+          description: Date before extension
+        na_verlening:
+          type: string
+          description: Date after extension
+        financiering:
+          type: string
+          description: Date of financing
+        bankgarantie:
+          type: string
+          description: Date of bank guarantee
+        passeerdatumVoortgang:
+          type: string
+          description: Date of passing date progress
+        collateral_address:
+          type: string
+          description: Collateral address of mortgage
+        collateral_city:
+          type: string
+          description: Collateral city of mortgage
+        collateral_postcode:
+          type: string
+          description: Collateral postal code of mortgage
+        collateral_housenumber:
+          type: string
+          description: Collateral house number of mortgage
+        collateral_county:
+          type: string
+          description: Collateral county of mortgage
+        restantHoofdsom:
+          type: number
+          description: Remainder of total sum of mortgage
+        executiewaarde:
+          type: number
+          description: Execution value of mortgage
+        type_woning:
+          type: number
+          description: ID type of property
+        offerteNummer:
+          type: number
+          description: Quotation of mortgage
+        datumAanvraag:
+          type: string
+          description: Date of application
+        datumOfferte:
+          type: string
+          description: Date of quotation
+        datumGeldigheidOfferte:
+          type: string
+          description: Date of validity for quotation
+        datumOfferteGetekend:
+          type: string
+          description: Date of quotation signed
+        vovVoorVerbouwing:
+          type: number
+          description: Vrije onderhandse verkoopwaarde (VOV) before construction
+        vovNaVerbouwing:
+          type: number
+          description: Vrije onderhandse verkoopwaarde (VOV) after construction
+        ewVoorVerbouwing:
+          type: number
+          description: Execution value before construction
+        ewNaVerbouwing:
+          type: number
+          description: Execution value after construction
+        trackingNumber:
+          type: number
+          description: Tracking number of mortgage
+        collateral_addition:
+          type: string
+          description: Collateral addition of mortgage
+        purchasing_broker_id:
+          type: number
+          description: ID of purchasing broker
+        validity_unsigned_offer_date:
+          type: string
+          description: Validity of unsigned offer date
+        validity_signed_offer_date:
+          type: string
+          description: Validity of signed offer date
+        end_financing_reservation_date:
+          type: string
+          description: End of financing reservation date
+        has_bank_guarantee_date:
+          type: string
+          description: Date of bank guarantee
+        bank_guarantee_date:
+          type: string
+          description: Date of bank guarantee
+        mortgage_property_id:
+          type: number
+          description: ID of mortgage property
+        financier_agency_id:
+          type: number
+          description: ID of financier agency
+        arrangement_type:
+          type: number
+          description: ID of arrangement
+        existing_mortgage_number:
+          type: string
+          description: Number of existing mortgage number
+        own_resources_amount:
+          type: number
+          description: Amount of own resources
+        mutation_code:
+          type: number
+          description: Code of mutation of mortgage
+        is_property_purchase:
+          type: boolean
+          description: Is property purchased?
+        bank_guarantee_costs:
+          type: number
+          description: Costs of bank guarantee
+        net_consultancy_costs:
+          type: number
+          description: Net consultancy costs
+        mortgage_deed_cost_specification:
+          type: number
+          description: Costs of mortgage deed
+        national_mortgage_guarantee_costs:
+          type: number
+          description: National mortgage guarantee costs
+        fine_interest:
+          type: number
+          description: Fine intereset of mortgage
+        loan_type:
+          type: string
+          description: Type of loan
+        secondary_customer_id:
+          type: number
+          description: ID of secondary customer
+        loan_to_value:
+          type: number
+          description: Value to loan of mortgage
+        risk_class:
+          type: number
+          description: Risk class of mortgage
+        risk_class_type:
+          type: number
+          description: Type of risk class of mortgage
+    MortgagePart:
+      type: object
+      required:
+        - mortgage_id
+      properties:
+        mortgage_id:
+          type: number
+          description: ID of mortgage
+        hypotheeknummer:
+          type: string
+          description: Number of mortgage
+        leningdeelnummer:
+          type: string
+          description: Part number of loan
+        soortLening:
+          type: string
+          description: Sort of loan
+        hoofdsom:
+          type: number
+          description: Main price
+        begindatum:
+          type: string
+          description: Start date
+        einddatum:
+          type: string
+          description: End date
+        rente:
+          type: number
+          description: Interest
+        rentevasteperiode:
+          type: string
+          description: Fixed interest period
+        einddatumRentevast:
+          type: string
+          description: End date of fixed interest period
+        created_at:
+          type: string
+          description: Timestamp of creation
+        updated_at:
+          type: string
+          description: Timestamp of last updated
+        begindatumRentevast:
+          type: string
+          description: Start date of fixed interest period
+        renteType:
+          type: number
+          description: Type of intereset
+        duur:
+          type: number
+          description: Duration
+        hypotheekType:
+          type: number
+          description: Type of mortgage
+        afsluitprovisie:
+          type: number
+          description: Commission
+        bedenktijd:
+          type: boolean
+          description: Time for consideration
+        bedenktijdStartDatum:
+          type: string
+          description: Start date of consideration
+        type:
+          type: number
+          description: Type
+        agency_code:
+          type: string
+          description: Code of agency
+        tax_box_type:
+          type: number
+          description: The tax box type number
+        repayment_type:
+          type: number
+          description: Type of repayment
+        interest_agreement_type:
+          type: number
+          description: Type of interest agreement
+        interest_cooling_off_period_type:
+          type: number
+          description: Type of interest cooling off period type
+        interest_cooling_off_period_in_months:
+          type: number
+          description: Type of interest colling off period in months
+        payment_term:
+          type: number
+          description: Payment term
+        consumptive_percentage:
+          type: number
+          description: Consumptive percentage
+        consumptive_amount:
+          type: number
+          description: Consumptive amount
+        national_mortgage_guarantee:
+          type: boolean
+          description: National mortgage guarantee
+        coverage_percentage:
+          type: number
+          description: Coverage percentage
+        rate_based_on:
+          type: number
+          description: Rate based on
+      description: >
+        A mortgage part is one of the parts that makes up the mortgage.
+    User:
+      type: object
+      required:
+        - username
+      properties:
+        id:
+          type: number
+          description: ID of user
+        first_name:
+          type: string
+          description: First name of the user
+        last_name:
+          type: number
+          description: Last name of the user
+        email:
+          type: string
+          description: Email address of the user
+        fullname:
+          type: string
+          description: Full name of the user
+        active:
+          type: boolean
+          description: Describes if the user is active (and can login)
+        preferred_office_id:
+          type: number
+          description: The user's preferred office id
+      description: >
+        An user model is a user of the application and can be marked as the advisor of a customer.
+    Search:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of search
+        name:
+          type: string
+          description: Name of search
+        content:
+          type: string
+          description: Content of search
+        user_id:
+          type: number
+          description: ID of user
+        public:
+          type: boolean
+          description: Is search public?
+        created_at:
+          type: string
+          description: Timestamp of creation
+        updated_at:
+          type: string
+          description: Timestamp of latest update
+      description: >
+        A search model contains a user defined query which can be used to find and export data. It can also be used as
+        a data source for a signal.
+    NotFound:
+      type: object
+      properties:
+        succes:
+          type: boolean
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              description: Code of the error
+            name:
+              type: string
+              description: A description of the error if available
+      description: A resource we could not find
+    Unauthorized:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+          description: The type of error
+        error_description:
+          type: string
+          description: A detailed description of the error
+      description: An authorized action
+    UnprocessableEntity:
+      type: object
+      properties:
+        success:
+          type: boolean
+        error:
+          type: object
+          description: A description of the error
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            errors:
+              type: array
+              items:
+                type: string
+      description: An unprocessable entity for which validation failed
+    BadRequest:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+      description: A bad request
+    CategoryEnum:
+      type: number
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+      description: >
+        An enum describing all categories of items found on the customer dashboard
+
+        Category:
+          * `1` - Customer
+          * `2` - Banking
+          * `3` - Insurance
+          * `4` - Damage
+          * `5` - Mortgage
+          * `6` - Mailing
+          * `7` - Dossier
+          * `8` - Credit
+          * `9` - Income
+          * `10` - Retirement
+          * `11` - Possession
+          * `12` - Obligation
+          * `13` - Current living condition
+    SalutationEnum:
+      type: number
+      enum:
+        - null
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 99
+      description: >
+        An enum that describes all education level types.
+         - `null`: Empty
+         - `0` The Lord (De heer)
+         - `1` Mrs (Mevrouw)
+         - `2` Miss (Mejuffrouw)
+         - `3` Mr. Mrs (Dhr/Mevr)
+         - `4` Family (Familie)
+         - `5` The Ladies (De dames)
+         - `6` The Heritage Of (De erven van)
+         - `7` The Management Of (De directie van)
+         - `8` The Board Of (Het bestuur van)
+         - `9` The Firmants Of (De firmanten van)
+         - `10` Society (Maatschap)
+         - `11` Firma (Firma)
+         - `12` Foundation (Stichting)
+         - `13` Owners Association (Vereniging van eigenaren)
+         - `14` Vof (V.O.F.)
+         - `15` To The Attention Of (Ter attentie van)
+         - `99` Unknown (Onbekend)
+    MaritalStatusEnum:
+      type: number
+      enum:
+        - null
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+      description: >
+        An enum that describes all marital statuses.
+         - `null`: Unknown
+         - `0`: Single
+         - `1`: Married joint assets
+         - `2`: Married with prenup
+         - `3`: Married foreign law
+         - `4`: Divorced
+         - `5`: Resident
+         - `6`: Partner registration joint assets
+         - `7`: Partner registration with prenup
+         - `8`: Cohabitation with prenup
+         - `9`: Cohabitation without prenup
+         - `10`: Widow
+    CustomerTypeEnum:
+      type: number
+      enum:
+        - null
+        - 1
+        - 2
+        - 7
+        - 9
+        - 11
+        - 12
+        - 13
+        - 14
+      description: >
+        An enum that describes all customer types.
+          - `null`: Unknown
+          - `1`: Private
+          - `2`: Expiring
+          - `7`: Expired
+          - `9`: Business
+          - `11`: Business expired
+          - `12`: Lead
+          - `13`: Mortgage lead
+          - `14`: Insurance lead
+    GenderEnum:
+      type: number
+      enum:
+        - null
+        - 0
+        - 1
+      description: >
+        An enum that describes all genders.
+          - `null`: Unknown
+          - `0`: Female
+          - `1`: Male
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequest'
+          examples:
+            UnauthorizedScopeExample:
+              $ref: '#/components/examples/BadScopeRequestExample'
+            UnauthorizedExample:
+              $ref: '#/components/examples/BadRequestExample'
+    BadScopeRequest:
+      description: Bad Scope Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequest'
+          examples:
+            UnauthorizedExample:
+              $ref: '#/components/examples/BadScopeRequestExample'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthorized'
+          examples:
+            UnauthorizedExample:
+              $ref: '#/components/examples/UnauthorizedExample'
+    ClientUnauthorized:
+      description: Client Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Unauthorized'
+          examples:
+            UnauthorizedExample:
+              $ref: '#/components/examples/ClientUnauthorizedExample'
+    NotFound:
+      description: This specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFound'
+          examples:
+            NotFoundExample:
+              $ref: '#/components/examples/NotFoundExample'
+    UnprocessableEntity:
+      description: The given data did not pass validation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnprocessableEntity'
+          examples:
+            UnauthorizedExample:
+              $ref: '#/components/examples/UnprocessableEntityExample'
+    Created:
+      description: The resource was succesfully created
+      headers: {}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Created'
+          examples:
+            CreatedExample:
+              $ref: '#/components/examples/CreatedExample'
+    Updated:
+      description: The resource was succesfully updated
+      headers: {}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Updated'
+          examples:
+            CreatedExample:
+              $ref: '#/components/examples/UpdatedExample'
+    Deleted:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Deleted'
+          examples:
+            DeletedExample:
+              $ref: '#/components/examples/DeletedExample'
+    CustomerURI:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  uri:
+                    type: string
+          examples:
+            response:
+              value:
+                data:
+                  uri: "https://uri"
+    Customer:
+      description: A customer resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Customer'
+          examples:
+            CustomerExample:
+              $ref: '#/components/examples/CustomerExample'
+    PaginatedCustomers:
+      description: A paginated collection of the customer resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+              meta:
+                $ref: '#/components/schemas/Pagination'
+          examples:
+            PaginatedCustomersExample:
+              $ref: '#/components/examples/PaginatedCustomersExample'
+    Dossier:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Dossier'
+          examples:
+            DossiersExample:
+              $ref: '#/components/examples/PaginatedDossiersExample'
+    PaginatedDossiers:
+      description: A paginated collection of the dossier resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dossier'
+              meta:
+                $ref: '#/components/schemas/Pagination'
+          examples:
+            PaginatedDossiersExample:
+              $ref: '#/components/examples/PaginatedDossiersExample'
+    Mortgage:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Mortgage'
+          examples:
+            MortgageExample:
+              $ref: '#/components/examples/MortgageExample'
+    PaginatedMortgages:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mortgage'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedMortgagesExample:
+              $ref: '#/components/examples/PaginatedMortgagesExample'
+    MortgagePart:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/MortgagePart'
+          examples:
+            MortgagePartExample:
+              $ref: '#/components/examples/MortgagePartExample'
+    PaginatedMortgageParts:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MortgagePart'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedMortgagePartsExample:
+              $ref: '#/components/examples/PaginatedMortgagePartsExample'
+    MortgageProgress:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/MortgagePart'
+          examples:
+            MortgageProgressExample:
+              $ref: '#/components/examples/MortgageProgressExample'
+    PaginatedMortgageProgress:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MortgagePart'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedMortgageProgressExample:
+              $ref: '#/components/examples/PaginatedMortgageProgressExample'
+    Damage:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Damage'
+          examples:
+            DamageExample:
+              $ref: '#/components/examples/DamageExample'
+    PaginatedDamages:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Damage'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedDamagesExample:
+              $ref: '#/components/examples/PaginatedDamagesExample'
+    Document:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Document'
+          examples:
+            DocumentExample:
+              $ref: '#/components/examples/DocumentExample'
+    PaginatedDocuments:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedDocumentsExample:
+              $ref: '#/components/examples/PaginatedDocumentsExample'
+  examples:
+    BadRequestExample:
+      summary: 400 No access token
+      description: Your request is missing required oauth paramenters, check that the access_token is passed correctly
+      value:
+        error: invalid_request
+        error_description: The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "access token" parameter.
+    BadScopeRequestExample:
+      summary: 400 Invalid scope(s)
+      description: Your access token doesn't have the correct scopes. You will probably need to request a new one which includes the scope(s) for this endpoint.
+      value:
+        success: false
+        error:
+          code: 400
+          message: Invalid scope(s) provided
+    UnauthorizedExample:
+      summary: 401 Unauthorized
+      description: Your client doesn't have access to this tenant or endpoint
+      value:
+        success: false
+        error: access_denied
+        error_description: The resource owner or authorization server denied the request.
+    ClientUnauthorizedExample:
+      summary: 401 Unauthorized
+      value:
+        success: false
+        error: invalid_client
+        error_description: Client authorization failed.
+    NotFoundExample:
+      summary: 404 Not Found
+      description: The requested resource could not be found
+      value:
+        success: false
+        error:
+          code: 404
+          description: No query results for model [model] 1
+    UnprocessableEntityExample:
+      summary: 422 Unprocessable Entity
+      description: >-
+        There was a problem processing your request, this is because one or more values did not pass validation.
+
+
+        Check the `errors` element in the response for detailed descriptions about the validation rules that failed.
+      value:
+        success: false
+        error:
+          code: 1
+          message: The given data was invalid.
+          errors:
+            property_name:
+              - Validation error
+    PaginationExample:
+      summary: Pagination
+      value:
+        pagination:
+          total: 1
+          count: 1
+          per_page: 15
+          current: 1
+          total_pages: 1
+          links: []
+    CreatedExample:
+      summary: 200 OK
+      value:
+        success: true
+        id: "1"
+    UpdatedExample:
+      summary: 200 OK
+      value:
+        success: true
+        id: "1"
+    DeletedExample:
+      summary: 200 OK
+      value:
+        success: true
+        id: "1"
+    CustomerExample:
+      summary: 200 OK
+      value:
+        data:
+          id: ABLKJfj2lk34
+          full_name: A. B. de Vries (Albert) 
+          initials: AB
+          first_name: Albert
+          suffix: de
+          last_name: Vries
+          date_of_birth: "1959-06-18T00:00:00+01:00"
+          age: 18
+          sex: 1
+          marital_status: 0
+          emailaddress: "ab.de.vries@test.nl"
+          phone: "0512345678"
+          mobile: "0612345678"
+          phone_work: "0512345678"
+          retirement_date: "2026-06-18T00:00:00+01:00"
+          username: "johndoe"
+    DossiersExample:
+      value:
+        data:
+          uuid: "39b304f1-051e-412c-94cb-71f46892d455"
+          customer_id: "1234"
+          status: 1
+    PaginatedDossiersExample:
+      value:
+        data:
+          - uuid: "39b304f1-051e-412c-94cb-71f46892d455"
+            customer_id: "1234"
+            status: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    PaginatedLettersExample:
+      value:
+        data:
+          - name: Test letter
+            address: Test
+            content: Test
+            customer_id: 1
+            user_id: 1
+            for_instance_class: 1
+            for_instance_id: 1
+            category_id: 1
+            template_id: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    MortgageExample:
+      value:
+        data:
+          customer_id: 1
+          hypotheeknummer: "12345678"
+          koopsom: 250000
+          onderpandsgegevens: Hoofdstraat 1, Hoofdstad
+          redenHypotheek: Bestaande bouw
+          hoofdsomHypotheek: 100000
+          hypotheciareInschrijving: "150000"
+          taxateur_id: 1
+          marktwaarde: 250000
+          datumTaxatie: 01-01-2018
+          wozWaarde: 250000
+          wozDatum: 01-01-2018
+          totaalSom: 0
+          bouwdepot: "25000"
+          notaris_id: 1
+          passeerdatum: 01-01-2018
+          verkopendMakelaar_id: 1
+          geldverstrekker_id: 1
+          label_id: 1
+          nhg: true
+          rate: 1
+          rangorde: 1
+          status: 1
+          getekend: 01-01-2018
+          voor_verlenging: 01-01-2018
+          na_verlening: 01-01-2018
+          financiering: 01-01-2018
+          bankgarantie: 01-01-20184
+          passeerdatumVoortgang: 01-01-2018
+          collateral_address: Teststraat
+          collateral_city: Teststad
+          collateral_postcode: 9123HH
+          collateral_housenumber: "61"
+          collateral_county: Netherlands
+          restantHoofdsom: 500000
+          executiewaarde: 100000
+          type_woning: 1
+          offerteNummer: 100
+          datumAanvraag: 01-01-2018
+          datumOfferte: 01-01-2018
+          datumGeldigheidOfferte: 01-01-2018
+          datumOfferteGetekend: 01-01-2018
+          vovVoorVerbouwing: 200000
+          vovNaVerbouwing: 250000
+          ewVoorVerbouwing: 150000
+          ewNaVerbouwing: 175000
+          trackingNumber: 1
+          collateral_addition: A
+          purchasing_broker_id: 1
+          validity_unsigned_offer_date: 01-01-2018
+          validity_signed_offer_date: 01-01-2018
+          end_financing_reservation_date: 401-01-2018
+          has_bank_guarantee_date: 01-01-2018
+          bank_guarantee_date: 01-01-2018
+          mortgage_property_id: 1
+          financier_agency_id: 1
+          arrangement_type: 1
+          existing_mortgage_number: "1"
+          own_resources_amount: 1
+          mutation_code: 1
+          is_property_purchase: false
+          bank_guarantee_costs: 50000
+          net_consultancy_costs: 50000
+          mortgage_deed_cost_specification: 5000
+          national_mortgage_guarantee_costs: 5000
+          fine_interest: 1
+          loan_type: "14"
+          secondary_customer_id: 1
+          loan_to_value: 1
+          risk_class: 1
+          risk_class_type: 1
+    PaginatedMortgagesExample:
+      value:
+        data:
+          - customer_id: 1
+            hypotheeknummer: "12345678"
+            koopsom: 250000
+            onderpandsgegevens: Hoofdstraat 1, Hoofdstad
+            redenHypotheek: Bestaande bouw
+            hoofdsomHypotheek: 100000
+            hypotheciareInschrijving: "150000"
+            taxateur_id: 1
+            marktwaarde: 250000
+            datumTaxatie: 01-01-2018
+            wozWaarde: 250000
+            wozDatum: 01-01-2018
+            totaalSom: 0
+            bouwdepot: "25000"
+            notaris_id: 1
+            passeerdatum: 01-01-2018
+            verkopendMakelaar_id: 1
+            geldverstrekker_id: 1
+            label_id: 1
+            nhg: true
+            rate: 1
+            rangorde: 1
+            status: 1
+            getekend: 01-01-2018
+            voor_verlenging: 01-01-2018
+            na_verlening: 01-01-2018
+            financiering: 01-01-2018
+            bankgarantie: 01-01-20184
+            passeerdatumVoortgang: 01-01-2018
+            collateral_address: Teststraat
+            collateral_city: Teststad
+            collateral_postcode: 9123HH
+            collateral_housenumber: "61"
+            collateral_county: Netherlands
+            restantHoofdsom: 500000
+            executiewaarde: 100000
+            type_woning: 1
+            offerteNummer: 100
+            datumAanvraag: 01-01-2018
+            datumOfferte: 01-01-2018
+            datumGeldigheidOfferte: 01-01-2018
+            datumOfferteGetekend: 01-01-2018
+            vovVoorVerbouwing: 200000
+            vovNaVerbouwing: 250000
+            ewVoorVerbouwing: 150000
+            ewNaVerbouwing: 175000
+            trackingNumber: 1
+            collateral_addition: A
+            purchasing_broker_id: 1
+            validity_unsigned_offer_date: 01-01-2018
+            validity_signed_offer_date: 01-01-2018
+            end_financing_reservation_date: 401-01-2018
+            has_bank_guarantee_date: 01-01-2018
+            bank_guarantee_date: 01-01-2018
+            mortgage_property_id: 1
+            financier_agency_id: 1
+            arrangement_type: 1
+            existing_mortgage_number: "1"
+            own_resources_amount: 1
+            mutation_code: 1
+            is_property_purchase: false
+            bank_guarantee_costs: 50000
+            net_consultancy_costs: 50000
+            mortgage_deed_cost_specification: 5000
+            national_mortgage_guarantee_costs: 5000
+            fine_interest: 1
+            loan_type: "14"
+            secondary_customer_id: 1
+            loan_to_value: 1
+            risk_class: 1
+            risk_class_type: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    MortgagePartExample:
+      value:
+        data:
+          - mortgage_id: 1
+            hypotheeknummer: "1"
+            leningdeelnummer: "1"
+            soortLening: lening
+            hoofdsom: 150000
+            begindatum: 01-01-2018
+            einddatum: 01-01-2019
+            rente: 4
+            rentevasteperiode: "10"
+            einddatumRentevast: 01-01-2019
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
+            begindatumRentevast: 2018-01-01
+            renteType: 1
+            duur: 360
+            hypotheekType: 1
+            afsluitprovisie: 0
+            bedenktijd: false
+            bedenktijdStartDatum: 2018-01-01
+            type: 2
+            agency_code: "1"
+            tax_box_type: 3
+            repayment_type: 1
+            interest_agreement_type: 1
+            interest_cooling_off_period_type: 1
+            interest_cooling_off_period_in_months: 1
+            payment_term: 1
+            consumptive_percentage: 1
+            consumptive_amount: 1
+            national_mortgage_guarantee: true
+            coverage_percentage: 1
+            rate_based_on: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    PaginatedMortgagePartsExample:
+      value:
+        data:
+          - mortgage_id: 1
+            hypotheeknummer: "1"
+            leningdeelnummer: "1"
+            soortLening: lening
+            hoofdsom: 150000
+            begindatum: 01-01-2018
+            einddatum: 01-01-2019
+            rente: 4
+            rentevasteperiode: "10"
+            einddatumRentevast: 01-01-2019
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
+            begindatumRentevast: 2018-01-01
+            renteType: 1
+            duur: 360
+            hypotheekType: 1
+            afsluitprovisie: 0
+            bedenktijd: false
+            bedenktijdStartDatum: 2018-01-01
+            type: 2
+            agency_code: "1"
+            tax_box_type: 3
+            repayment_type: 1
+            interest_agreement_type: 1
+            interest_cooling_off_period_type: 1
+            interest_cooling_off_period_in_months: 1
+            payment_term: 1
+            consumptive_percentage: 1
+            consumptive_amount: 1
+            national_mortgage_guarantee: true
+            coverage_percentage: 1
+            rate_based_on: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    MortgageProgressExample:
+      value:
+        data:
+          id: 1
+          mortgage_id: 1
+          name: Testverklaring
+          sent: true
+          received: true
+          completed: true
+          comment: Comment
+          date: 01-01-2018
+          created_at: "2019-10-25T12:00:00+02:00"
+          updated_at: "2019-10-25T13:00:00+02:00"
+    PaginatedMortgageProgressExample:
+      value:
+        data:
+          - id: 1
+            mortgage_id: 1
+            name: Testverklaring
+            sent: true
+            received: true
+            completed: true
+            comment: Comment
+            date: 01-01-2018
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    DamageExample:
+      value:
+        data:
+          customer_id: 1
+          damage_number: "700004"
+          licenseplate: AA-BB-12
+          policy_id: 564
+          insurance_branche_code: 0
+          policy_contractNumber: "702519615"
+          insurance_agency_id: 0
+          settled: true
+          date: 2008-11-12
+          blame: true
+          cause: Letselschade, oorzaak onbekend
+          notes: Notities
+          agency_id: 8
+          agency_contact_id: 0
+          agency_contact: Jan Modaal
+          agency_phone: "0612345678"
+          agency_emailaddress: test@test.nl
+          external_number: "0612345678"
+          wa: 0
+          casco: 500
+          deductible: 200
+          garage_id: 1
+          garage_contact_id: 1
+          user_id: 1
+          trackingNumber: "5"
+          expert_id: 1
+          expert_case_number: "1"
+          pay_to: 1
+          status: 1
+          wa_at: "1"
+          casco_at: "1"
+          deductible_at: "1"
+          estimated: 1
+    PaginatedDamagesExample:
+      value:
+        data:
+          - customer_id: 1
+            damage_number: "700004"
+            licenseplate: AA-BB-12
+            policy_id: 564
+            insurance_branche_code: 0
+            policy_contractNumber: "702519615"
+            insurance_agency_id: 0
+            settled: true
+            date: 2008-11-12
+            blame: true
+            cause: Letselschade, oorzaak onbekend
+            notes: Notities
+            agency_id: 8
+            agency_contact_id: 0
+            agency_contact: Jan Modaal
+            agency_phone: "0612345678"
+            agency_emailaddress: test@test.nl
+            external_number: "0612345678"
+            wa: 0
+            casco: 500
+            deductible: 200
+            garage_id: 1
+            garage_contact_id: 1
+            user_id: 1
+            trackingNumber: "5"
+            expert_id: 1
+            expert_case_number: "1"
+            pay_to: 1
+            status: 1
+            wa_at: "1"
+            casco_at: "1"
+            deductible_at: "1"
+            estimated: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    DocumentExample:
+      value:
+        data:
+          name: Testverklaring voor testverzekering
+          type: Microsoft Outlook
+          mime_type: application/pdf
+          customer_id: 1
+          documentcategory_id: 1
+          extension: pdf
+          migrated: true
+          filesize: 1000
+          decoded: true
+          user_id: 1
+    PaginatedDocumentsExample:
+      value:
+        data:
+          - name: Testverklaring voor testverzekering
+            type: Microsoft Outlook
+            mime_type: application/pdf
+            customer_id: 1
+            documentcategory_id: 1
+            extension: pdf
+            migrated: true
+            filesize: 1000
+            decoded: true
+            user_id: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    CustomerByRelationNumberExample:
+      value:
+        number: 'external_relation_number_123'
+        relation_number_type_id: 1
+  parameters:
+    PerPage:
+      name: perPage
+      in: query
+      description: The maximum number of objects to return
+      required: false
+      example: "25"
+      schema:
+        type: integer
+        default: 15
+    Page:
+      name: page
+      in: query
+      description: The page number
+      required: false
+      example: "1"
+      schema:
+        type: integer
+        default: 1
+    JsonHeader:
+      name: Accept
+      in: header
+      description: Provide the desired response type. If this is not provided error messages might be rendered as a generic 500 html page.
+      required: true
+      example: application/json
+      schema:
+        type: string
+        enum:
+          - application/json
+    AddressId:
+      name: address_id
+      in: path
+      description: The id of the address
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CountryId:
+      name: country_id
+      in: path
+      description: The ID or of the country.
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CustomerId:
+      name: customer_id
+      in: path
+      description: The ID or of the customer.
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CustomerIdOrUUId:
+      name: customer_id_or_uuid
+      in: path
+      description: The ID or UUID of the customer.
+      required: true
+      example: "1"
+      schema:
+        type: string
+    DossierId:
+      name: dossier_id
+      in: path
+      description: The id of the dossier
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    EmailAccountId:
+      name: emailAccount_id
+      in: path
+      description: The id of the emailaccount
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    LetterId:
+      name: letter_id
+      in: path
+      description: The id of the letter
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    LockId:
+      name: lock_id
+      in: path
+      description: The id of the lock
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    MortgageId:
+      name: mortgage_id
+      in: path
+      description: The id of the mortgage
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    MortgagePartId:
+      name: mortgagePart_id
+      in: path
+      description: The id of the mortgagePart
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    MortgageProgressId:
+      name: mortgageProgress_id
+      in: path
+      description: The id of the mortgageProgress
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    DamageId:
+      name: damage_id
+      in: path
+      description: The id of the damage
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    DocumentId:
+      name: document_id
+      in: path
+      description: The id of the document
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    EmailId:
+      name: email_id
+      in: path
+      description: The id of the email
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    TemplateId:
+      name: template_id
+      in: path
+      description: The id of the template
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    NoteId:
+      name: note_id
+      in: path
+      description: The id of the note
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    SignalId:
+      name: signal_id
+      in: path
+      description: The id of the signal
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    AccountId:
+      name: account_id
+      in: path
+      description: The id of the account
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    OfficeId:
+      name: office_id
+      in: path
+      description: The id of the office
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    UserId:
+      name: user_id
+      in: path
+      description: The id of the user
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    PortalInvitationId:
+      name: portalInvitation_id
+      in: path
+      description: The id of the portal invitation
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    PortalInvitationToken:
+      name: portalInvitation_token
+      in: path
+      description: The token of the portal invitation
+      required: true
+      example: "oTicierOsEuGAlDruNDELERCulGABASkIDeClINERMiSPENTATErEvIGhANDIeLAIRepTORsycHawnSiBleDpieNGOUSCONiDIAS"
+      schema:
+        type: string
+    RelationNumberId:
+      name: relationNumber_id
+      in: path
+      description: The id of the relation number
+      required: true
+      example: "1"
+      schema:
+        type: number
+    RelationNumberTypeId:
+      name: relationNumberType_id
+      in: path
+      description: The id of the relation number type
+      required: true
+      example: "1"
+      schema:
+        type: number
+    SearchId:
+      name: search_id
+      in: path
+      description: The id of the search
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    AXMessageId:
+      name: ax_message_id
+      in: path
+      description: The id of the AX Message
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    TaskId:
+      name: task_id
+      in: path
+      description: The id of the task
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CalendarEventId:
+      name: event_id
+      in: path
+      description: The id of the event
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    CalendarId:
+      name: calendar_id
+      in: path
+      description: The id of the calendar
+      required: true
+      example: "1"
+      schema:
+        type: integer
