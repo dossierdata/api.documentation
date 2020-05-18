@@ -1671,6 +1671,414 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/TaskId'
+  /task/active/by_customer/{customer_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Get active by customer
+      description: "Get all active tasks linked to a customer"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
+  /task/active/by_department/{department_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active by instance
+      description: "Get all active tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/DepartmentId'
+  /task/active/by_user/{user_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active by instance
+      description: "Get all active tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
+  /task/active_callback/by_department/{department_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active callback by department
+      description: "Get all active callback requests (a special type of task) by a user department"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/DepartmentId'
+  /task/active_callback/by_user/{user_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active callback by instance
+      description: "Get all active callback requests (a special type of task) by a user"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
+  /task/completed/by_customer/{customer_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Get completed by customer
+      description: "Get all completed tasks linked to a customer"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/CustomerId'
+  /task/completed/by_department/{department_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed by instance
+      description: "Get all completed tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/DepartmentId'
+  /task/completed/by_user/{user_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed by instance
+      description: "Get all completed tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
+  /task/completed_callback/by_department/{department_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed callback by instance
+      description: "Get all completed callback requests (a special type of task) by a user department"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/DepartmentId'
+  /task/completed_callback/by_user/{user_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed callback by instance
+      description: "Get all completed callback requests (a special type of task) by a user"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserId'
+  /task/active/by_customers:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active by customers
+      description: "Get all active tasks linked to customers"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/TasksByCustomers"
+  /task/active/by_instance:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active by instance
+      description: "Get all active tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/TasksByInstance"
+  /task/active/by_customers_and_category:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get active by instance
+      description: "Get all active tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/TasksByCustomersAndCategory"
+  /task/completed/by_customers:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed by customers
+      description: "Get all completed tasks linked to customers"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/TasksByCustomers"
+  /task/completed/by_instance:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed by instance
+      description: "Get all completed tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/TasksByInstance"
+  /task/completed/by_customers_and_category:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get completed by instance
+      description: "Get all completed tasks linked to an instance"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/TasksByCustomersAndCategory"
+  /task/activate:
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/UpdatedTasksWithMetaCounts'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Activate multiple tasks
+      description: "Activate multiple tasks at once"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/ActivateTasks"
+  /task/{task_id}/activate:
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/UpdatedTaskWithMetaCounts'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Activate multiple tasks
+      description: "Activate multiple tasks at once"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/TaskId'
+      requestBody:
+        $ref: "#/components/requestBodies/ActivateTask"
+  /task/complete:
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Complete multiple tasks
+      description: "Complete multiple tasks at once for a provided user"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/CompleteTasks"
+  /task/{task_id}/complete:
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedTasks'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Complete multiple tasks
+      description: "Complete multiple tasks at once for a provided user"
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/TaskId'
+      requestBody:
+        $ref: "#/components/requestBodies/CompleteTask"
   /calendar:
     get:
       responses:
@@ -3015,6 +3423,127 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Task'
+    TasksByCustomers:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - customerIds
+            properties:
+              customerIds:
+                type: array
+                items:
+                  type: integer
+                description: An array opf customer ids
+          examples:
+            PaginateTasksByCustomers:
+              $ref: '#/components/examples/PaginateTasksByCustomers'
+    TasksByCustomersAndCategory:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - customerIds
+              - category
+            properties:
+              customerIds:
+                type: array
+                items:
+                  type: integer
+                description: An array of customer ids
+              category:
+                $ref: '#/components/schemas/CategoryEnum'
+          examples:
+            PaginateTasksByCustomersAndCategory:
+              $ref: '#/components/examples/PaginateTasksByCustomersAndCategory'
+    ActivateTasks:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - taskIds
+              - userId
+            properties:
+              taskIds:
+                type: array
+                items:
+                  type: integer
+                description: An array of task ids
+              userId:
+                type: integer
+                description: The id of the user
+          examples:
+            CompleteTasks:
+              $ref: '#/components/examples/ActivateTasks'
+    ActivateTask:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - userId
+            properties:
+              userId:
+                type: integer
+                description: The id of the user which will be set a the person who completed the task
+          examples:
+            CompleteTasks:
+              $ref: '#/components/examples/ActivateTask'
+    CompleteTasks:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - taskIds
+              - userId
+            properties:
+              taskIds:
+                type: array
+                items:
+                  type: integer
+                description: An array of task ids
+              userId:
+                type: integer
+                description: The id of the user which will be set a the person who completed the task
+          examples:
+            CompleteTasks:
+              $ref: '#/components/examples/CompleteTasks'
+    CompleteTask:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - userId
+            properties:
+              userId:
+                type: integer
+                description: The id of the user which will be set a the person who completed the task
+          examples:
+            CompleteTasks:
+              $ref: '#/components/examples/CompleteTask'
+    TasksByInstance:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - instanceClass
+              - instanceId
+            properties:
+              instanceClass:
+                type: string
+                description: Type of the instance
+              instanceId:
+                type: string
+                description: Identifier of the instance
+          examples:
+            PaginateTasksByInstance:
+              $ref: '#/components/examples/PaginateTasksByInstance'
     Template:
       content:
         application/json:
@@ -3224,6 +3753,8 @@ components:
             'address:basic': Basis adresgegevens
             'address:coordinates': Adres coordinaten
             'address:create': Nieuwe adressen aanmaken
+            'country:index': Index countries
+            'country:show': Show a country
             'customer:basic': Basisgegevens van een klant
             'customer:contact': Contactgegevens van een klant
             'customer:create': Nieuwe klanten aanmaken
@@ -3334,6 +3865,94 @@ components:
         id:
           type: string
           description: Id of updated data (can be empty on array inserts)
+    MetaDepartmentTasksCount:
+      type: object
+      properties:
+        department_hashid:
+          type: string
+          description: The hashid of the department
+        activeCount:
+          type: integer
+          description: The number of active (callback) tasks assigned to the department
+        completedCount:
+          type: integer
+          description: The number of completed (callback) tasks assigned to the department
+    MetaUserTasksCount:
+      type: object
+      properties:
+        user_hashid:
+          type: string
+          description: The hashid of the department
+        activeCount:
+          type: integer
+          description: The number of active (callback) tasks assigned to the department
+        completedCount:
+          type: integer
+          description: The number of completed (callback) tasks assigned to the department
+    UpdatedTasksWithMetaCounts:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            success:
+              type: boolean
+              description: Success true or false
+            ids:
+              type: array
+              description: Ids of updated tasks
+              items:
+                type: integer
+        meta:
+          type: object
+          properties:
+            departmentTasksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaDepartmentTasksCount"
+            departmentCallbacksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaDepartmentTasksCount"
+            userTasksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaUserTasksCount"
+            userCallbacksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaUserTasksCount"
+    UpdatedTaskWithMetaCounts:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            success:
+              type: boolean
+              description: Success true or false
+            id:
+              type: integer
+              description: Id of updated task
+        meta:
+          type: object
+          properties:
+            departmentTasksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaDepartmentTasksCount"
+            departmentCallbacksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaDepartmentTasksCount"
+            userTasksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaUserTasksCount"
+            userCallbacksCounts:
+              type: array
+              items:
+                $ref: "#/components/schemas/MetaUserTasksCount"
     Meta:
       type: object
       properties:
@@ -3440,7 +4059,6 @@ components:
           type: number
           description: The title of the customer.
         salutation:
-          description: The salutation which is put as the start of an email or letter to the customer
           $ref: "#/components/schemas/SalutationEnum"
         smoking:
           type: boolean
@@ -3514,7 +4132,6 @@ components:
           description: Indicates whether the customer lives at home or not. Note, this only applies if the customer has
             been marked as a child of another customer.
         education_level:
-          description: The education level of the customer.
           $ref: "#/components/schemas/EducationLevelEnum"
         disability_discount_years:
           type: number
@@ -3561,7 +4178,6 @@ components:
           type: string
           description: The date at which the customer's marital status last changed according to ISO8601.
         marriage_dissolved_type:
-          description: The type of marriage which was dissolved according to ISO8601.
           $ref: "#/components/schemas/MarriageDissolvedTypeEnum"
         marriage_dissolved_at:
           type: string
@@ -3974,7 +4590,7 @@ components:
           type: number
           description: ID of the user
         for_instance_class:
-          type: number
+          type: string
           description: For instance class of the letter
         for_instance_id:
           type: number
@@ -4773,6 +5389,9 @@ components:
         id:
           type: number
           description: ID of user
+        username:
+          type: string
+          description: The username used for logging in
         first_name:
           type: string
           description: First name of the user
@@ -5274,7 +5893,7 @@ components:
             UnauthorizedExample:
               $ref: '#/components/examples/UnprocessableEntityExample'
     Created:
-      description: The resource was succesfully created
+      description: The resource was successfully created
       headers: {}
       content:
         application/json:
@@ -5284,7 +5903,7 @@ components:
             CreatedExample:
               $ref: '#/components/examples/CreatedExample'
     Updated:
-      description: The resource was succesfully updated
+      description: The resource was successfully updated
       headers: {}
       content:
         application/json:
@@ -5293,6 +5912,32 @@ components:
           examples:
             CreatedExample:
               $ref: '#/components/examples/UpdatedExample'
+    UpdatedTasksWithMetaCounts:
+      description: >-
+        The resource was successfully updated.
+
+        This response also includes updated active/completed task counts so the front-end can be updated.
+      headers: {}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatedTasksWithMetaCounts'
+          examples:
+            CreatedExample:
+              $ref: '#/components/examples/UpdatedTasksWithMetaCountsExample'
+    UpdatedTaskWithMetaCounts:
+      description: >-
+        The resource was successfully updated
+
+        This response also includes updated active/completed task counts so the front-end can be updated.
+      headers: {}
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdatedTaskWithMetaCounts'
+          examples:
+            CreatedExample:
+              $ref: '#/components/examples/UpdatedTaskWithMetaCountsExample'
     Deleted:
       description: OK
       headers: {}
@@ -6198,6 +6843,52 @@ components:
       value:
         success: true
         id: "1"
+    UpdatedTasksWithMetaCountsExample:
+      summary: 200 OK
+      value:
+        data:
+          success: true,
+          ids: [1, 2, 3]
+        meta:
+          departmentTasksCounts:
+            - department_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+          departmentCallbacksCounts:
+            - department_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+          userTasksCounts:
+            - user_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+          userCallbacksCounts:
+            - user_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+    UpdatedTaskWithMetaCountsExample:
+      summary: 200 OK
+      value:
+        data:
+          success: true,
+          id: 1
+        meta:
+          departmentTasksCounts:
+            - department_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+          departmentCallbacksCounts:
+            - department_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+          userTasksCounts:
+            - user_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
+          userCallbacksCounts:
+            - user_hashid: enXBxVoGkolKDv6E
+              activeCount: 1
+              completedCount: 2
     DeletedExample:
       summary: 200 OK
       value:
@@ -7319,6 +8010,31 @@ components:
       value:
         number: 'external_relation_number_123'
         relation_number_type_id: 1
+    PaginateTasksByCustomers:
+      value:
+        customerIds: [1, 2, 3]
+    PaginateTasksByCustomersAndCategory:
+      value:
+        customerIds: [1, 2, 3]
+        category: 1
+    ActivateTasks:
+      value:
+        taskIds: [1, 2, 3]
+        user_id: 1
+    ActivateTask:
+      value:
+        user_id: 1
+    CompleteTasks:
+      value:
+        taskIds: [1, 2, 3]
+        user_id: 1
+    CompleteTask:
+      value:
+        user_id: 1
+    PaginateTasksByInstance:
+      value:
+        instanceClass: 'policy'
+        instanceId: 1
     RelationNumberStoreExample:
       value:
         number: 'external_relation_number_123'
@@ -7432,6 +8148,14 @@ components:
       example: "1"
       schema:
         type: string
+    DepartmentId:
+      name: department_id
+      in: path
+      description: The id of a user department
+      required: true
+      example: "1"
+      schema:
+        type: integer
     DossierId:
       name: dossier_id
       in: path
