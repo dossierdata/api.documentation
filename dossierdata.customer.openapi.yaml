@@ -195,6 +195,252 @@ paths:
       security:
         - oauth2:
             - customer_api:customer
+  /customer/partner:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Customer'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a the current customer.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer
+  /customer/children:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Customer'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a the current customer.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer
+
+  /customer/family:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Family'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer
+
+  /customer/messages:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Messages'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_messages
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PostMessages'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_messages
+            
+  /customer/messages/:message_id/read:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PostMessages'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Customer
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_messages
+
+  /mortgage:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Mortgage'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Mortgage
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_mortgages
+
+  /mortgage/:mortgage_id/document:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Document'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Mortgage
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_mortgages, customer_api:customer_documents
+
+
+
+  /damage:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Damage'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Damage
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_damages
+
+  /damage/:damage_id/document:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Document'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Damage
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_damages, customer_api:customer_documents
+
+  /policy:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Policy'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all policies
+      description: Get a the current customers policies.
+      tags:
+        - Policy
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_damages
+
+  /policy/:policy_id/document:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Document'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all policy documents
+      description: Get a the current customers policy document.
+      tags:
+        - Policy
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_policies, customer_api:customer_documents
+
+  /tenant:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/TenantInfo'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all policies
+      description: Get a the current customers policies.
+      tags:
+        - Tenant
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer_tenant
+
 tags:
   - name: Authentication
     description: >-
@@ -381,6 +627,17 @@ components:
         username:
           type: string
           description: Username of the customer.
+    Family:
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/responses/Customer'
+        partner:
+          $ref: '#/components/responses/Customer'
+        children:
+          type: array
+          items:
+            $ref: '#/components/responses/Customer'
     Damage:
       type: object
       required:
@@ -1205,6 +1462,18 @@ components:
           examples:
             CustomerExample:
               $ref: '#/components/examples/CustomerExample'
+    Family:
+      description: A family resource
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Family'
+              
+
     PaginatedCustomers:
       description: A paginated collection of the customer resource
       headers: {}
