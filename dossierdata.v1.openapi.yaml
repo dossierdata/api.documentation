@@ -2768,6 +2768,25 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/User"
+  /user/by_relation_number:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Find a user by a relation number
+      description: ""
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UserByRelationNumber"
   /user/{user_id}:
     get:
       responses:
@@ -3698,6 +3717,24 @@ components:
           examples:
             FindByRelationNumber:
               $ref: '#/components/examples/CustomerByRelationNumberExample'
+    UserByRelationNumber:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - number
+              - relation_number_type_id
+            properties:
+              number:
+                type: string
+                description: The identifier of the relation number
+              relation_number_type_id:
+                type: number
+                description: The id of the relation number type
+          examples:
+            FindByRelationNumber:
+              $ref: '#/components/examples/UserByRelationNumberExample'
     RelationNumber:
       content:
         application/json:
@@ -8009,6 +8046,10 @@ components:
             total_pages: 1
             links: []
     CustomerByRelationNumberExample:
+      value:
+        number: 'external_relation_number_123'
+        relation_number_type_id: 1
+    UserByRelationNumberExample:
       value:
         number: 'external_relation_number_123'
         relation_number_type_id: 1
