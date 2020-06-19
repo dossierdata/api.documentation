@@ -5788,11 +5788,13 @@ components:
         - 'full'
         - 'assessment'
         - 'source_data'
+        - 'advice'
       description: >
         An enum that describes all types of portal invitations.
-          - `full`: This is an invite for the entire portal process which included the source data and an assessment
-          - `assessment`: This is an invite for the assessment process
-          - `source_data`: This is an invite for the source data process via iWize
+          - `full`: This is an invite for the entire portal process which included the source data and an assessment (Volledig)
+          - `assessment`: This is an invite for the assessment process (Oriëntatie)
+          - `source_data`: This is an invite for the source data process via iWize (Brondata)
+          - `advice`: This is an invite for the advice process (Advies)
     MorphRelationTypeEnum:
       type: string
       enum:
