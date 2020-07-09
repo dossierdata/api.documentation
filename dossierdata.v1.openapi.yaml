@@ -1429,10 +1429,8 @@ paths:
       description: ""
       tags:
         - Document
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
       requestBody:
-        $ref: "#/components/requestBodies/Document"
+        $ref: "#/components/requestBodies/CreateDocument"
   /document/{document_id}:
     get:
       responses:
@@ -1471,7 +1469,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/DocumentId'
       requestBody:
-        $ref: "#/components/requestBodies/Document"
+        $ref: "#/components/requestBodies/UpdateDocument"
     delete:
       responses:
         200:
@@ -1614,7 +1612,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
-        $ref: "#/components/requestBodies/Task"
+        $ref: "#/components/requestBodies/CreateTask"
   /task/{task_id}:
     get:
       responses:
@@ -3442,6 +3440,164 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Task'
+    CreateTask:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - user_id
+              - content
+              - date
+            properties:
+              category_id:
+                type: number
+                enum:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+                  - 7
+                  - 8
+                  - 9
+                  - 10
+                  - 11
+                  - 12
+                  - 13
+                description: >
+                  The category of the task, this will default to `Customer` if not provided.
+
+                  This is an enum describing all categories of items found on the customer dashboard
+
+                  Category:
+                    * `1` - Customer
+                    * `2` - Banking
+                    * `3` - Insurance
+                    * `4` - Damage
+                    * `5` - Mortgage
+                    * `6` - Mailing
+                    * `7` - Dossier
+                    * `8` - Credit
+                    * `9` - Income
+                    * `10` - Retirement
+                    * `11` - Possession
+                    * `12` - Obligation
+                    * `13` - Current living condition
+                $ref: '#/components/schemas/CategoryEnum'
+              status:
+                type: number
+                enum:
+                  - null
+                  - 0
+                  - 1
+                description: >
+                  The status of the task, this will default to `Active` if not provided.
+
+                  This is an enum that describes all task status types.
+                    - `null`: Unknown
+                    - `0`: Active
+                    - `1`: Completed
+              type:
+                type: number
+                enum:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 20
+                description: >
+                  The type of the task, this will default to `General task` if not provided.
+
+                  This is an enum that describes all task types.
+                   - `1`: Call back request
+                   - `2`: Check task
+                   - `3`: Communication task
+                   - `4`: Birthday task
+                   - `20`: General task
+              priority:
+                type: number
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                description: >
+                  The priority of the task, this will default to `Normal` if not provided.
+
+                  This is an enum that describes all task priority types.
+                   - `0`: Critical
+                   - `1`: Important
+                   - `2`: Normal
+                   - `3`: Insignificant
+              user_id:
+                type: number
+                description: The id of the user who will be assigned as the creator of the task.
+              finished_by:
+                type: number
+                description: The id of the user who will be assigned as person who completed the task.
+              customer_id:
+                type: number
+                description: The id of the customer to which this task is assigned.
+              content:
+                type: string
+                description: The title of the task
+              description:
+                type: string
+                description: A more detailed or additional description of the task
+              date:
+                type: string
+                description: The date when the task is planned, format Y-m-d
+              time:
+                type: string
+                description: The specific time when the task is planned, format H:i
+              assigned_users:
+                type: array
+                items:
+                  type: integer
+                description: An array of user ids which will be assigned to this task
+              assigned_user_departments:
+                type: array
+                items:
+                  type: integer
+                description: An array of user department ids which will be assigned to this task
+              finished_at:
+                type: string
+                description: ISO 8601 date when the task was finished.
+          examples:
+            CreateSimpleTaskExample:
+              description: >-
+                The creation of a simple task.
+
+                - When not provided the `category_id` will default to `Customer`
+
+                - When not provided the `status` will default to `Active`
+
+                - When not provided the `type` will default to `Generic task`
+
+                - When not provided the `priority` will default to `Normal`
+              value:
+                user_id: 1
+                content: 'Need to check x'
+                date: '2020-01-01'
+            CreateTaskExample:
+              description: >-
+                The creation of task with all fields provided.
+              value:
+                category_id: 1
+                status: 0
+                type: 20
+                priority: 2
+                user_id: 1
+                finished_by: 2
+                customer_id: 1
+                content: 'Need to check x'
+                description: 'A detailed description of the task'
+                date: '2020-01-01'
+                time: '12:00'
+                assigned_users: [1,2,3]
+                assigned_user_departments: [4]
     TasksByCustomers:
       content:
         application/json:
@@ -3454,7 +3610,7 @@ components:
                 type: array
                 items:
                   type: integer
-                description: An array opf customer ids
+                description: An array of customer ids
           examples:
             PaginateTasksByCustomers:
               $ref: '#/components/examples/PaginateTasksByCustomers'
@@ -3583,11 +3739,90 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Search'
-    Document:
+    CreateDocument:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - name
+              - mime_type
+              - customer_id
+              - extension
+              - content
+            properties:
+              name:
+                type: string
+                description: Name of the document
+              mime_type:
+                type: string
+                description: MIME-type of the document (e.g. application/pdf)
+              extension:
+                type: string
+                description: The extension of the document (e.g. pdf)
+              customer_id:
+                type: number
+                description: The id of the customer to which this document belongs
+              user_id:
+                type: number
+                description: User who is marked as the creator of the document
+              attachable_category_id:
+                type: number
+                description: >-
+                  The id of the attachable category to which this file should be linked.
+
+                  Only one can be provided, this id or the `attachable_category_name`.
+              attachable_category_name:
+                type: string
+                description: >-
+                  The name of the attachable category under the customer to which this file should be linked.
+                  This will either link it to an existing attachable category with this name or create a new one if it
+                  does not exist yet.
+
+                  Only one can be provided, this name or the `attachable_category_id`.
+              content:
+                type: string
+                format: binary
+                description: The binary content of the file
+    UpdateDocument:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Document'
+            type: object
+            required:
+              - name
+              - customer_id
+            properties:
+              name:
+                type: string
+                description: Name of the document
+              customer_id:
+                type: number
+                description: The id of the customer to which this document belongs
+              user_id:
+                type: number
+                description: User who is marked as the creator of the document
+              attachable_category_id:
+                type: number
+                description: >-
+                  The id of the attachable category to which this file should be linked.
+
+                  Only one can be provided, this id or the `attachable_category_name`.
+              attachable_category_name:
+                type: string
+                description: >-
+                  The name of the attachable category under the customer to which this file should be linked.
+                  This will either link it to an existing attachable category with this name or create a new one if it
+                  does not exist yet.
+
+                  Only one can be provided, this name or the `attachable_category_id`.
+          examples:
+            UpdateDocumentExample:
+              value:
+                name: 'New document name'
+                customer_id: 2
+                user_id: 2
+                attachable_category_name: 'New category'
     Address:
       content:
         application/json:
@@ -4476,37 +4711,31 @@ components:
       properties:
         name:
           type: string
-          description: Naam van het document
-        file:
-          type: string
-          description: Bestandslocatie van het document
+          description: Name of the document
         type:
           type: string
-          description: Documenttype
+          description: A name or description of the mimetype
         mime_type:
           type: string
-          description: MIME-type van het document
+          description: MIME-type of the document (e.g. application/pdf)
         customer_id:
           type: number
-          description: ID van klant
-        documentcategory_id:
-          type: number
-          description: ID van categorie
+          description: The id of the customer to which this document belongs
         extension:
           type: string
-          description: Bestandsextensie van het document
-        migrated:
-          type: boolean
-          description: Is het document gemigreerd?
+          description: The extension of the document (e.g. pdf)
         filesize:
           type: number
-          description: Bestandsgrootte van het document (in bytes)
-        decoded:
-          type: boolean
-          description: Is het document gedecodeerd?
+          description: The documents filesize (in bytes)
         user_id:
           type: number
-          description: ID van gebruiker
+          description: User who uploaded the document
+        created_at:
+          type: string
+          description: Date time of creation
+        updated_at:
+          type: string
+          description: Date time of latest update
     AXMessage:
       type: object
       properties:
