@@ -85,7 +85,7 @@ paths:
           in: query
           description: The scopes you are requesting access for, comma separated.
           required: true
-          example: customer:basic, customer:contact
+          example: customer:basic customer:contact
           schema:
             type: string
         - name: redirect_uri
@@ -2740,14 +2740,18 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
-      summary: List all resources
-      description: Get a list of all Users.
+      summary: Paginate all
+      description: Get a paginated list of all users, active and inactive.
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
     post:
       responses:
         200:
@@ -2758,33 +2762,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Create a new resource
-      description: ""
+      summary: Create user
+      description: Create a new user
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/User"
-  /user/by_relation_number:
-    post:
-      responses:
-        200:
-          $ref: '#/components/responses/User'
-        400:
-          $ref: '#/components/responses/BadRequest'
-        401:
-          $ref: '#/components/responses/Unauthorized'
-        404:
-          $ref: '#/components/responses/NotFound'
-      summary: Find a user by a relation number
-      description: ""
-      tags:
-        - User
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-      requestBody:
-        $ref: "#/components/requestBodies/UserByRelationNumber"
+      security:
+        - oauth2:
+            - user:create
   /user/{user_id}:
     get:
       responses:
@@ -2796,13 +2784,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Show a resource
-      description: ""
+      summary: Show user
+      description: Get a user by its id
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserId'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
     put:
       responses:
         200:
@@ -2815,8 +2807,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Update a resource
-      description: ""
+      summary: Update user
+      description: Update a user with the provided values
       tags:
         - User
       parameters:
@@ -2824,6 +2816,9 @@ paths:
         - $ref: '#/components/parameters/UserId'
       requestBody:
         $ref: "#/components/requestBodies/User"
+      security:
+        - oauth2:
+            - user:update
     delete:
       responses:
         200:
@@ -2834,13 +2829,127 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Delete a resource
-      description: ""
+      summary: Delete user
+      description: Delete a user
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserId'
+      security:
+        - oauth2:
+            - user:delete
+  /user/active:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Paginate all active
+      description: Get a paginated list of all **active** users.
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/inactive:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Paginate all inactive
+      description: Get a paginated list of all **inactive** users.
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/by_relation_number:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Find by relation number
+      description: Find a user by a relation number
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UserByRelationNumber"
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/by_ids:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get by ids
+      description: Get a list of users by the provided ids
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UsersByIds"
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/search/by_name:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Get by query
+      description: Get a paginated list of users by a search query
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/SearchUsersByName"
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
   /portal_invitation:
     get:
       responses:
@@ -3784,6 +3893,14 @@ components:
                 type: string
                 format: binary
                 description: The binary content of the file
+          examples:
+            CreateDocumentExample:
+              value:
+                name: 'New document name'
+                customer_id: 2
+                user_id: 2
+                attachable_category_name: 'New category'
+                content: 'content'
     UpdateDocument:
       content:
         application/json:
@@ -3883,6 +4000,38 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/User'
+    UsersByIds:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - user_ids
+            properties:
+              user_ids:
+                type: array
+                description: An array of user ids
+                items:
+                  type: integer
+          examples:
+            GetUsersByIdsExample:
+              value:
+                user_ids: [1, 2, 3]
+    SearchUsersByName:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - query
+            properties:
+              query:
+                type: string
+                description: Search query, minimum length is 2
+          examples:
+            SearchUsersByNameExample:
+              value:
+                query: 'Piet'
     Customer:
       content:
         application/json:
