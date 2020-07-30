@@ -3977,8 +3977,8 @@ components:
       scheme: bearer
       flows:
         authorizationCode:
-          authorizationUrl: https://test.ddat.nl/api/v1/oauth/authorize
-          tokenUrl: https://test.ddat.nl/api/v1/oauth/access_token
+          authorizationUrl: /api/v1/oauth/authorize
+          tokenUrl: /api/v1/oauth/access_token
           scopes:
             'account:full': Rekeningen inzien
             'address:basic': Basis adresgegevens
