@@ -3476,7 +3476,7 @@ components:
                 items:
                   type: integer
                 description: An array of user ids which will be assigned to this task
-              assigned_user_departments:
+              assigned_departments:
                 type: array
                 items:
                   type: integer
@@ -3516,7 +3516,7 @@ components:
                 date: '2020-01-01'
                 time: '12:00'
                 assigned_users: [1,2,3]
-                assigned_user_departments: [4]
+                assigned_departments: [4]
     TasksByCustomers:
       content:
         application/json:
