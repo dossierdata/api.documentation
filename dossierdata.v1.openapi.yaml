@@ -8292,17 +8292,17 @@ components:
     ActivateTasks:
       value:
         taskIds: [1, 2, 3]
-        user_id: 1
+        userId: 1
     ActivateTask:
       value:
-        user_id: 1
+        userId: 1
     CompleteTasks:
       value:
         taskIds: [1, 2, 3]
-        user_id: 1
+        userId: 1
     CompleteTask:
       value:
-        user_id: 1
+        userId: 1
     PaginateTasksByInstance:
       value:
         instanceClass: 'policy'
