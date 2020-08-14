@@ -2,260 +2,39 @@ openapi: 3.0.0
 info:
   title: DossierData API
   version: ""
-  description: Welcome to the **DossierData API**. This API provides access to a all data
-    from a tenant within DossierData.
+  description: |-
+    Welcome to the **DossierData API**.
+
+    This API provides access to a all data from a tenant within DossierData.
+
+    # Authentication
+    The API uses the OAuth 2.0 authentication method.
+
+    The authorization endpoints are:
+
+    + `https://{subdomain}.ddat.nl/api/oauth/authorize`
+
+    + `https://{subdomain}.ddat.nl/api/oauth/token`
+
+    Available grant types are:
+
+    + `authorization_code`
+
+    + `client_credentials`
+
+    + `customer_password`
+
+    ## Client
+    To request an OAuth client send an email to `info@dossierdata.nl`.
+
+    In your request please provide the following:
+    + your company details
+    + a description of what you plan to use the API for
+    + a `callback_url` if you plan to use the `authorization_code` grant
+    + the grant types you plan to use
+    + the scopes you need access to
+    + the tenant(s) (e.g. subdomains) you need access to
 paths:
-  /protected:
-    get:
-      responses:
-        200:
-          description: OK
-          headers: {}
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                required:
-                  - status
-              examples:
-                response:
-                  value:
-                    status: ok
-        400:
-          $ref: '#/components/responses/BadRequest'
-        401:
-          $ref: '#/components/responses/Unauthorized'
-      summary: Query Example
-      description: ""
-      tags:
-        - Authentication
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-        - name: token
-          in: query
-          description: ""
-          required: true
-          example: vr5HmMkzlxKE70W1y4MibiJUusZwZC25NOVBEx3BD1
-          schema:
-            type: string
-  /oauth/authorize:
-    get:
-      responses:
-        200:
-          description: OK
-          headers: {}
-          content:
-            text/html:
-              examples:
-                response:
-                  value: |
-                    Authorize page
-        "302":
-          description: Found
-          headers:
-            Location:
-              schema:
-                type: string
-      summary: Authorize
-      description: >-
-        Load the authorization page.
-
-
-        If the user is already logged in (this depends on if you takle cookies into account) you will get the autorization page.
-
-
-        If the user is **NOT** logged in, you will be redirected to the login page after which you will be redirected back to
-
-        this page.
-      tags:
-        - Authorization
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-        - name: client_id
-          in: query
-          description: Your OAuth client id.
-          required: true
-          example: d5fb86ec–60a0–49fe–9571–3615d74843ac
-          schema:
-            type: string
-        - name: scope
-          in: query
-          description: The scopes you are requesting access for, comma separated.
-          required: true
-          example: customer:basic, customer:contact
-          schema:
-            type: string
-        - name: redirect_uri
-          in: query
-          description: Your callback URL.
-          required: true
-          example: http://callback.url
-          schema:
-            type: string
-        - name: response_type
-          in: query
-          description: Requested response type.
-          required: true
-          example: code
-          schema:
-            type: string
-  /your_callback:
-    get:
-      responses:
-        200:
-          description: OK
-          headers: {}
-      summary: Callback
-      description: Getting the authorization code back to you so you can fetch an access
-        token
-      tags:
-        - Authorization
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-        - name: code
-          in: query
-          description: The code to request your access token
-          required: true
-          example: a4dd64ffb43e6bfe16d47acfab1e68d9c7a28381
-          schema:
-            type: string
-  /oauth/access_token#authorization_code:
-    post:
-      responses:
-        200:
-          description: OK
-          headers: {}
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                    description: Your new oauth access token
-                  token_type:
-                    type: string
-                    description: The token type
-                  expires_in:
-                    type: number
-                    description: The number of seconds this token is valid for
-                  refresh_token:
-                    type: string
-                    description: The refresh token that can be used to request a new access
-                      token when the old one expires or is about to expire.
-              examples:
-                response:
-                  value:
-                    access_token: A7NoRur7CJVbhRPGKjA2l4uCenFRgpR4klOgtMu0
-                    token_type: Bearer
-                    expires_in: 86400
-                    refresh_token: 7jQTFMTE9ZVpu5CvHdYPQgIBwdynu53qlagx7uLK
-        400:
-          $ref: '#/components/responses/BadRequest'
-        401:
-          $ref: '#/components/responses/Unauthorized'
-      summary: Access token
-      description: Requesting the oauth access token.
-      tags:
-        - Authorization
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                  description: Your client id
-                client_secret:
-                  type: string
-                  description: Your client secret
-                grant_type:
-                  type: string
-                  description: The grant type
-                code:
-                  type: string
-                  description: The code from the previous request
-                redirect_uri:
-                  type: string
-                  description: Your callback URL.
-              required:
-                - client_id
-                - client_secret
-                - grant_type
-                - code
-                - redirect_uri
-              example:
-                client_id: d5fb86ec-60a0-49fe-95710-3615d74843ac
-                client_secret: 4d768389b2e9e9d5584a165204d72235c3c75401
-                grant_type: authorization_code
-                code: a4dd64ffb43e6bfe16d47acfab1e68d9c7a28381
-                redirect_uri: http://callback.url
-  /oauth/access_token#refresh_token:
-    post:
-      responses:
-        200:
-          description: OK
-          headers: {}
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                    description: Your new oauth access token
-                  token_type:
-                    type: string
-                    description: The token type
-                  expires_in:
-                    type: number
-                    description: The number of seconds this token is valid for
-                  refresh_token:
-                    type: string
-                    description: The refresh token that can be used to request a new access
-                      token when the old one expires or is about to expire.
-              examples:
-                response:
-                  value:
-                    access_token: A7NoRur7CJVbhRPGKjA2l4uCenFRgpR4klOgtMu0
-                    token_type: Bearer
-                    expires_in: 86400
-                    refresh_token: 7jQTFMTE9ZVpu5CvHdYPQgIBwdynu53qlagx7uLK
-        400:
-          $ref: '#/components/responses/BadScopeRequest'
-        401:
-          $ref: '#/components/responses/ClientUnauthorized'
-      summary: Refresh Token
-      description: Refreshing an oauth access token by the refresh token.
-      tags:
-        - Authorization
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                grant_type:
-                  type: string
-                  description: Specify the refresh grant type
-                refresh_token:
-                  type: string
-                  description: The refresh token provided to you when you first requested
-                    the access token.
-              required:
-                - grant_type
-                - refresh_token
-              example:
-                grant_type: refresh_token
-                refresh_token: 7jQTFMTE9ZVpu5CvHdYPQgIBwdynu53qlagx7uLK
   /address:
     get:
       responses:
@@ -415,8 +194,18 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
-      summary: List all resources
-      description: Get a paginated list of all Customers.
+      summary: Paginate all
+      description: |-
+        Get a paginated list of all customers.
+
+        This call required one or more of the following scopes:
+        + `customer:basic`
+
+        + `customer:contact`
+
+        + `customer:full`
+
+        Depending on which scopes you have access to, corresponding fields will be returned (see examples).
       tags:
         - Customer
       parameters:
@@ -425,9 +214,9 @@ paths:
         - $ref: '#/components/parameters/Page'
       security:
         - oauth2:
-            - customer:full
             - customer:basic
             - customer:contact
+            - customer:full
     post:
       responses:
         200:
@@ -438,8 +227,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Create a new resource
-      description: ""
+      summary: Create customer
+      description: |-
+        Create a new customer.
+
+        This call requires the `customer:create` scope.
       tags:
         - Customer
       parameters:
@@ -460,8 +252,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Create a new customer of the type lead
-      description: ""
+      summary: Create lead
+      description: |-
+        Create a new customer of the type lead.
+
+        This call requires the `customer:create_lead` scope.
       tags:
         - Customer
       parameters:
@@ -482,8 +277,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Open
-      description: Get uri to the dashboard of customer
+      summary: Open customer
+      description: |-
+        Get the full url to the customer's dashboard in DossierData
+
+        This call requires the `customer:basic` scope.
       tags:
         - Customer
       parameters:
@@ -491,7 +289,7 @@ paths:
         - $ref: '#/components/parameters/CustomerIdOrUUId'
       security:
         - oauth2:
-            - customer:full
+            - customer:basic
   /customer/mortgage_lead:
     post:
       responses:
@@ -504,7 +302,10 @@ paths:
         422:
           $ref: '#/components/responses/UnprocessableEntity'
       summary: Create mortgage lead
-      description: ""
+      description: |-
+        Create a new customer of the type mortgage lead
+
+        This call requires the `customer:create_mortgage_lead` scope.
       tags:
         - Customer
       parameters:
@@ -525,8 +326,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Find existing customers that match the details of the provided ax message
-      description: ""
+      summary: Get by AX message
+      description: |-
+        Find all customers that match the details in the provided AX message
+
+        This call required one or more of the following scopes:
+        + `customer:basic`
+
+        + `customer:contact`
+
+        + `customer:full`
+
+        Depending on which scopes you have access to, corresponding fields will be returned (see examples).
       tags:
         - Customer
       parameters:
@@ -537,6 +348,8 @@ paths:
         $ref: "#/components/requestBodies/XMLAXMessage"
       security:
         - oauth2:
+            - customer:basic
+            - customer:contact
             - customer:full
   /customer/by_relation_number:
     post:
@@ -551,8 +364,18 @@ paths:
           $ref: '#/components/responses/NotFound'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Find a customer by a relation number
-      description: ""
+      summary: Find by relation number
+      description: |-
+        Find a customer by a [relation number](#/Relation%20number/get_relation_number)
+
+        This call required one or more of the following scopes:
+        + `customer:basic`
+
+        + `customer:contact`
+
+        + `customer:full`
+
+        Depending on which scopes you have access to, corresponding fields will be returned (see examples).
       tags:
         - Customer
       parameters:
@@ -561,6 +384,8 @@ paths:
         $ref: "#/components/requestBodies/CustomerByRelationNumber"
       security:
         - oauth2:
+            - customer:basic
+            - customer:contact
             - customer:full
   /customer/{customer_id}:
     get:
@@ -573,8 +398,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Show a resource
-      description: Show a customer
+      summary: Show customer
+      description: |-
+        Get a customer by its id
+
+        This call required one or more of the following scopes:
+        + `customer:basic`
+
+        + `customer:contact`
+
+        + `customer:full`
+
+        Depending on which scopes you have access to, corresponding fields will be returned (see examples).
       tags:
         - Customer
       parameters:
@@ -582,6 +417,8 @@ paths:
         - $ref: '#/components/parameters/CustomerId'
       security:
         - oauth2:
+            - customer:basic
+            - customer:contact
             - customer:full
     put:
       responses:
@@ -595,8 +432,11 @@ paths:
           $ref: '#/components/responses/NotFound'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Update a resource
-      description: Update a customer
+      summary: Update customer
+      description: |-
+        Update a customer
+
+        This call requires the `customer:update` scope.
       tags:
         - Customer
       parameters:
@@ -606,7 +446,7 @@ paths:
         $ref: "#/components/requestBodies/Customer"
       security:
         - oauth2:
-            - customer:full
+            - customer:update
     delete:
       responses:
         200:
@@ -617,8 +457,11 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Delete a resource
-      description: Delete a customer
+      summary: Delete customer
+      description: |-
+        Delete a customer
+
+        This call requires the `customer:delete` scope.
       tags:
         - Customer
       parameters:
@@ -626,7 +469,7 @@ paths:
         - $ref: '#/components/parameters/CustomerId'
       security:
         - oauth2:
-            - customer:full
+            - customer:delete
   /customer/{customer_id}/ax_message:
     put:
       responses:
@@ -640,8 +483,11 @@ paths:
           $ref: '#/components/responses/NotFound'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Update a resource
-      description: Update a customer with the data from an AX Message.
+      summary: Update customer with AX message
+      description: >-
+        Update a customer with the data from an AX Message.
+
+        This call requires the `customer:update` scope.
       tags:
         - Customer
       parameters:
@@ -651,7 +497,7 @@ paths:
         $ref: "#/components/requestBodies/XMLAXMessage"
       security:
         - oauth2:
-            - customer:full
+            - customer:update
   /dossier:
     get:
       responses:
@@ -2740,14 +2586,18 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
-      summary: List all resources
-      description: Get a list of all Users.
+      summary: Paginate all
+      description: Get a paginated list of all users, active and inactive.
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
     post:
       responses:
         200:
@@ -2758,33 +2608,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Create a new resource
-      description: ""
+      summary: Create user
+      description: Create a new user
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/User"
-  /user/by_relation_number:
-    post:
-      responses:
-        200:
-          $ref: '#/components/responses/User'
-        400:
-          $ref: '#/components/responses/BadRequest'
-        401:
-          $ref: '#/components/responses/Unauthorized'
-        404:
-          $ref: '#/components/responses/NotFound'
-      summary: Find a user by a relation number
-      description: ""
-      tags:
-        - User
-      parameters:
-        - $ref: '#/components/parameters/JsonHeader'
-      requestBody:
-        $ref: "#/components/requestBodies/UserByRelationNumber"
+      security:
+        - oauth2:
+            - user:create
   /user/{user_id}:
     get:
       responses:
@@ -2796,13 +2630,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Show a resource
-      description: ""
+      summary: Show user
+      description: Get a user by its id
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserId'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
     put:
       responses:
         200:
@@ -2815,8 +2653,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         422:
           $ref: '#/components/responses/UnprocessableEntity'
-      summary: Update a resource
-      description: ""
+      summary: Update user
+      description: Update a user with the provided values
       tags:
         - User
       parameters:
@@ -2824,6 +2662,9 @@ paths:
         - $ref: '#/components/parameters/UserId'
       requestBody:
         $ref: "#/components/requestBodies/User"
+      security:
+        - oauth2:
+            - user:update
     delete:
       responses:
         200:
@@ -2834,13 +2675,127 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
-      summary: Delete a resource
-      description: ""
+      summary: Delete user
+      description: Delete a user
       tags:
         - User
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserId'
+      security:
+        - oauth2:
+            - user:delete
+  /user/active:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Paginate all active
+      description: Get a paginated list of all **active** users.
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/inactive:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Paginate all inactive
+      description: Get a paginated list of all **inactive** users.
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/by_relation_number:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Find by relation number
+      description: Find a user by a relation number
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UserByRelationNumber"
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/by_ids:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get by ids
+      description: Get a list of users by the provided ids
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UsersByIds"
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
+  /user/search/by_name:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUsers'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Get by query
+      description: Get a paginated list of users by a search query
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/SearchUsersByName"
+      security:
+        - oauth2:
+            - user:basic
+            - user:detailed
   /portal_invitation:
     get:
       responses:
@@ -3335,42 +3290,6 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AXMessageId'
 tags:
-  - name: Authentication
-    description: >-
-      This section describes the authentication process.
-
-      ### OAuth2
-      Authentication is done based on OAuth2. Tokens have an expiration time of ***24 hours*** and can be refreshed
-      ***30 days*** after they were generated.
-
-      #### Client
-      To use the api you need to request an OAuth client with which you can request an access token.
-
-
-      In your request you need to supply the following:
-      * Company details
-      * A callback URL for OAuth
-      * A detailed description of what you plan to use the API for
-
-      Please send your OAuth Client request to `info@dossierdata.nl`.
-
-      #### Login
-      When you've received your client credentials, you can prompt your users for an access token access. They need to login
-      with their DossierData account and approve that your client can access their data. After this process you obtain an
-      access key.
-
-      ### Authentication
-      Requesting any endpoint except the authentication will require you to send an access token, this can be done in
-      two-ways. Either by Header of in the Query of the request.
-  - name: Authorization
-    description: |-
-      This section lists basic information about the authorization process.
-
-      The two requests that you need for the authorization process are:
-
-      + `/oauth/authorize`
-
-      + `/oauth/access_token`
   - name: Account
     description: Endpoint for Account resource management
   - name: Address
@@ -3382,7 +3301,7 @@ tags:
   - name: Country
     description: Endpoint for Country resource management
   - name: Customer
-    description: Endpoint for Customer resource management
+    description: Manage customers
   - name: Damage
     description: Endpoint for Damage resource management
   - name: Document
@@ -3557,7 +3476,7 @@ components:
                 items:
                   type: integer
                 description: An array of user ids which will be assigned to this task
-              assigned_user_departments:
+              assigned_departments:
                 type: array
                 items:
                   type: integer
@@ -3597,7 +3516,7 @@ components:
                 date: '2020-01-01'
                 time: '12:00'
                 assigned_users: [1,2,3]
-                assigned_user_departments: [4]
+                assigned_departments: [4]
     TasksByCustomers:
       content:
         application/json:
@@ -3784,6 +3703,14 @@ components:
                 type: string
                 format: binary
                 description: The binary content of the file
+          examples:
+            CreateDocumentExample:
+              value:
+                name: 'New document name'
+                customer_id: 2
+                user_id: 2
+                attachable_category_name: 'New category'
+                content: 'content'
     UpdateDocument:
       content:
         application/json:
@@ -3883,6 +3810,38 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/User'
+    UsersByIds:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - user_ids
+            properties:
+              user_ids:
+                type: array
+                description: An array of user ids
+                items:
+                  type: integer
+          examples:
+            GetUsersByIdsExample:
+              value:
+                user_ids: [1, 2, 3]
+    SearchUsersByName:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - query
+            properties:
+              query:
+                type: string
+                description: Search query, minimum length is 2
+          examples:
+            SearchUsersByNameExample:
+              value:
+                query: 'Piet'
     Customer:
       content:
         application/json:
@@ -4018,8 +3977,8 @@ components:
       scheme: bearer
       flows:
         authorizationCode:
-          authorizationUrl: https://test.ddat.nl/api/v1/oauth/authorize
-          tokenUrl: https://test.ddat.nl/api/v1/oauth/access_token
+          authorizationUrl: /api/v1/oauth/authorize
+          tokenUrl: /api/v1/oauth/access_token
           scopes:
             'account:full': Rekeningen inzien
             'address:basic': Basis adresgegevens
@@ -4907,7 +4866,7 @@ components:
           type: string
           description: The email address to which the email is sent.
         cc:
-          type: string,
+          type: string
           description: The additional email address to which the email is sent.
         bcc:
           type: string
@@ -6305,8 +6264,12 @@ components:
               data:
                 $ref: '#/components/schemas/Customer'
           examples:
-            CustomerExample:
-              $ref: '#/components/examples/CustomerExample'
+            CustomerBasicExample:
+              $ref: '#/components/examples/CustomerBasicExample'
+            CustomerContactExample:
+              $ref: '#/components/examples/CustomerContactExample'
+            CustomerFullExample:
+              $ref: '#/components/examples/CustomerFullExample'
     PaginatedCustomers:
       description: A paginated collection of the customer resource
       headers: {}
@@ -6322,8 +6285,12 @@ components:
               meta:
                 $ref: '#/components/schemas/Pagination'
           examples:
-            PaginatedCustomersExample:
-              $ref: '#/components/examples/PaginatedCustomersExample'
+            PaginatedCustomersBasicScopeExample:
+              $ref: '#/components/examples/PaginatedCustomersBasicScopeExample'
+            PaginatedCustomersBasicAndContactScopeExample:
+              $ref: '#/components/examples/PaginatedCustomersBasicAndContactScopeExample'
+            PaginatedCustomersFullScopeExample:
+              $ref: '#/components/examples/PaginatedCustomersFullScopeExample'
     Dossier:
       description: OK
       headers: {}
@@ -7221,11 +7188,13 @@ components:
             current: 1
             total_pages: 1
             links: []
-    CustomerExample:
-      summary: 200 OK
+    CustomerBasicExample:
+      summary: Basic details response
+      description: An example response of the fields returned when using the `customer:basic` scope
       value:
         data:
           id: 1234
+          full_name: AB de Vries (Albert)
           initials: AB
           first_name: Albert
           suffix: de
@@ -7234,7 +7203,41 @@ components:
           passed_away_at: null
           sex: 1
           date_of_birth: "1959-06-18T00:00:00+01:00"
-          emailaddress: "ab.de.vries@test.nl"
+    CustomerContactExample:
+      summary: Contact details response
+      description: An example response of the fields returned when using the `customer:basic` and `customer:contact` scopes
+      value:
+        data:
+          id: 1234
+          full_name: AB de Vries (Albert)
+          initials: AB
+          first_name: Albert
+          suffix: de
+          last_name: Vries
+          passed_away: false
+          passed_away_at: null
+          sex: 1
+          date_of_birth: "1959-06-18T00:00:00+01:00"
+          email_address: "ab.de.vries@test.nl"
+          phone: "0512345678"
+          mobile: "0612345678"
+          phone_work: "0512345678"
+    CustomerFullExample:
+      summary: Full object response
+      description: An example response of the fields returned when using the `customer:basic`, `customer:contact` and `customer:full` scopes
+      value:
+        data:
+          id: 1234
+          full_name: AB de Vries (Albert)
+          initials: AB
+          first_name: Albert
+          suffix: de
+          last_name: Vries
+          passed_away: false
+          passed_away_at: null
+          sex: 1
+          date_of_birth: "1959-06-18T00:00:00+01:00"
+          email_address: "ab.de.vries@test.nl"
           phone: "0512345678"
           mobile: "0612345678"
           phone_work: "0512345678"
@@ -7284,10 +7287,13 @@ components:
           status_changed_at: "2019-11-30T00:00:00+01:00"
           retirement_date: "2026-06-18T00:00:00+01:00"
           last_opened_date: "2019-12-01T00:00:00+01:00"
-    PaginatedCustomersExample:
+    PaginatedCustomersBasicScopeExample:
+      summary: Basic details response
+      description: An example response of the fields returned when using the `customer:basic` scope
       value:
         data:
           - id: 1234
+            full_name: AB de Vries (Albert)
             initials: AB
             first_name: Albert
             suffix: de
@@ -7296,7 +7302,57 @@ components:
             passed_away_at: null
             sex: 1
             date_of_birth: "1959-06-18T00:00:00+01:00"
-            emailaddress: "ab.de.vries@test.nl"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    PaginatedCustomersBasicAndContactScopeExample:
+      summary: Contact details response
+      description: An example response of the fields returned when using the `customer:basic` and `customer:contact` scopes
+      value:
+        data:
+          - id: 1234
+            full_name: AB de Vries (Albert)
+            initials: AB
+            first_name: Albert
+            suffix: de
+            last_name: Vries
+            passed_away: false
+            passed_away_at: null
+            sex: 1
+            date_of_birth: "1959-06-18T00:00:00+01:00"
+            email_address: "ab.de.vries@test.nl"
+            phone: "0512345678"
+            mobile: "0612345678"
+            phone_work: "0512345678"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: []
+    PaginatedCustomersFullScopeExample:
+      summary: Full object response
+      description: An example response of the fields returned when using the `customer:basic`, `customer:contact` and `customer:full` scopes
+      value:
+        data:
+          - id: 1234
+            full_name: AB de Vries (Albert)
+            initials: AB
+            first_name: Albert
+            suffix: de
+            last_name: Vries
+            passed_away: false
+            passed_away_at: null
+            sex: 1
+            date_of_birth: "1959-06-18T00:00:00+01:00"
+            email_address: "ab.de.vries@test.nl"
             phone: "0512345678"
             mobile: "0612345678"
             phone_work: "0512345678"
