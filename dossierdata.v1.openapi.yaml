@@ -52,6 +52,10 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - address:basic
+            - address:coordinates
     post:
       responses:
         200:
@@ -70,6 +74,9 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/Address"
+      security:
+        - oauth2:
+            - address:create
   /address/{address_id}:
     get:
       responses:
@@ -88,6 +95,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AddressId'
+      security:
+        - oauth2:
+            - address:basic
+            - address:coordinates
     put:
       responses:
         200:
@@ -109,6 +120,9 @@ paths:
         - $ref: '#/components/parameters/AddressId'
       requestBody:
         $ref: "#/components/requestBodies/Address"
+      security:
+        - oauth2:
+            - address:update
     delete:
       responses:
         200:
@@ -126,6 +140,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AddressId'
+      security:
+        - oauth2:
+            - address:delete
   /address/by_customer/{customer_id}:
     get:
       responses:
@@ -144,6 +161,342 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
+      security:
+        - oauth2:
+            - address:basic
+            - address:coordinates
+  /attachable:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a new resource
+      description: |-
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:create` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/CreateAttachable"
+      security:
+        - oauth2:
+            - attachable:create
+  /attachable/{attachable_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/Attachable'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: |-
+        Show an attachable object (the `Attachable` model).
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:basic` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/AttachableId'
+      security:
+        - oauth2:
+            - attachable:basic
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Update a resource
+      description: |-
+        Update an attachable object (the `Attachable` model).
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:update` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/AttachableId'
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateAttachable"
+      security:
+        - oauth2:
+            - attachable:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: |-
+        Delete an attachable object (the `Attachable` model). This only deletes the dynamic link between the parent and
+        child objects and does not affect the linked objects in any way.
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:delete` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/AttachableId'
+      security:
+        - oauth2:
+            - attachable:delete
+  /attachable/{attachable_id}/breadcrumbs:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/AttachableBreadcrumbs'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: List all resources linked to child
+      description: |-
+        Get a breadcrumbs response to where a child instance of an attachable can be found. E.g. `customer 'test'` > `policy '123'` > `attachable category 'documents'`.
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:breadcrumbs` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/AttachableId'
+      security:
+        - oauth2:
+            - attachable:basic
+  /attachable/by_parent:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedAttachables'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources linked to parent
+      description: |-
+        Get a paginated list of all attachables linked to a parent object (the `HasAttachable` interface).
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:basic` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      requestBody:
+        $ref: "#/components/requestBodies/AttachableByInstance"
+      security:
+        - oauth2:
+            - attachable:basic
+  /attachable/by_child:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedAttachables'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources linked to child
+      description: |-
+        Get a paginated list of all attachables linked to a child object (the `Attachable` interface).
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:basic` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      requestBody:
+        $ref: "#/components/requestBodies/AttachableByInstance"
+      security:
+        - oauth2:
+            - attachable:basic
+  /attachable/by_child/breadcrumbs:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/AttachableBreadcrumbs'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: List all resources linked to child
+      description: |-
+        Get a breadcrumbs response to where a child instance of an attachable can be found. E.g. `customer 'test'` > `policy '123'` > `attachable category 'documents'`.
+
+        ---
+
+        The attachable resource is a dynamic link between a parent and a child object. It is a many to many pivot table
+        with morphable relations.
+
+        ---
+
+        **Example**
+
+        A [document](#/Document) can be linked to an attachable category.
+
+        Document            | <--->          | Attachable      | <--->           | AttachableCategory
+        ------------------- | -------------- | --------------- | --------------- | ----------------------
+        AttachableInterface | child relation | AttachableModel | parent relation | HasAttachableInterface
+
+        ---
+
+        This call requires the `attachable:breadcrumbs` scope.
+      tags:
+        - Attachable
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/AttachableId'
+      requestBody:
+        $ref: "#/components/requestBodies/AttachableByInstance"
+      security:
+        - oauth2:
+            - attachable:basic
   /country:
     get:
       responses:
@@ -2412,6 +2765,9 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - account:basic
     post:
       responses:
         200:
@@ -2430,6 +2786,9 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
         $ref: "#/components/requestBodies/Account"
+      security:
+        - oauth2:
+            - account:create
   /account/{account_id}:
     get:
       responses:
@@ -2448,6 +2807,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AccountId'
+      security:
+        - oauth2:
+            - account:basic
     put:
       responses:
         200:
@@ -2469,6 +2831,9 @@ paths:
         - $ref: '#/components/parameters/AccountId'
       requestBody:
         $ref: "#/components/requestBodies/Account"
+      security:
+        - oauth2:
+            - account:update
     delete:
       responses:
         200:
@@ -2486,6 +2851,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AccountId'
+      security:
+        - oauth2:
+            - account:delete
   /office:
     get:
       responses:
@@ -3294,6 +3662,8 @@ tags:
     description: Endpoint for Account resource management
   - name: Address
     description: Endpoint for Address resource management
+  - name: Attachable
+    description: Endpoint for Attachable resource management
   - name: Calendar
     description: Endpoint for Calendar resource management
   - name: Calendar event
@@ -3301,7 +3671,7 @@ tags:
   - name: Country
     description: Endpoint for Country resource management
   - name: Customer
-    description: Manage customers
+    description: Endpoint for Customer resource management
   - name: Damage
     description: Endpoint for Damage resource management
   - name: Document
@@ -3515,8 +3885,8 @@ components:
                 description: 'A detailed description of the task'
                 date: '2020-01-01'
                 time: '12:00'
-                assigned_users: [1,2,3]
-                assigned_departments: [4]
+                assigned_users: [ 1,2,3 ]
+                assigned_departments: [ 4 ]
     TasksByCustomers:
       content:
         application/json:
@@ -3755,6 +4125,72 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+    CreateAttachable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attachable'
+          examples:
+            CreateAttachableLinkedToCategoryExample:
+              value:
+                customer_id: 2
+                attachable_category_id: 2
+                child_type: 'document'
+                child_id: 123
+                parent_category: 1
+                visible_for_customer: false
+            CreateAttachableLinkedToCategoryWithCreatedByUserExample:
+              value:
+                customer_id: 2
+                attachable_category_id: 2
+                child_type: 'document'
+                child_id: 123
+                parent_category: 1
+                visible_for_customer: false
+                created_by_type: 'user'
+                created_by_id: 2
+            CreateAttachableLinkingCategoryToHasAttachableExample:
+              value:
+                customer_id: 2
+                parent_type: 'mortgage'
+                parent_id: 3
+                child_type: 'attachable_category'
+                child_id: 4
+                parent_category: 5
+                visible_for_customer: false
+            CreateAttachableLinkingDocumentToTaskExample:
+              value:
+                customer_id: 2
+                parent_type: 'task'
+                parent_id: 3
+                child_type: 'document'
+                child_id: 123
+                parent_category: 1
+                visible_for_customer: false
+    UpdateAttachable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Attachable'
+          examples:
+            UpdateAttachableLinkedToCategoryExample:
+              value:
+                customer_id: 2
+                attachable_category_id: 2
+                child_type: 'document'
+                child_id: 123
+                parent_category: 1
+                visible_for_customer: false
+    AttachableByInstance:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AttachableByInstance'
+          examples:
+            AttachableByInstanceExample:
+              value:
+                instance_type: 'mortgage'
+                instance_id: 5
     Dossier:
       content:
         application/json:
@@ -3826,7 +4262,7 @@ components:
           examples:
             GetUsersByIdsExample:
               value:
-                user_ids: [1, 2, 3]
+                user_ids: [ 1, 2, 3 ]
     SearchUsersByName:
       content:
         application/json:
@@ -3974,7 +4410,6 @@ components:
   securitySchemes:
     oauth2:
       type: oauth2
-      scheme: bearer
       flows:
         authorizationCode:
           authorizationUrl: /api/v1/oauth/authorize
@@ -4665,6 +5100,76 @@ components:
         lng:
           type: number
           description: Longitude of the address
+    Attachable:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the attachable
+        customer_id:
+          type: number
+          description: ID of the related customer
+        parent_type:
+          $ref: '#/components/schemas/HasAttachablesMorphRelationTypeEnum'
+        parent_id:
+          type: number
+          description: The id of parent object to which the attachable is attached
+        child_type:
+          $ref: '#/components/schemas/IsAttachableMorphRelationTypeEnum'
+        child_id:
+          type: number
+          description: The id of child object to which the attachable is attached
+        parent_category:
+          $ref: '#/components/schemas/CategoryEnum'
+          description: The global category under which the child object will be displayed as a linked object
+        visible_for_customer:
+          type: boolean
+          description: A boolean if the attachable model should be visible for the customer in app/portal environments
+        created_by_type:
+          $ref: '#/components/schemas/MorphRelationTypeEnum'
+        created_by_id:
+          type: number
+          description: The id of object by whom/which this was created
+    AttachableBreadcrumbs:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the instance
+        success:
+          type: boolean
+          description: Defines if a path to the child instance could be found
+        category:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the global category to which the child instance is attached (e.g. `Klant` or `Hypotheken`)
+        customer:
+          type: object
+          properties:
+            full_name:
+              type: string
+              description: The name of the customer who's the owner of the attachable
+            link:
+              type: string
+              description: The link to the dashboard the that customer
+        attachable_category:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the attachable category to which the child instance is attached
+        parent_instance:
+          type: object
+    AttachableByInstance:
+      type: object
+      properties:
+        instance_type:
+          $ref: '#/components/schemas/MorphRelationTypeEnum'
+        instance_id:
+          type: number
+          description: The id of instance
     Document:
       type: object
       properties:
@@ -5727,6 +6232,16 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
       description: A paginated result of addresses
+    PaginatedAttachables:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachable'
+        meta:
+          $ref: '#/components/schemas/Meta'
+      description: A paginated result of attachables
     OfferteAanvraag:
       type: object
       properties:
@@ -6044,8 +6559,8 @@ components:
         - 'user'
       description: >
         An enum that describes all possible types for a polymorphic relationship.
-          - `account`: The (bank) Account model
           - `address`: The Address model
+          - `bank_account`: The (bank) Account model
           - `current_living_condition`: The CurrentLivingCondition model
           - `customer`: The Customer model
           - `damage`: The Damage model
@@ -6062,6 +6577,53 @@ components:
           - `possession`: The Possession model
           - `retirement`: The Retirement model
           - `user`: The User model
+    HasAttachablesMorphRelationTypeEnum:
+      type: string
+      enum:
+        - 'bank_account'
+        - 'current_living_condition'
+        - 'customer'
+        - 'damage'
+        - 'income_benefit'
+        - 'income_company'
+        - 'income_employment'
+        - 'income_other'
+        - 'income_retirement'
+        - 'mortgage'
+        - 'obligation'
+        - 'policy'
+        - 'possession'
+        - 'retirement'
+      description: >
+        An enum that describes all possible types for the attachable parent (`HasAttachable` interface) polymorphic relationship.
+          - `bank_account`: The (bank) Account model
+          - `current_living_condition`: The CurrentLivingCondition model
+          - `customer`: The Customer model
+          - `damage`: The Damage model
+          - `income_benefit`: The IncomeBenefit model
+          - `income_company`: The IncomeCompany model
+          - `income_employment`: The IncomeEmployment model
+          - `income_other`: The IncomeOther model
+          - `income_retirement`: The IncomeRetirement model
+          - `mortgage`: The Mortgage model
+          - `obligation`: The Obligation model
+          - `policy`: The Policy model
+          - `possession`: The Possession model
+          - `retirement`: The Retirement model
+          - `task`: The Task model
+    IsAttachableMorphRelationTypeEnum:
+      type: string
+      enum:
+        - 'document'
+        - 'email'
+        - 'letter'
+        - 'note'
+      description: >
+        An enum that describes all possible types for the attachable child (`IsAttachable` interface) polymorphic relationship.
+          - `document`: The Document model
+          - `email`: The Email model
+          - `letter`: The Letter model
+          - `note`: The Note model
   responses:
     BadRequest:
       description: Bad Request
@@ -6121,7 +6683,7 @@ components:
               $ref: '#/components/examples/UnprocessableEntityExample'
     Created:
       description: The resource was successfully created
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6131,7 +6693,7 @@ components:
               $ref: '#/components/examples/CreatedExample'
     Updated:
       description: The resource was successfully updated
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6144,7 +6706,7 @@ components:
         The resource was successfully updated.
 
         This response also includes updated active/completed task counts so the front-end can be updated.
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6157,7 +6719,7 @@ components:
         The resource was successfully updated
 
         This response also includes updated active/completed task counts so the front-end can be updated.
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6167,7 +6729,7 @@ components:
               $ref: '#/components/examples/UpdatedTaskWithMetaCountsExample'
     Deleted:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6177,7 +6739,7 @@ components:
               $ref: '#/components/examples/DeletedExample'
     CustomerURI:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6195,7 +6757,7 @@ components:
                   uri: "https://uri"
     Address:
       description: An address resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6208,7 +6770,7 @@ components:
               $ref: '#/components/examples/AddressExample'
     PaginatedAddresses:
       description: A paginated collection of the address resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6223,9 +6785,52 @@ components:
           examples:
             PaginatedAddressExample:
               $ref: '#/components/examples/PaginatedAddressesExample'
+    Attachable:
+      description: An attachable resource
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Attachable'
+          examples:
+            AttachableExample:
+              $ref: '#/components/examples/AttachableExample'
+    AttachableBreadcrumbs:
+      description: Breadcrumbs to a child of an attachable resource
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/AttachableBreadcrumbs'
+          examples:
+            AttachableBreadcrumbsExample:
+              $ref: '#/components/examples/AttachableBreadcrumbsExample'
+    PaginatedAttachables:
+      description: A paginated collection of the attachable resource
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachable'
+              meta:
+                $ref: '#/components/schemas/Pagination'
+          examples:
+            PaginatedAttachablesExample:
+              $ref: '#/components/examples/PaginatedAttachablesExample'
     Country:
       description: A Country resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6238,7 +6843,7 @@ components:
               $ref: '#/components/examples/CountryExample'
     PaginatedCountries:
       description: A paginated collection of the Country resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6255,7 +6860,7 @@ components:
               $ref: '#/components/examples/PaginatedCountriesExample'
     Customer:
       description: A customer resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6272,7 +6877,7 @@ components:
               $ref: '#/components/examples/CustomerFullExample'
     PaginatedCustomers:
       description: A paginated collection of the customer resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6293,7 +6898,7 @@ components:
               $ref: '#/components/examples/PaginatedCustomersFullScopeExample'
     Dossier:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6303,7 +6908,7 @@ components:
               $ref: '#/components/examples/PaginatedDossiersExample'
     PaginatedDossiers:
       description: A paginated collection of the dossier resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6320,7 +6925,7 @@ components:
               $ref: '#/components/examples/PaginatedDossiersExample'
     EmailAccount:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6330,7 +6935,7 @@ components:
               $ref: '#/components/examples/EmailAccountExample'
     PaginatedEmailAccounts:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6347,7 +6952,7 @@ components:
               $ref: '#/components/examples/PaginatedEmailAccountsExample'
     Letter:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6360,7 +6965,7 @@ components:
               $ref: '#/components/examples/LetterExample'
     PaginatedLetters:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6377,7 +6982,7 @@ components:
               $ref: '#/components/examples/PaginatedLettersExample'
     Lock:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6390,7 +6995,7 @@ components:
               $ref: '#/components/examples/LockExample'
     PaginatedLocks:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6407,7 +7012,7 @@ components:
               $ref: '#/components/examples/PaginatedLocksExample'
     Mortgage:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6420,7 +7025,7 @@ components:
               $ref: '#/components/examples/MortgageExample'
     PaginatedMortgages:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6437,7 +7042,7 @@ components:
               $ref: '#/components/examples/PaginatedMortgagesExample'
     MortgagePart:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6450,7 +7055,7 @@ components:
               $ref: '#/components/examples/MortgagePartExample'
     PaginatedMortgageParts:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6467,7 +7072,7 @@ components:
               $ref: '#/components/examples/PaginatedMortgagePartsExample'
     MortgageProgress:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6480,7 +7085,7 @@ components:
               $ref: '#/components/examples/MortgageProgressExample'
     PaginatedMortgageProgress:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6497,7 +7102,7 @@ components:
               $ref: '#/components/examples/PaginatedMortgageProgressExample'
     Damage:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6510,7 +7115,7 @@ components:
               $ref: '#/components/examples/DamageExample'
     PaginatedDamages:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6527,7 +7132,7 @@ components:
               $ref: '#/components/examples/PaginatedDamagesExample'
     Document:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6540,7 +7145,7 @@ components:
               $ref: '#/components/examples/DocumentExample'
     PaginatedDocuments:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6557,7 +7162,7 @@ components:
               $ref: '#/components/examples/PaginatedDocumentsExample'
     Email:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6570,7 +7175,7 @@ components:
               $ref: '#/components/examples/EmailExample'
     PaginatedEmails:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6587,7 +7192,7 @@ components:
               $ref: '#/components/examples/PaginatedEmailsExample'
     Template:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6600,7 +7205,7 @@ components:
               $ref: '#/components/examples/TemplateExample'
     PaginatedTemplates:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6617,7 +7222,7 @@ components:
               $ref: '#/components/examples/PaginatedTemplatesExample'
     Note:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6630,7 +7235,7 @@ components:
               $ref: '#/components/examples/NoteExample'
     PaginatedNotes:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6647,7 +7252,7 @@ components:
               $ref: '#/components/examples/PaginatedNotesExample'
     Signal:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6662,7 +7267,7 @@ components:
               $ref: '#/components/examples/SignalExample'
     PaginatedSignals:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6679,7 +7284,7 @@ components:
               $ref: '#/components/examples/PaginatedSignalsExample'
     Account:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6692,7 +7297,7 @@ components:
               $ref: '#/components/examples/AccountExample'
     PaginatedAccounts:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6709,7 +7314,7 @@ components:
               $ref: '#/components/examples/PaginatedAccountsExample'
     Office:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6722,7 +7327,7 @@ components:
               $ref: '#/components/examples/OfficeExample'
     PaginatedOffices:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6739,7 +7344,7 @@ components:
               $ref: '#/components/examples/PaginatedOfficesExample'
     User:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6752,7 +7357,7 @@ components:
               $ref: '#/components/examples/UserExample'
     PaginatedUsers:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6769,7 +7374,7 @@ components:
               $ref: '#/components/examples/PaginatedUsersExample'
     Search:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6782,7 +7387,7 @@ components:
               $ref: '#/components/examples/SearchExample'
     PaginatedSearches:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6799,7 +7404,7 @@ components:
               $ref: '#/components/examples/PaginatedSearchesExample'
     AXMessage:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6812,7 +7417,7 @@ components:
               $ref: '#/components/examples/AXMessageExample'
     PaginatedAXMessages:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6829,7 +7434,7 @@ components:
               $ref: '#/components/examples/PaginatedAXMessagesExample'
     Task:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6842,7 +7447,7 @@ components:
               $ref: '#/components/examples/TaskExample'
     PaginatedTasks:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6859,7 +7464,7 @@ components:
               $ref: '#/components/examples/PaginatedTasksExample'
     Calendar:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6872,7 +7477,7 @@ components:
               $ref: '#/components/examples/CalendarExample'
     PaginatedCalendars:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6889,7 +7494,7 @@ components:
               $ref: '#/components/examples/PaginatedCalendarsExample'
     CalendarEvent:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6902,7 +7507,7 @@ components:
               $ref: '#/components/examples/CalendarEventExample'
     PaginatedCalendarEvents:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6919,7 +7524,7 @@ components:
               $ref: '#/components/examples/PaginatedCalendarEventsExample'
     PortalInvitation:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6932,7 +7537,7 @@ components:
               $ref: '#/components/examples/PortalInvitationExample'
     PaginatedPortalInvitations:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6949,7 +7554,7 @@ components:
               $ref: '#/components/examples/PaginatedPortalInvitationsExample'
     RelationNumber:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6962,7 +7567,7 @@ components:
               $ref: '#/components/examples/RelationNumberExample'
     PaginatedRelationNumbers:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6979,7 +7584,7 @@ components:
               $ref: '#/components/examples/PaginatedRelationNumbersExample'
     RelationNumberType:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -6992,7 +7597,7 @@ components:
               $ref: '#/components/examples/RelationNumberTypeExample'
     PaginatedRelationNumberTypes:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -7067,7 +7672,7 @@ components:
           per_page: 15
           current: 1
           total_pages: 1
-          links: []
+          links: [ ]
     CreatedExample:
       summary: 200 OK
       value:
@@ -7083,7 +7688,7 @@ components:
       value:
         data:
           success: true,
-          ids: [1, 2, 3]
+          ids: [ 1, 2, 3 ]
         meta:
           departmentTasksCounts:
             - department_hashid: enXBxVoGkolKDv6E
@@ -7166,7 +7771,66 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
+    AttachableExample:
+      summary: 200 OK
+      value:
+        data:
+          customer_id: 2
+          attachable_category_id: 2
+          parent_type: null
+          parent_id: null
+          child_type: 'document'
+          child_id: 123
+          parent_category: 1
+          visible_for_customer: false
+          created_by_type: 'user'
+          created_by_id: 2
+    AttachableBreadcrumbsExample:
+      summary: 200 OK
+      value:
+        data:
+          id: 123
+          success: true
+          category:
+            name: 'Hypotheken'
+          customer:
+            full_name: 'A.B. van der Test'
+            link: 'https://test.ddat.nl/customer/3/dashboard'
+          attachable_category:
+            name: 'Identificatie'
+          parent_instance:
+            id: 5
+            customer_id: 1
+            hypotheeknummer: "12345678"
+            koopsom: 250000
+            onderpandsgegevens: Hoofdstraat 1, Hoofdstad
+            redenHypotheek: Bestaande bouw
+            hoofdsomHypotheek: 100000
+            hypotheciareInschrijving: "150000"
+            taxateur_id: 1
+    PaginatedAttachablesExample:
+      summary: 200 OK
+      value:
+        data:
+          - customer_id: 2
+            attachable_category_id: 2
+            parent_type: null
+            parent_id: null
+            child_type: 'document'
+            child_id: 123
+            parent_category: 1
+            visible_for_customer: false
+            created_by_type: 'user'
+            created_by_id: 2
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
     CountryExample:
       summary: 200 OK
       value:
@@ -7187,7 +7851,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     CustomerBasicExample:
       summary: Basic details response
       description: An example response of the fields returned when using the `customer:basic` scope
@@ -7309,7 +7973,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedCustomersBasicAndContactScopeExample:
       summary: Contact details response
       description: An example response of the fields returned when using the `customer:basic` and `customer:contact` scopes
@@ -7336,7 +8000,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedCustomersFullScopeExample:
       summary: Full object response
       description: An example response of the fields returned when using the `customer:basic`, `customer:contact` and `customer:full` scopes
@@ -7409,7 +8073,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     DossiersExample:
       value:
         data:
@@ -7429,7 +8093,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     EmailAccountExample:
       value:
         data:
@@ -7471,7 +8135,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     LetterExample:
       value:
         data:
@@ -7503,7 +8167,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     LockExample:
       value:
         data:
@@ -7523,7 +8187,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     MortgageExample:
       value:
         data:
@@ -7679,7 +8343,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     MortgagePartExample:
       value:
         data:
@@ -7722,7 +8386,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedMortgagePartsExample:
       value:
         data:
@@ -7765,7 +8429,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     MortgageProgressExample:
       value:
         data:
@@ -7799,7 +8463,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     DamageExample:
       value:
         data:
@@ -7879,7 +8543,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     DocumentExample:
       value:
         data:
@@ -7913,7 +8577,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     EmailExample:
       value:
         data:
@@ -7929,7 +8593,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     TemplateExample:
       value:
         data:
@@ -7965,7 +8629,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     NoteExample:
       value:
         data:
@@ -7999,7 +8663,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     SignalExample:
       value:
         data:
@@ -8020,7 +8684,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedSignalsExample:
       value:
         data:
@@ -8041,7 +8705,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     AccountExample:
       value:
         data:
@@ -8075,7 +8739,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     OfficeExample:
       value:
         data:
@@ -8113,7 +8777,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     UserExample:
       value:
         data:
@@ -8143,7 +8807,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     SearchExample:
       value:
         data:
@@ -8171,7 +8835,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     AXMessageExample:
       value:
         data:
@@ -8197,7 +8861,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     TaskExample:
       value:
         data:
@@ -8235,7 +8899,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     CalendarExample:
       value:
         data:
@@ -8249,7 +8913,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedCalendarsExample:
       value:
         data:
@@ -8263,7 +8927,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     CalendarEventExample:
       value:
         data:
@@ -8282,7 +8946,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedCalendarEventsExample:
       value:
         data:
@@ -8301,7 +8965,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PortalInvitationExample:
       value:
         data:
@@ -8329,7 +8993,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     CustomerByRelationNumberExample:
       value:
         number: 'external_relation_number_123'
@@ -8340,21 +9004,21 @@ components:
         relation_number_type_id: 1
     PaginateTasksByCustomers:
       value:
-        customerIds: [1, 2, 3]
+        customerIds: [ 1, 2, 3 ]
     PaginateTasksByCustomersAndCategory:
       value:
-        customerIds: [1, 2, 3]
+        customerIds: [ 1, 2, 3 ]
         category: 1
     ActivateTasks:
       value:
-        taskIds: [1, 2, 3]
+        taskIds: [ 1, 2, 3 ]
         userId: 1
     ActivateTask:
       value:
         userId: 1
     CompleteTasks:
       value:
-        taskIds: [1, 2, 3]
+        taskIds: [ 1, 2, 3 ]
         userId: 1
     CompleteTask:
       value:
@@ -8396,7 +9060,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     RelationNumberTypeExample:
       value:
         data:
@@ -8414,7 +9078,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
   parameters:
     PerPage:
       name: perPage
@@ -8448,6 +9112,14 @@ components:
       name: address_id
       in: path
       description: The id of the address
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    AttachableId:
+      name: attachable_id
+      in: path
+      description: The id of the attachable
       required: true
       example: "1"
       schema:
