@@ -10,7 +10,7 @@ paths:
       responses:
         200:
           description: OK
-          headers: {}
+          headers: { }
           content:
             application/json:
               schema:
@@ -46,7 +46,7 @@ paths:
       responses:
         200:
           description: OK
-          headers: {}
+          headers: { }
           content:
             application/json:
               schema:
@@ -122,7 +122,7 @@ paths:
       responses:
         200:
           description: OK
-          headers: {}
+          headers: { }
           content:
             application/json:
               schema:
@@ -286,7 +286,7 @@ paths:
       security:
         - oauth2:
             - customer_api:customer_messages
-            
+
   /customer/messages/:message_id/read:
     post:
       responses:
@@ -305,6 +305,64 @@ paths:
       security:
         - oauth2:
             - customer_api:customer_messages
+
+  /document:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/DocumentsTreeResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a paginated list of all documents.
+      tags:
+        - Document
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:document
+  /document/upload:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Upload a document
+      description: Upload a document.
+      tags:
+        - Document
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:document
+      requestBody:
+        $ref: "#/components/requestBodies/CreateDocument"
+  /document/:document_id:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/DocumentResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: Download a resources
+      description: Download a document.
+      tags:
+        - Document
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/DocumentId'
+      security:
+        - oauth2:
+            - customer_api:document
 
   /mortgage:
     get:
@@ -492,6 +550,27 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Customer'
+    CreateDocument:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - name
+              - content
+            properties:
+              name:
+                type: string
+                description: Name of the document
+              content:
+                type: string
+                format: binary
+                description: The binary content of the file
+          examples:
+            CreateDocumentExample:
+              value:
+                name: 'New document name'
+                content: 'binary document content'
   securitySchemes:
     oauth2:
       type: oauth2
@@ -742,42 +821,40 @@ components:
         estimated:
           type: number
           description: Estimation
+    DocumentCategory:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Document categorie id
+        name:
+          type: string
+          description: Document categorie naam
+        description:
+          type: string
+          description: Document categorie omschrijving
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
     Document:
       type: object
       properties:
+        id:
+          type: string
+          description: Document id (hashed)
+        type:
+          type: string
+          description: Type object waar het document aan gekoppeld is
         name:
           type: string
           description: Naam van het document
-        file:
+        slug:
           type: string
-          description: Bestandslocatie van het document
-        type:
+          description: Slug naam van het document
+        link:
           type: string
-          description: Documenttype
-        mime_type:
-          type: string
-          description: MIME-type van het document
-        customer_id:
-          type: number
-          description: ID van klant
-        documentcategory_id:
-          type: number
-          description: ID van categorie
-        extension:
-          type: string
-          description: Bestandsextensie van het document
-        migrated:
-          type: boolean
-          description: Is het document gemigreerd?
-        filesize:
-          type: number
-          description: Bestandsgrootte van het document (in bytes)
-        decoded:
-          type: boolean
-          description: Is het document gedecodeerd?
-        user_id:
-          type: number
-          description: ID van gebruiker
+          description: Document download link
     Mortgage:
       type: object
       required:
@@ -1403,7 +1480,7 @@ components:
               $ref: '#/components/examples/UnprocessableEntityExample'
     Created:
       description: The resource was succesfully created
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1413,7 +1490,7 @@ components:
               $ref: '#/components/examples/CreatedExample'
     Updated:
       description: The resource was succesfully updated
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1423,7 +1500,7 @@ components:
               $ref: '#/components/examples/UpdatedExample'
     Deleted:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1433,7 +1510,7 @@ components:
               $ref: '#/components/examples/DeletedExample'
     CustomerURI:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1449,9 +1526,29 @@ components:
               value:
                 data:
                   uri: "https://uri"
+    DocumentResponse:
+      description: OK
+      headers: { }
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+    PaginatedDocumentsResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Document'
+          examples:
+            DocumentExample:
+              $ref: '#/components/examples/DocumentExample'
     Customer:
       description: A customer resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1464,7 +1561,7 @@ components:
               $ref: '#/components/examples/CustomerExample'
     Family:
       description: A family resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1472,11 +1569,11 @@ components:
             properties:
               data:
                 $ref: '#/components/schemas/Family'
-              
+
 
     PaginatedCustomers:
       description: A paginated collection of the customer resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1493,7 +1590,7 @@ components:
               $ref: '#/components/examples/PaginatedCustomersExample'
     Dossier:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1503,7 +1600,7 @@ components:
               $ref: '#/components/examples/PaginatedDossiersExample'
     PaginatedDossiers:
       description: A paginated collection of the dossier resource
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1520,7 +1617,7 @@ components:
               $ref: '#/components/examples/PaginatedDossiersExample'
     Mortgage:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1533,7 +1630,7 @@ components:
               $ref: '#/components/examples/MortgageExample'
     PaginatedMortgages:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1550,7 +1647,7 @@ components:
               $ref: '#/components/examples/PaginatedMortgagesExample'
     MortgagePart:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1563,7 +1660,7 @@ components:
               $ref: '#/components/examples/MortgagePartExample'
     PaginatedMortgageParts:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1580,7 +1677,7 @@ components:
               $ref: '#/components/examples/PaginatedMortgagePartsExample'
     MortgageProgress:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1593,7 +1690,7 @@ components:
               $ref: '#/components/examples/MortgageProgressExample'
     PaginatedMortgageProgress:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1610,7 +1707,7 @@ components:
               $ref: '#/components/examples/PaginatedMortgageProgressExample'
     Damage:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1623,7 +1720,7 @@ components:
               $ref: '#/components/examples/DamageExample'
     PaginatedDamages:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1640,7 +1737,7 @@ components:
               $ref: '#/components/examples/PaginatedDamagesExample'
     Document:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1651,9 +1748,9 @@ components:
           examples:
             DocumentExample:
               $ref: '#/components/examples/DocumentExample'
-    PaginatedDocuments:
+    DocumentsTreeResponse:
       description: OK
-      headers: {}
+      headers: { }
       content:
         application/json:
           schema:
@@ -1662,12 +1759,10 @@ components:
               data:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Document'
-              meta:
-                $ref: '#/components/schemas/Meta'
+                  $ref: '#/components/schemas/DocumentCategory'
           examples:
-            PaginatedDocumentsExample:
-              $ref: '#/components/examples/PaginatedDocumentsExample'
+            DocumentsTreeExample:
+              $ref: '#/components/examples/DocumentsTreeExample'
   examples:
     BadRequestExample:
       summary: 400 No access token
@@ -1728,7 +1823,7 @@ components:
           per_page: 15
           current: 1
           total_pages: 1
-          links: []
+          links: [ ]
     CreatedExample:
       summary: 200 OK
       value:
@@ -1749,7 +1844,7 @@ components:
       value:
         data:
           id: ABLKJfj2lk34
-          full_name: A. B. de Vries (Albert) 
+          full_name: A. B. de Vries (Albert)
           initials: AB
           first_name: Albert
           suffix: de
@@ -1783,7 +1878,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedLettersExample:
       value:
         data:
@@ -1803,7 +1898,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     MortgageExample:
       value:
         data:
@@ -1959,7 +2054,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     MortgagePartExample:
       value:
         data:
@@ -2002,7 +2097,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     PaginatedMortgagePartsExample:
       value:
         data:
@@ -2045,7 +2140,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     MortgageProgressExample:
       value:
         data:
@@ -2079,7 +2174,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     DamageExample:
       value:
         data:
@@ -2159,7 +2254,7 @@ components:
             per_page: 15
             current: 1
             total_pages: 1
-            links: []
+            links: [ ]
     DocumentExample:
       value:
         data:
@@ -2173,27 +2268,20 @@ components:
           filesize: 1000
           decoded: true
           user_id: 1
-    PaginatedDocumentsExample:
+    DocumentsTreeExample:
       value:
         data:
-          - name: Testverklaring voor testverzekering
-            type: Microsoft Outlook
-            mime_type: application/pdf
-            customer_id: 1
-            documentcategory_id: 1
-            extension: pdf
-            migrated: true
-            filesize: 1000
-            decoded: true
-            user_id: 1
-        meta:
-          pagination:
-            total: 1
-            count: 1
-            per_page: 15
-            current: 1
-            total_pages: 1
-            links: []
+          - id: CATEGORIE
+            name: Categorie
+            description:
+              id: 1
+              name: Klanten
+            documents:
+              - id: 12345
+                type: Klant
+                name: Mijn document
+                slug: slug
+                link: https://subdomain.ddat.nl/api/customer/document/12345
     CustomerByRelationNumberExample:
       value:
         number: 'external_relation_number_123'
@@ -2330,7 +2418,7 @@ components:
       required: true
       example: "1"
       schema:
-        type: integer
+        type: string
     EmailId:
       name: email_id
       in: path
