@@ -1506,6 +1506,181 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/MortgageProgressId'
+  /product_label:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedProductLabels'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a list of all product labels.
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a new resource
+      description: ""
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/ProductLabelRequest"
+  /product_label/{product_label_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/ProductLabel'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/ProductLabelId'
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Update a resource
+      description: ""
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/ProductLabelId'
+      requestBody:
+        $ref: "#/components/requestBodies/ProductLabelRequest"
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/ProductLabelId'
+  /product_label/by_category:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedProductLabels'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get product labels by product category
+      description: Get a paginated list of product labels by product category
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/ProductLabelsByProductCategoryRequest"
+  /product_label/by_entity:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedProductLabels'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Get product labels attached to entity
+      description: Get a paginated list of product labels attached to an entity
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/ProductLabelsByEntityRequest"
+  /product_label/attach_to_entity:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Attach product label to entity
+      description: "Attach a product label to an entity for example a customer"
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/ProductLabelEntityRequest"
+  /product_label/detach_from_entity:
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Detach product label from entity
+      description: "Detach a product label from an entity for example a customer"
+      tags:
+        - Product label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/ProductLabelEntityRequest"
   /damage:
     get:
       responses:
@@ -3176,7 +3351,7 @@ paths:
       summary: List all resources
       description: Get a list of all portal invitations.
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
@@ -3197,7 +3372,7 @@ paths:
       summary: Create a new resource
       description: Create a new portal invitation.
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
@@ -3219,7 +3394,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PortalInvitationId'
@@ -3241,7 +3416,7 @@ paths:
       summary: Update a resource
       description: ""
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PortalInvitationId'
@@ -3263,7 +3438,7 @@ paths:
       summary: Delete a resource
       description: ""
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PortalInvitationId'
@@ -3284,7 +3459,7 @@ paths:
       summary: Show a resource
       description: Show a portal invitation by its token
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PortalInvitationToken'
@@ -3305,7 +3480,7 @@ paths:
       summary: List all resource
       description: List all portal invitations for a specific customer
       tags:
-        - Portal invitations
+        - Portal invitation
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/CustomerId'
@@ -3698,8 +3873,10 @@ tags:
     description: Endpoint for Note resource management
   - name: Office
     description: Endpoint for Office resource management
-  - name: Portal invitations
+  - name: Portal invitation
     description: Endpoint for Portal invitations resource management
+  - name: Product label
+    description: Endpoint for Product labels resource management
   - name: Relation number
     description: Endpoint for Portal invitations resource management
   - name: Search
@@ -4181,6 +4358,17 @@ components:
                 child_id: 123
                 parent_category: 1
                 visible_for_customer: false
+    AttachProductLabelToEntity:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AttachProductLabelToEntity'
+          examples:
+            AttachProductLabelToCustomerExample:
+              value:
+                instance_type: 'customer'
+                instance_id: 123
+                product_label_id: 123
     AttachableByInstance:
       content:
         application/json:
@@ -4201,6 +4389,75 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EmailAccount'
+    ProductLabelsByProductCategoryRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - product_category
+            properties:
+              product_category:
+                $ref: '#/components/schemas/ProductCategoryEnum'
+          examples:
+            ProductLabelExample:
+              value:
+                product_category: 'customer'
+    ProductLabelsByEntityRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - entity_type
+              - entity_id
+            properties:
+              entity_type:
+                $ref: '#/components/schemas/MorphRelationTypeEnum'
+              entity_id:
+                type: number
+                description: Id of the entity
+          examples:
+            ProductLabelExample:
+              value:
+                entity_type: 'customer'
+                entity_id: 1
+    ProductLabelEntityRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - entity_type
+              - entity_id
+              - product_label_id
+            properties:
+              entity_type:
+                $ref: '#/components/schemas/MorphRelationTypeEnum'
+              entity_id:
+                type: number
+                description: Id of the entity
+              product_label_id:
+                type: number
+                description: Id of the product label you want to attach/detach
+          examples:
+            Attach product label 2 to customer 1:
+              value:
+                entity_type: 'customer'
+                entity_id: 1
+                product_label_id: 2
+    ProductLabelRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductLabel'
+          examples:
+            ProductLabelExample:
+              value:
+                tag: 'label'
+                name: 'Longer description'
+                product_category: 'customer'
+                color: '9c27b0'
     Letter:
       content:
         application/json:
@@ -4513,6 +4770,12 @@ components:
         id:
           type: string
           description: Id of stored data (can be empty on array inserts)
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success true or false
     Deleted:
       type: object
       properties:
@@ -5162,6 +5425,14 @@ components:
               description: The name of the attachable category to which the child instance is attached
         parent_instance:
           type: object
+    AttachProductLabelToEntity:
+      type: object
+      properties:
+        entity_type:
+          $ref: '#/components/schemas/MorphRelationTypeEnum'
+        entity_id:
+          type: number
+          description: The id of entity
     AttachableByInstance:
       type: object
       properties:
@@ -5331,6 +5602,25 @@ components:
         template_id:
           type: number
           description: ID of the template of the letter
+    ProductLabel:
+      type: object
+      required:
+        - id
+        - tag
+        - name
+        - product_category
+      properties:
+        id:
+          type: number
+          description: Id of the product label
+        tag:
+          type: string
+          description: A short tag by which this product label is displayed in the application
+        name:
+          type: string
+          description: A longer description which is displayed on hover in the application
+        product_category:
+          $ref: '#/components/schemas/ProductCategoryEnum'
     Lock:
       type: object
       required:
@@ -6577,6 +6867,29 @@ components:
           - `possession`: The Possession model
           - `retirement`: The Retirement model
           - `user`: The User model
+    ProductCategoryEnum:
+      type: string
+      enum:
+        - 'banking'
+        - 'customer'
+        - 'credit'
+        - 'damage'
+        - 'dossier'
+        - 'insurance'
+        - 'mortgage'
+        - 'task'
+        - 'note'
+      description: >
+        An enum that describes all possible product categories by which product labels are grouped.
+          - `banking`: Banking
+          - `customer`: Customers
+          - `credit`: Credits
+          - `damage`: Damages
+          - `dossier`: Dossiers
+          - `insurance`: Insurance policies
+          - `mortgage`: Mortgages
+          - `task`: Tasks
+          - `note`: Notes
     HasAttachablesMorphRelationTypeEnum:
       type: string
       enum:
@@ -6636,6 +6949,16 @@ components:
               $ref: '#/components/examples/BadScopeRequestExample'
             UnauthorizedExample:
               $ref: '#/components/examples/BadRequestExample'
+    Success:
+      description: The request was processed successfully
+      headers: { }
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Success'
+          examples:
+            CreatedExample:
+              $ref: '#/components/examples/SuccessExample'
     BadScopeRequest:
       description: Bad Scope Request
       content:
@@ -6980,6 +7303,36 @@ components:
           examples:
             PaginatedLettersExample:
               $ref: '#/components/examples/PaginatedLettersExample'
+    ProductLabel:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/ProductLabel'
+          examples:
+            ProductLabelExample:
+              $ref: '#/components/examples/ProductLabelExample'
+    PaginatedProductLabels:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductLabel'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedLettersExample:
+              $ref: '#/components/examples/PaginatedProductLabelsExample'
     Lock:
       description: OK
       headers: { }
@@ -7678,6 +8031,10 @@ components:
       value:
         success: true
         id: "1"
+    SuccessExample:
+      summary: 200 OK
+      value:
+        success: true
     UpdatedExample:
       summary: 200 OK
       value:
@@ -8160,6 +8517,30 @@ components:
             for_instance_id: 1
             category_id: 1
             template_id: 1
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
+    ProductLabelExample:
+      value:
+        data:
+          id: 1
+          tag: label
+          name: The description of the label
+          product_category: customer
+          color: f44336
+    PaginatedProductLabelsExample:
+      value:
+        data:
+          - id: 1
+            tag: label
+            name: The description of the label
+            product_category: customer
+            color: f44336
         meta:
           pagination:
             total: 1
@@ -9176,6 +9557,14 @@ components:
       name: letter_id
       in: path
       description: The id of the letter
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    ProductLabelId:
+      name: product_label_id
+      in: path
+      description: The id of the product label
       required: true
       example: "1"
       schema:
