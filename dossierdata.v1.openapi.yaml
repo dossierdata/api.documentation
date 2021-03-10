@@ -3343,7 +3343,7 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/PaginatedAddresses'
+          $ref: '#/components/responses/PaginatedUserDepartments'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -8030,6 +8030,23 @@ components:
           examples:
             PaginatedRelationNumberTypesExample:
               $ref: '#/components/examples/PaginatedRelationNumberTypesExample'
+    PaginatedUserDepartments:
+      description: A paginated collection of the user departments resource
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDepartments'
+              meta:
+                $ref: '#/components/schemas/Pagination'
+          examples:
+            PaginatedUserDepartmentsExample:
+              $ref: '#/components/examples/PaginatedUserDepartmentsExample'
   examples:
     BadRequestExample:
       summary: 400 No access token
@@ -9517,6 +9534,26 @@ components:
         data:
           - id: 1
             name: 'Relation number type name'
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
+    UserDepartmentsExample:
+      summary: 200 OK
+      value:
+        data:
+          name: "IT Department"
+          user_id: 1
+    PaginatedUserDepartmentsExample:
+      summary: 200 OK
+      value:
+        data:
+          - name: "IT Department"
+            user_id: 1
         meta:
           pagination:
             total: 1
