@@ -3339,6 +3339,47 @@ paths:
         - oauth2:
             - user:basic
             - user:detailed
+  /user_department:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedAddresses'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a paginated list of all User departments.
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - user_department:basic
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a new resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UserDepartment"
+      security:
+        - oauth2:
+            - user_department:create
   /portal_invitation:
     get:
       responses:
@@ -3889,6 +3930,8 @@ tags:
     description: Endpoint for Template resource management
   - name: User
     description: Endpoint for User resource management
+  - name: User department
+    description: Endpoint for User department resource management
 servers:
   - url: https://{subdomain}.ddat.nl/api/v1
     variables:
@@ -4503,6 +4546,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/User'
+    UserDepartment:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserDepartment'
     UsersByIds:
       content:
         application/json:
@@ -4725,6 +4773,11 @@ components:
             'search:full': Zoekopdrachten
             'signal:full': Signalen
             'template:full': Templates
+            'user_department:basic': List all user deparments
+            'user_department:create': Create a user department
+            'user_department:update': Update a user department
+            'user_department:delete': Delete a user department
+            'user_department:users': Show user department including users
   schemas:
     MortgageProgress:
       type: object
@@ -6432,6 +6485,18 @@ components:
           description: The user's preferred office id
       description: >
         An user model is a user of the application and can be marked as the advisor of a customer.
+    UserDepartment:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the user department
+        name:
+          type: string
+          description: name of the user department
+        user_id:
+          type: number
+          description: Id of the related user (owner)
     Search:
       type: object
       properties:
