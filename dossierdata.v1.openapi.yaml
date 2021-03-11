@@ -3376,7 +3376,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
-        $ref: "#/components/requestBodies/UserDepartment"
+        $ref: "#/components/requestBodies/UserDepartmentRequest"
       security:
         - oauth2:
             - user_department:create
@@ -3384,7 +3384,7 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/UserDepartment'
+          $ref: '#/components/responses/UserDepartmentResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -3421,7 +3421,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserDepartmentId'
       requestBody:
-        $ref: "#/components/requestBodies/UserDepartment"
+        $ref: "#/components/requestBodies/UserDepartmentRequest"
       security:
         - oauth2:
             - user_department:update
@@ -4611,7 +4611,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/User'
-    UserDepartment:
+    UserDepartmentRequest:
       content:
         application/json:
           schema:
