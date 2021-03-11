@@ -3380,6 +3380,71 @@ paths:
       security:
         - oauth2:
             - user_department:create
+  /user_department/{user_department_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/UserDepartment'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - Address
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserDepartmentId'
+      security:
+        - oauth2:
+            - user_department:basic
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Update a resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserDepartmentId'
+      requestBody:
+        $ref: "#/components/requestBodies/UserDepartment"
+      security:
+        - oauth2:
+            - user_department:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserDepartmentId'
+      security:
+        - oauth2:
+            - user_department:delete
   /portal_invitation:
     get:
       responses:
