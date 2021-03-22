@@ -9856,7 +9856,7 @@ components:
       schema:
         type: integer
     UserDepartmentId:
-      name: userDepartment_id
+      name: user_department_id
       in: path
       description: The id of the user department
       required: true
