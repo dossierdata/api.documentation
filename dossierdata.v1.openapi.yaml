@@ -3394,7 +3394,7 @@ paths:
       summary: Show a resource
       description: ""
       tags:
-        - Address
+        - User department
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserDepartmentId'
