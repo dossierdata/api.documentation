@@ -8106,12 +8106,27 @@ components:
               data:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserDepartments'
+                  $ref: '#/components/schemas/UserDepartment'
               meta:
                 $ref: '#/components/schemas/Pagination'
           examples:
             PaginatedUserDepartmentsExample:
               $ref: '#/components/examples/PaginatedUserDepartmentsExample'
+    UserDepartmentResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDepartment'
+          examples:
+            DocumentsTreeExample:
+              $ref: '#/components/examples/UserDepartmentsExample'
   examples:
     BadRequestExample:
       summary: 400 No access token
@@ -9836,6 +9851,14 @@ components:
       name: user_id
       in: path
       description: The id of the user
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    UserDepartmentId:
+      name: userDepartment_id
+      in: path
+      description: The id of the user department
       required: true
       example: "1"
       schema:
