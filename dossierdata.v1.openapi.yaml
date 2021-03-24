@@ -3356,6 +3356,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/PerPage'
         - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/UserDepartmentIncludes'
       security:
         - oauth2:
             - user_department:basic
@@ -3398,6 +3399,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/UserDepartmentId'
+        - $ref: '#/components/parameters/UserDepartmentIncludes'
       security:
         - oauth2:
             - user_department:basic
@@ -4838,7 +4840,12 @@ components:
             'search:full': Zoekopdrachten
             'signal:full': Signalen
             'template:full': Templates
-            'user_department:basic': List all user deparments
+            'user:basic': View a user's basic information
+            'user:detailed': View a user's detailed information
+            'user:create': Create a user
+            'user:update': Update a user
+            'user:delete': Delete a user
+            'user_department:basic': List all user departments
             'user_department:create': Create a user department
             'user_department:update': Update a user department
             'user_department:delete': Delete a user department
@@ -8125,8 +8132,10 @@ components:
                 items:
                   $ref: '#/components/schemas/UserDepartment'
           examples:
-            DocumentsTreeExample:
-              $ref: '#/components/examples/UserDepartmentsExample'
+            UserDepartmentExample:
+              $ref: '#/components/examples/UserDepartmentExample'
+            UserDepartmentWithUsersIncludeExample:
+              $ref: '#/components/examples/UserDepartmentWithUsersIncludeExample'
   examples:
     BadRequestExample:
       summary: 400 No access token
@@ -9622,18 +9631,34 @@ components:
             current: 1
             total_pages: 1
             links: [ ]
-    UserDepartmentsExample:
-      summary: 200 OK
+    UserDepartmentExample:
+      summary: User department example
       value:
         data:
+          id: 123
           name: "IT Department"
-          user_id: 1
+    UserDepartmentWithUsersIncludeExample:
+      summary: User department with users include example
+      value:
+        data:
+          id: 123
+          name: "IT Department"
+          users:
+            data:
+              - id: 1
+                username: "lucas"
+                email: "lucas@dossierdata.nl"
+                first_name: "Lucas"
+                last_name: "van der Have"
+                fullname: "Lucas van der Have"
+                preferred_office_id: 1
+                active: true
     PaginatedUserDepartmentsExample:
       summary: 200 OK
       value:
         data:
-          - name: "IT Department"
-            user_id: 1
+          - id: 123
+            name: "IT Department"
         meta:
           pagination:
             total: 1
@@ -9863,6 +9888,19 @@ components:
       example: "1"
       schema:
         type: integer
+    UserDepartmentIncludes:
+      name: include
+      in: query
+      description: The user department includes
+      required: false
+      example:
+        - "users"
+      schema:
+        type: array
+        items:
+          type: string
+      style: form
+      explode: true
     PortalInvitationId:
       name: portalInvitation_id
       in: path
