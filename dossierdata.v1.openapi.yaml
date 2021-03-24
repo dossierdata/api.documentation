@@ -3339,6 +3339,114 @@ paths:
         - oauth2:
             - user:basic
             - user:detailed
+  /user_department:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedUserDepartments'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all resources
+      description: Get a paginated list of all User departments.
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/UserDepartmentIncludes'
+      security:
+        - oauth2:
+            - user_department:basic
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a new resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/UserDepartmentRequest"
+      security:
+        - oauth2:
+            - user_department:create
+  /user_department/{user_department_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/UserDepartmentResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Show a resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserDepartmentId'
+        - $ref: '#/components/parameters/UserDepartmentIncludes'
+      security:
+        - oauth2:
+            - user_department:basic
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/Updated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Update a resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserDepartmentId'
+      requestBody:
+        $ref: "#/components/requestBodies/UserDepartmentRequest"
+      security:
+        - oauth2:
+            - user_department:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/Deleted'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+      summary: Delete a resource
+      description: ""
+      tags:
+        - User department
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/UserDepartmentId'
+      security:
+        - oauth2:
+            - user_department:delete
   /portal_invitation:
     get:
       responses:
@@ -3889,6 +3997,8 @@ tags:
     description: Endpoint for Template resource management
   - name: User
     description: Endpoint for User resource management
+  - name: User department
+    description: Endpoint for User department resource management
 servers:
   - url: https://{subdomain}.ddat.nl/api/v1
     variables:
@@ -4503,6 +4613,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/User'
+    UserDepartmentRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserDepartment'
     UsersByIds:
       content:
         application/json:
@@ -4725,6 +4840,16 @@ components:
             'search:full': Zoekopdrachten
             'signal:full': Signalen
             'template:full': Templates
+            'user:basic': View a user's basic information
+            'user:detailed': View a user's detailed information
+            'user:create': Create a user
+            'user:update': Update a user
+            'user:delete': Delete a user
+            'user_department:basic': List all user departments
+            'user_department:create': Create a user department
+            'user_department:update': Update a user department
+            'user_department:delete': Delete a user department
+            'user_department:users': Show user department including users
   schemas:
     MortgageProgress:
       type: object
@@ -6432,6 +6557,18 @@ components:
           description: The user's preferred office id
       description: >
         An user model is a user of the application and can be marked as the advisor of a customer.
+    UserDepartment:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Id of the user department
+        name:
+          type: string
+          description: name of the user department
+        user_id:
+          type: number
+          description: Id of the related user (owner)
     Search:
       type: object
       properties:
@@ -7965,6 +8102,40 @@ components:
           examples:
             PaginatedRelationNumberTypesExample:
               $ref: '#/components/examples/PaginatedRelationNumberTypesExample'
+    PaginatedUserDepartments:
+      description: A paginated collection of the user departments resource
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDepartment'
+              meta:
+                $ref: '#/components/schemas/Pagination'
+          examples:
+            PaginatedUserDepartmentsExample:
+              $ref: '#/components/examples/PaginatedUserDepartmentsExample'
+    UserDepartmentResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDepartment'
+          examples:
+            UserDepartmentExample:
+              $ref: '#/components/examples/UserDepartmentExample'
+            UserDepartmentWithUsersIncludeExample:
+              $ref: '#/components/examples/UserDepartmentWithUsersIncludeExample'
   examples:
     BadRequestExample:
       summary: 400 No access token
@@ -9460,6 +9631,42 @@ components:
             current: 1
             total_pages: 1
             links: [ ]
+    UserDepartmentExample:
+      summary: User department example
+      value:
+        data:
+          id: 123
+          name: "IT Department"
+    UserDepartmentWithUsersIncludeExample:
+      summary: User department with users include example
+      value:
+        data:
+          id: 123
+          name: "IT Department"
+          users:
+            data:
+              - id: 1
+                username: "lucas"
+                email: "lucas@dossierdata.nl"
+                first_name: "Lucas"
+                last_name: "van der Have"
+                fullname: "Lucas van der Have"
+                preferred_office_id: 1
+                active: true
+    PaginatedUserDepartmentsExample:
+      summary: 200 OK
+      value:
+        data:
+          - id: 123
+            name: "IT Department"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
   parameters:
     PerPage:
       name: perPage
@@ -9673,6 +9880,27 @@ components:
       example: "1"
       schema:
         type: integer
+    UserDepartmentId:
+      name: user_department_id
+      in: path
+      description: The id of the user department
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    UserDepartmentIncludes:
+      name: include
+      in: query
+      description: The user department includes
+      required: false
+      example:
+        - "users"
+      schema:
+        type: array
+        items:
+          type: string
+      style: form
+      explode: true
     PortalInvitationId:
       name: portalInvitation_id
       in: path
