@@ -3120,6 +3120,25 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/OfficeId'
+  /office/by_customer_relation_number:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Office'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Find an office by a customer relation number
+      description: ""
+      tags:
+        - Office
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/OfficeByCustomerRelationNumber"
   /user:
     get:
       responses:
@@ -4061,7 +4080,6 @@ components:
                     * `11` - Possession
                     * `12` - Obligation
                     * `13` - Current living condition
-                $ref: '#/components/schemas/CategoryEnum'
               status:
                 type: number
                 enum:
@@ -4608,6 +4626,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Office'
+    OfficeByCustomerRelationNumber:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - number
+              - relation_number_type_id
+            properties:
+              number:
+                type: string
+                description: The relation number
+              relation_number_type_id:
+                type: integer
+                description: The id of the relation number type
+          examples:
+            GetOfficeByCustomerRelationNumberExample:
+              value:
+                number: '321654'
+                relation_number_type_id: 1
     User:
       content:
         application/json:
@@ -4787,10 +4825,20 @@ components:
           authorizationUrl: /api/v1/oauth/authorize
           tokenUrl: /api/v1/oauth/access_token
           scopes:
-            'account:full': Rekeningen inzien
+            'account:basic': Rekeningen inzien basisinformatie
+            'account:full': Rekeningen inzien volledig
+            'account:create': Rekening aanmaken
+            'account:update': Rekening updaten
+            'account:delete': Rekening verwijderen
             'address:basic': Basis adresgegevens
             'address:coordinates': Adres coordinaten
             'address:create': Nieuwe adressen aanmaken
+            'address:update': Adres updaten
+            'address:delete': Adres delete
+            'attachable:basic': Attachable inzien
+            'attachable:create': Attachable aanmaken
+            'attachable:update': Attachable updaten
+            'attachable:delete': Attachable verwijderen
             'country:index': Index countries
             'country:show': Show a country
             'customer:basic': Basisgegevens van een klant
@@ -4800,6 +4848,8 @@ components:
             'customer:create_lead': Nieuwe leads aanmaken
             'customer:create_mortgage_lead': Nieuwe hypotheek leads aanmaken
             'customer:full': Alle gegevens van een klant
+            'customer:update': Klant updaten
+            'customer:delete': Klant verwijderen
             'damage_person:address': Schade betrokken persoon adres
             'damage_person:agency': Schade betrokken persoon maatschappij
             'damage_person:basic': Schade betrokken persoon
