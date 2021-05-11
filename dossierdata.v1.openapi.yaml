@@ -165,6 +165,52 @@ paths:
         - oauth2:
             - address:basic
             - address:coordinates
+  /assessment_token/generate_for_customer:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/JWTResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a JWT token to log in a customer on the assessment portal
+      description: |-
+        This endpoint can be used to create a JWT token to log in a customer on the assessment portal
+      tags:
+        - Assessment token
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/GenerateAssessmentTokenForCustomer"
+      security:
+        - oauth2:
+            - assessment_token:generate
+  /assessment_token/generate_for_partner:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/JWTResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
+      summary: Create a JWT token to log in a customer's partner on the assessment portal
+      description: |-
+        This endpoint can be used to create a JWT token to log in a customer's partner on the assessment portal
+      tags:
+        - Assessment token
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/GenerateAssessmentTokenForCustomer"
+      security:
+        - oauth2:
+            - assessment_token:generate
   /attachable:
     post:
       responses:
@@ -3964,6 +4010,8 @@ tags:
     description: Endpoint for Account resource management
   - name: Address
     description: Endpoint for Address resource management
+  - name: Assessment token
+    description: Endpoint for generating Assessment JTW
   - name: Attachable
     description: Endpoint for Attachable resource management
   - name: Calendar
@@ -4430,6 +4478,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Address'
+    GenerateAssessmentTokenForCustomer:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - customer_id
+            properties:
+              customer_id:
+                type: integer
+                description: Id of the customer
+              client_id:
+                type: integer
+                description: Optionally provide a different oauth client id
+              type:
+                $ref: '#/components/schemas/PortalInvitationTypeEnum'
+          examples:
+            GenerateDefaultAssessmentTokenForCustomer:
+              value:
+                customer_id: 2
+                client_id: 12345
+            GenerateCustomAssessmentTokenForCustomer:
+              value:
+                customer_id: 2
+                client_id: 12345
+                type: 'full'
     CreateAttachable:
       content:
         application/json:
@@ -4835,6 +4909,7 @@ components:
             'address:create': Nieuwe adressen aanmaken
             'address:update': Adres updaten
             'address:delete': Adres delete
+            'assessment_token:generate': Generate assessment jwt auth token
             'attachable:basic': Attachable inzien
             'attachable:create': Attachable aanmaken
             'attachable:update': Attachable updaten
@@ -7295,6 +7370,22 @@ components:
           examples:
             PaginatedAddressExample:
               $ref: '#/components/examples/PaginatedAddressesExample'
+    JWTResponse:
+      description: A JWT response
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  token:
+                    type: string
+          examples:
+            JWTResponseExample:
+              $ref: '#/components/examples/JWTResponseExample'
     Attachable:
       description: An attachable resource
       headers: { }
@@ -8350,6 +8441,11 @@ components:
             current: 1
             total_pages: 1
             links: [ ]
+    JWTResponseExample:
+      summary: 200 OK
+      value:
+        data:
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
     AttachableExample:
       summary: 200 OK
       value:
