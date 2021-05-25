@@ -4793,6 +4793,11 @@ components:
           schema:
             $ref: '#/components/schemas/PortalInvitation'
     CreatePortalInvitation:
+      description: >
+        Create a new portal invitation.
+
+        If no `email_account_id` is provided with which to send the invitation and `send_email` is set to true the
+        system will default to `no-reply@dossierdata.nl` as the sender. Default `type` is `full`.
       content:
         application/json:
           schema:
@@ -4800,7 +4805,6 @@ components:
             required:
               - customer_id
               - send_email
-              - type
             properties:
               customer_id:
                 type: number
@@ -4813,6 +4817,43 @@ components:
               valid_until:
                 type: string
                 description: Date time string until when the invite is valid. Set to null if the invite must never expire.
+              token:
+                type: string
+                description: A long token that is used to identify the customer when logging in/registering for the first time.
+          examples:
+            Create with defaults:
+              value:
+                customer_id: '1'
+                send_email: true
+            Create specific type:
+              value:
+                customer_id: '1'
+                send_email: true
+                type: 'source_data'
+            Create with custom from address:
+              value:
+                customer_id: '1'
+                email_account_id: '2'
+                send_email: true
+                type: 'source_data'
+            Create with custom recipient address:
+              value:
+                customer_id: '1'
+                send_email: true
+                type: 'source_data'
+                email: 'customer_recipient@email.address'
+            Create with all fields:
+              value:
+                customer_id: '1'
+                email_account_id: '2'
+                send_email: true
+                type: 'source_data'
+                token: 'ipXYdC7AawabAqrA8ngGLh5M45sYdReSY544hN1iHFCvXMTNsl9bCko792De9wuu'
+                active: true
+                email: 'customer_recipient@email.address'
+                valid_until: '2021-03-15T00:00:00+00:00'
+                created_at: '2021-02-15T00:00:00+00:00'
+                updated_at: '2021-02-15T00:00:00+00:00'
     CustomerByRelationNumber:
       content:
         application/json:
