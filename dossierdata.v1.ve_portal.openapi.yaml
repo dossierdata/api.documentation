@@ -1,0 +1,629 @@
+openapi: 3.0.0
+info:
+  title: DDAT Ve Portal API
+  version: 1.0.0
+servers:
+  - url: https://subdomain.ddat.nl
+components:
+  securitySchemes:
+    oauth2Auth:
+      type: http
+      scheme: oauth2
+security:
+  - oauth2Auth: [ ]
+tags:
+  - name: Customer
+  - name: Loan
+  - name: Income
+  - name: Office
+  - name: Authorization
+paths:
+  /api/v1/ve/customer/by_reference:
+    post:
+      tags:
+        - Customer
+      summary: GetCustomer
+      description: Find a customer by a CustomerReference.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/submit_partner:
+    post:
+      tags:
+        - Customer
+      summary: SubmitPartner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+                Partner:
+                  DateOfBirth: '1990-07-30'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/submit_name:
+    post:
+      tags:
+        - Customer
+      summary: SubmitName
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+                Customer:
+                  Initials: A.B.
+                  Prefix: de
+                  LastName: Vries
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/submit:
+    post:
+      tags:
+        - Customer
+      summary: Submit All
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+                Customer:
+                  Initials: A.B.
+                  Prefix: de
+                  LastName: Vries
+                DateOfBirthApplicant: 1985-01-01T00:00:00+0200
+                Gender: Male
+                MobilePhoneNumber: '0612345678'
+                EmailAddress: test@test.com
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/submit_mobile:
+    post:
+      tags:
+        - Customer
+      summary: SubmitPhone
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '1235'
+                  Label: test
+                MobilePhoneNumber:
+                  DateOfBirth: '0612345678'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/submit_email:
+    post:
+      tags:
+        - Customer
+      summary: SubmitEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '1235'
+                  Label: test
+                EmailAddress: test@test.com
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/submit_date_of_birth_applicant:
+    post:
+      tags:
+        - Customer
+      summary: SubmitApplicantDateOfBirth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+                DateOfBirthApplicant: '1985-01-01T00:00:00+02:00'
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/customer/delete_partner:
+    post:
+      tags:
+        - Customer
+      summary: DeletePartner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '1235'
+                  Label: test
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/loan/by_customer_reference:
+    post:
+      tags:
+        - Loan
+      summary: GetLoansByCustomer
+      description: Get LoanIds by a CustomerReference.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/loan/by_reference:
+    post:
+      tags:
+        - Loan
+      summary: GetLoan
+      description: Get a loan by a LoanId.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                LoanId: '3917'
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/loan/submit:
+    post:
+      tags:
+        - Loan
+      summary: SubmitLoan
+      description: Get a loan by a LoanId.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+                Loan:
+                  Id: '4690'
+                  LoanNumber: null
+                  Collateral:
+                    Id: '3917'
+                    Address:
+                      HouseNumber: '36'
+                      PostalCode: 7824HD
+                      HouseNumberAddition: null
+                      Street: Bettingeslag
+                      City: EMMEN
+                    PropertyTaxValue: 105000
+                    PropertyMarketValue: 150000
+                  LoanParts:
+                    - LoanPartNumber: '1'
+                      EffectiveDate: '2018-11-08T17:41:31+01:00'
+                      EndDate: '2018-11-08T17:41:31+01:00'
+                      PartialSum: '38798.00'
+                      RemainingPartialSum: 0
+                      RepaymentMethod: InterestOnly
+                      InterestProduct:
+                        InterestProductNumber: 7572
+                        Name: Onbekend
+                        InterestType: Fixed
+                        InterestRate: '2.60'
+                        EffectiveDate: null
+                        EndDate: '2018-11-08T17:41:31+01:00'
+                        DurationInMonths: 240
+                        RemainingDurationInMonths: null
+                      GrossMonthlyMortgagePayments: 0
+                      RepaymentAmount: 0
+                      InterestAmount: 0
+                    - LoanPartNumber: '2'
+                      EffectiveDate: '2018-11-08T17:41:31+01:00'
+                      EndDate: '2018-11-08T17:41:31+01:00'
+                      PartialSum: '57650.00'
+                      RemainingPartialSum: 0
+                      RepaymentMethod: Amortization
+                      InterestProduct:
+                        InterestProductNumber: 7573
+                        Name: Onbekend
+                        InterestType: Fixed
+                        InterestRate: '2.50'
+                        EffectiveDate: null
+                        EndDate: '2018-11-08T17:41:31+01:00'
+                        DurationInMonths: 240
+                        RemainingDurationInMonths: null
+                      GrossMonthlyMortgagePayments: 0
+                      RepaymentAmount: 0
+                      InterestAmount: 0
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/income/by_customer_reference:
+    post:
+      tags:
+        - Income
+      summary: GetIncome
+      description: Get Income by a CustomerReference.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/income/submit:
+    post:
+      tags:
+        - Income
+      summary: SubmitIncome
+      description: Submit Customer and Partner Income by a CustomerReference.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+                CustomerIncome:
+                  GrossYearlyIncome: 25106
+                  GrossYearlyPensionIncome:
+                    GrossYearlyOldAgePensionAmount: 14947
+                    GrossYearlyEmploymentPensionAmount: 0
+                    GrossYearlyAnnuityAmount: 0
+                PartnerIncome:
+                  GrossYearlyIncome: 25106
+                  GrossYearlyPensionIncome:
+                    GrossYearlyOldAgePensionAmount: 14947
+                    GrossYearlyEmploymentPensionAmount: 0
+                    GrossYearlyAnnuityAmount: 0
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/ve/office/by_customer_reference:
+    post:
+      tags:
+        - Office
+      summary: GetOffice
+      description: Find an office by a CustomerReference.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CustomerReference:
+                  Id: '12345'
+                  Label: test
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: Bearer token
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
+  /api/v1/oauth/access_token:
+    post:
+      tags:
+        - Authorization
+      summary: Client Grant Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                client_id: 1
+                client_secret: secret
+                grant_type: client_credentials
+                scope: ve
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: { }
