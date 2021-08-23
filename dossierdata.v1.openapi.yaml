@@ -626,7 +626,7 @@ paths:
     post:
       responses:
         200:
-          $ref: '#/components/responses/CreatedResponse'
+          $ref: '#/components/responses/CreatedCustomerResponse'
         400:
           $ref: '#/components/responses/BadRequestResponse'
         401:
@@ -674,6 +674,7 @@ paths:
             - customer:create_lead
   /customer/open/{customer_id_or_uuid}:
     get:
+      operationId: paginateCustomers
       responses:
         200:
           $ref: '#/components/responses/CustomerURI'
@@ -797,6 +798,7 @@ paths:
             - customer:full
   /customer/{customer_id}:
     get:
+      operationId: getCustomer
       responses:
         200:
           $ref: '#/components/responses/CustomerResponse'
@@ -830,6 +832,7 @@ paths:
             - customer:contact
             - customer:full
     put:
+      operationId: updateCustomer
       responses:
         200:
           $ref: '#/components/responses/UpdatedResponse'
@@ -857,6 +860,7 @@ paths:
         - oauth2:
             - customer:update
     delete:
+      operationId: deleteCustomer
       responses:
         200:
           $ref: '#/components/responses/DeletedResponse'
@@ -881,6 +885,7 @@ paths:
             - customer:delete
   /customer/{customer_id}/ax_message:
     put:
+      operationId: updateCustomerByAX
       responses:
         200:
           $ref: '#/components/responses/UpdatedResponse'
@@ -5599,7 +5604,7 @@ components:
     oauth2:
       type: oauth2
       flows:
-        authorizationCode:
+        clientCredentials:
           authorizationUrl: /api/v1/oauth/authorize
           tokenUrl: /api/v1/oauth/access_token
           scopes:
@@ -8235,6 +8240,38 @@ components:
           examples:
             UnauthorizedExample:
               $ref: '#/components/examples/UnprocessableEntityExample'
+    CreatedCustomerResponse:
+      description: The resource was successfully created
+      headers: { }
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Created'
+          examples:
+            CreatedExample:
+              $ref: '#/components/examples/CreatedExample'
+      links:
+        Get customer:
+          operationId: getCustomer
+          parameters:
+            customer_id: '$response.body#/data/id'
+          description: >-
+            The `id` value returned in the response can be used as the
+            `customer_id` parameter in `GET /customer/{customer_id}`.
+        Update customer:
+          operationId: updateCustomer
+          parameters:
+            customer_id: '$response.body#/data/id'
+          description: >-
+            The `id` value returned in the response can be used as the
+            `customer_id` parameter in `PUT /customer/{customer_id}`.
+        Delete customer:
+          operationId: deleteCustomer
+          parameters:
+            customer_id: '$response.body#/data/id'
+          description: >-
+            The `id` value returned in the response can be used as the
+            `customer_id` parameter in `DELETE /customer/{customer_id}`.
     CreatedResponse:
       description: The resource was successfully created
       headers: { }
@@ -8447,6 +8484,14 @@ components:
               $ref: '#/components/examples/CustomerFullExample'
             CustomerWithIncludesExample:
               $ref: '#/components/examples/CustomerWithIncludesExample'
+      links:
+        Get customer by customer_id:
+          operationId: getCustomer
+          parameters:
+            customer_id: '$response.body#/data/id'
+          description: >-
+            The `id` value returned in the response can be used as the
+            `customer_id` parameter in `GET /customer/{customer_id}`.
     PaginatedCustomersResponse:
       description: A paginated collection of the customer resource
       headers: { }
@@ -8468,6 +8513,14 @@ components:
               $ref: '#/components/examples/PaginatedCustomersBasicAndContactScopeExample'
             PaginatedCustomersFullScopeExample:
               $ref: '#/components/examples/PaginatedCustomersFullScopeExample'
+      links:
+        Get customer by customer_id:
+          operationId: getCustomer
+          parameters:
+            customer_id: '$response.body#/data/0/id'
+          description: >-
+            The `id` value returned in the response can be used as the
+            `customer_id` parameter in `GET /customer/{customer_id}`.
     DossierResponse:
       description: OK
       headers: { }
