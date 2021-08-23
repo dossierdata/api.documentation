@@ -4416,10 +4416,7 @@ tags:
   - name: Address
     description: Endpoint for Address resource management
 servers:
-  - url: https://{subdomain}.ddat.nl/api/v1
-    variables:
-      subdomain:
-        default: test
+  - url: /api/v1
 components:
   requestBodies:
     CreateSignalRequest:
