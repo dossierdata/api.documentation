@@ -4416,7 +4416,7 @@ tags:
   - name: Address
     description: Endpoint for Address resource management
 servers:
-  - url: /api/v1
+  - url: https://test.ddat.nl/api/v1
 components:
   requestBodies:
     CreateSignalRequest:
