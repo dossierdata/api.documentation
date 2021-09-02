@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: DDAT Assessment Portal
+  version: 1.0.0
+servers:
+  - url: https://subdomain.mijndossierdata.nl
+tags:
+  - name: Login
+paths:
+  /login:
+    get:
+      tags:
+        - Login
+      summary: Login
+      description: The login page of the assessment portal and all possible parameters.
+      parameters:
+        - name: username
+          description: Parameter to prefill username
+          in: query
+          required: false
+          schema:
+            type: string
+          example: username
+        - name: token
+          description: >-
+            Parameter which provides a JSON Web Token to automatically log a customer in.
+
+            This token can be fetched via the [/api/v1/assessment_token_generate_for_customer](https://ddat.nl/apidocs/?urls.primaryName=DossierData%20v1#/Assessment%20token/post_assessment_token_generate_for_customer) endpoint or you can generate one yourself if your public key used to sign the the JWT is known to us. If you generate the JWT yourself the required claims are: `cid` containing customer id and `scopes` containing 'portal'.
+          in: query
+          required: false
+          schema:
+            type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        - name: redirect_success
+          description: Parameter for redirecting the customer to a specific url when the assessment has been completed successfully
+          in: query
+          required: false
+          schema:
+            type: string
+          example: https://redirect.to/success
+        - name: redirect_fail
+          description: Parameter for redirecting the customer to a specific url when something during the assessment failed
+          in: query
+          required: false
+          schema:
+            type: string
+          example: https://redirect.to/failed
+      responses:
+        '200':
+          description: Assessment portal login page opened with parameters
+          content:
+            application/html: { }
