@@ -213,7 +213,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       requestBody:
-        $ref: "#/components/requestBodies/GenerateAssessmentTokenForCustomerRequest"
+        $ref: "#/components/requestBodies/GenerateAssessmentTokenForPartnerRequest"
       security:
         - oauth2:
             - assessment_token:generate
@@ -4865,13 +4865,39 @@ components:
               summary: Create default assessment token
               value:
                 customer_id: 2
-                client_id: 12345
             GenerateCustomAssessmentTokenForCustomer:
               summary: Create assessment token with specific type
               value:
                 customer_id: 2
                 client_id: 12345
-                type: 'full'
+                type: 'mortgage'
+    GenerateAssessmentTokenForPartnerRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - customer_id
+            properties:
+              customer_id:
+                type: integer
+                description: Id of the customer
+              client_id:
+                type: integer
+                description: Optionally provide a different oauth client id
+              type:
+                $ref: '#/components/schemas/PartnerPortalInvitationTypeEnum'
+          examples:
+            GenerateDefaultAssessmentTokenForCustomer:
+              summary: Create default assessment token
+              value:
+                customer_id: 2
+            GenerateCustomAssessmentTokenForCustomer:
+              summary: Create assessment token with specific type
+              value:
+                customer_id: 2
+                client_id: 12345
+                type: 'mortgage'
     CreateAttachableRequest:
       content:
         application/json:
@@ -7871,6 +7897,25 @@ components:
           - `assessment`: This is an invite for the assessment process (Oriëntatie)
           - `source_data`: This is an invite for the source data process via iWize (Brondata)
           - `advice`: This is an invite for the advice process (Advies)
+          - `mortgage_pension`: This invite gathers and verifies available mortgage and pension data (Hypotheek en Pensioen)
+          - `mortgage`: This invite gathers and verifies available mortgage data (Hypotheek)
+          - `pension`: This invite gathers and verifies available pension data (Pensioen)
+    PartnerPortalInvitationTypeEnum:
+      type: string
+      enum:
+        - 'partner'
+        - 'partner_assessment'
+        - 'partner_source_data'
+        - 'partner_advice'
+        - 'mortgage_pension'
+        - 'mortgage'
+        - 'pension'
+      description: >
+        An enum that describes all types of portal invitations.
+          - `partner`: This is an invite for the entire portal process which included the source data and an assessment for the partner (Volledig partner)
+          - `partner_assessment`: This is an invite for the assessment process for the partner (Partner oriëntatie)
+          - `partner_source_data`: This is an invite for the source data process for the partner via iWize (Partner brondata)
+          - `partner_advice`: This is an invite for the advice process for the partner (Partner advies)
           - `mortgage_pension`: This invite gathers and verifies available mortgage and pension data (Hypotheek en Pensioen)
           - `mortgage`: This invite gathers and verifies available mortgage data (Hypotheek)
           - `pension`: This invite gathers and verifies available pension data (Pensioen)
