@@ -4181,6 +4181,32 @@ paths:
       security:
         - oauth2:
             - hdn_company:basic
+  /hdn_company/by_hdn_code:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/HDNCompanyResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityResponse'
+      summary: Find HDN company
+      description: Find an HDN company by HDN code
+      tags:
+        - HDN company
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      requestBody:
+        $ref: "#/components/requestBodies/GetHDNCompanyByHDNCodeRequest"
+      security:
+        - oauth2:
+            - hdn_company:basic
   /hdn_company_label:
     get:
       responses:
@@ -4210,6 +4236,8 @@ paths:
           $ref: '#/components/responses/BadRequestResponse'
         401:
           $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
       summary: List all resources
       description: Get a list of all HDN companies.
       tags:
@@ -4251,6 +4279,8 @@ paths:
           $ref: '#/components/responses/BadRequestResponse'
         401:
           $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
       summary: List all resources
       description: Get a list of all HDN companies.
       tags:
@@ -4481,6 +4511,12 @@ tags:
     description: Endpoint for Email resource management
   - name: HDN
     description: Endpoint for HDN functions
+  - name: HDN company
+    description: Endpoint for HDN companies
+  - name: HDN company label
+    description: Endpoint for HDN company labels
+  - name: HDN company product
+    description: Endpoint for HDN company products
   - name: Letter
     description: Endpoint for Letter resource management
   - name: Lock
@@ -5699,6 +5735,20 @@ components:
           examples:
             UpdateCustomerPropertyExample:
               $ref: '#/components/examples/UpdateCustomerPropertyExample'
+    GetHDNCompanyByHDNCodeRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hdn_code
+            properties:
+              hdn_code:
+                type: string
+                description: The HDN code to search by
+          examples:
+            GetHDNCompanyByHDNCodeRequestExample:
+              $ref: '#/components/examples/GetHDNCompanyByHDNCodeRequestExample'
   securitySchemes:
     oauth2:
       type: oauth2
@@ -9234,6 +9284,19 @@ components:
           examples:
             PaginatedSearchesResponseExample:
               $ref: '#/components/examples/PaginatedSearchesResponseExample'
+    HDNCompanyResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/HDNCompany'
+          examples:
+            HDNCompanyResponseExample:
+              $ref: '#/components/examples/HDNCompanyResponseExample'
     PaginatedHDNCompaniesResponse:
       description: OK
       headers: { }
@@ -9249,7 +9312,7 @@ components:
               meta:
                 $ref: '#/components/schemas/Meta'
           examples:
-            PaginatedSearchesResponseExample:
+            PaginatedHDNCompaniesResponseExample:
               $ref: '#/components/examples/PaginatedHDNCompaniesResponseExample'
     PaginatedHDNCompanyLabelsResponse:
       description: OK
@@ -9266,7 +9329,7 @@ components:
               meta:
                 $ref: '#/components/schemas/Meta'
           examples:
-            PaginatedSearchesResponseExample:
+            PaginatedHDNCompanyLabelsResponseExample:
               $ref: '#/components/examples/PaginatedHDNCompanyLabelsResponseExample'
     PaginatedHDNCompanyProductsResponse:
       description: OK
@@ -9283,7 +9346,7 @@ components:
               meta:
                 $ref: '#/components/schemas/Meta'
           examples:
-            PaginatedSearchesResponseExample:
+            PaginatedHDNCompanyProductsResponseExample:
               $ref: '#/components/examples/PaginatedHDNCompanyProductsResponseExample'
     AXMessageResponse:
       description: OK
@@ -11608,6 +11671,18 @@ components:
         is_current: true
         percentage_owner: 50
         address_type: "mail"
+    HDNCompanyResponseExample:
+      summary: A single HDN companies
+      value:
+        data:
+          id: 123
+          hdn_code: "AA"
+          sender_name: "ABN Amro"
+          receiver_name: "ABN Amro"
+          is_sender: true
+          is_receiver: true
+          max_hdn_version: 21
+          min_hdn_version: 16
     PaginatedHDNCompaniesResponseExample:
       summary: Paginated HDN companies
       value:
@@ -11666,6 +11741,10 @@ components:
             current: 1
             total_pages: 1
             links: [ ]
+    GetHDNCompanyByHDNCodeRequestExample:
+      summary: Find HDN company by HDN code
+      value:
+        hdn_code: "AA"
   parameters:
     PerPage:
       name: perPage
