@@ -7862,12 +7862,18 @@ components:
         - 'assessment'
         - 'source_data'
         - 'advice'
+        - 'mortgage_pension'
+        - 'mortgage'
+        - 'pension'
       description: >
         An enum that describes all types of portal invitations.
           - `full`: This is an invite for the entire portal process which included the source data and an assessment (Volledig)
           - `assessment`: This is an invite for the assessment process (Oriëntatie)
           - `source_data`: This is an invite for the source data process via iWize (Brondata)
           - `advice`: This is an invite for the advice process (Advies)
+          - `mortgage_pension`: This invite gathers and verifies available mortgage and pension data (Hypotheek en Pensioen)
+          - `mortgage`: This invite gathers and verifies available mortgage data (Hypotheek)
+          - `pension`: This invite gathers and verifies available pension data (Pensioen)
     MorphRelationTypeEnum:
       type: string
       enum:
