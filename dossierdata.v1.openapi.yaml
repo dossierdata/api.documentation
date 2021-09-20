@@ -11670,7 +11670,7 @@ components:
         percentage_owner: 50
         address_type: "mail"
     HDNCompanyResponseExample:
-      summary: A single HDN companies
+      summary: A single HDN company
       value:
         data:
           id: 123
