@@ -4161,6 +4161,136 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/AXMessageId'
+  /hdn_company:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedHDNCompaniesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+      summary: List all resources
+      description: Get a list of all HDN companies.
+      tags:
+        - HDN company
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - hdn_company:basic
+  /hdn_company/by_hdn_code:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/HDNCompanyResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityResponse'
+      summary: Find HDN company
+      description: Find an HDN company by HDN code
+      tags:
+        - HDN company
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/GetHDNCompanyByHDNCodeRequest"
+      security:
+        - oauth2:
+            - hdn_company:basic
+  /hdn_company_label:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedHDNCompanyLabelsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+      summary: List all resources
+      description: Get a list of all HDN company labels.
+      tags:
+        - HDN company label
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - hdn_company_label:basic
+  /hdn_company_label/by_company/{hdn_company_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedHDNCompanyLabelsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+      summary: List all resources linked to HDN company
+      description: Get a list of labels of a HDN company.
+      tags:
+        - HDN company label
+      parameters:
+        - $ref: '#/components/parameters/HDNCompanyId'
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - hdn_company_label:basic
+  /hdn_company_product:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedHDNCompanyProductsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+      summary: List all resources
+      description: Get a list of all HDN company products.
+      tags:
+        - HDN company product
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - hdn_company_product:basic
+  /hdn_company_product/by_company/{hdn_company_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedHDNCompanyProductsResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+      summary: List all resources linked to HDN company
+      description: Get a list of products of a HDN company.
+      tags:
+        - HDN company product
+      parameters:
+        - $ref: '#/components/parameters/HDNCompanyId'
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - hdn_company_product:basic
   /property:
     get:
       responses:
@@ -4379,6 +4509,12 @@ tags:
     description: Endpoint for Email resource management
   - name: HDN
     description: Endpoint for HDN functions
+  - name: HDN company
+    description: Endpoint for HDN companies
+  - name: HDN company label
+    description: Endpoint for HDN company labels
+  - name: HDN company product
+    description: Endpoint for HDN company products
   - name: Letter
     description: Endpoint for Letter resource management
   - name: Lock
@@ -5597,6 +5733,20 @@ components:
           examples:
             UpdateCustomerPropertyExample:
               $ref: '#/components/examples/UpdateCustomerPropertyExample'
+    GetHDNCompanyByHDNCodeRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - hdn_code
+            properties:
+              hdn_code:
+                type: string
+                description: The HDN code to search by
+          examples:
+            GetHDNCompanyByHDNCodeRequestExample:
+              $ref: '#/components/examples/GetHDNCompanyByHDNCodeRequestExample'
   securitySchemes:
     oauth2:
       type: oauth2
@@ -5658,6 +5808,9 @@ components:
             'hdn_ax': AX berichten overzicht
             'hdn_ax:create': Opslaan van nieuwe AX berichten
             'hdn_ax:show': AX bericht statussen
+            'hdn_company:basic': HDN companies inzien
+            'hdn_company_label:basic': HDN company labels inzien
+            'hdn_company_product:basic': HDN company products inzien
             'letter:full': Brieven
             'lock:full': Locks
             'mortgage:basic': Basisgegevens hypotheek
@@ -8149,7 +8302,7 @@ components:
       properties:
         id:
           type: number
-          description: The id of the agency property
+          description: The id of the property
         property_id:
           type: number
           description: The property id to which the agency is linked
@@ -8161,6 +8314,81 @@ components:
           description: The value of the valuation
         type:
           $ref: '#/components/schemas/PropertyValuationTypeEnum'
+    HDNCompany:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The id of the HDN company
+        hdn_code:
+          type: string
+          description: The company's HDN code
+        sender_name:
+          type: string
+          description: The sender name
+        receiver_name:
+          type: number
+          description: The receiver name
+        is_sender:
+          type: bool
+          description: Describes is company is a sender
+        is_receiver:
+          type: bool
+          description: Describes is company is a receiver
+        max_hdn_version:
+          type: number
+          description: The maximum HDN version until which this company is valid
+        min_hdn_version:
+          type: number
+          description: The minimum HDN version from which this company is valid
+    HDNCompanyLabel:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The id of the HDN company label
+        company_id:
+          type: number
+          description: The id of the HDN company
+        hdn_code:
+          type: string
+          description: The company's HDN code
+        product_id:
+          type: number
+          description: The id of the HDN company label
+        name:
+          type: string
+          description: The name of the HDN company label
+        max_hdn_version:
+          type: number
+          description: The maximum HDN version until which this company is valid
+        min_hdn_version:
+          type: number
+          description: The minimum HDN version from which this company is valid
+    HDNCompanyProduct:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The id of the HDN company product
+        company_id:
+          type: number
+          description: The id of the HDN company
+        hdn_code:
+          type: string
+          description: The company's HDN code
+        product_id:
+          type: number
+          description: The id of the HDN company product
+        name:
+          type: string
+          description: The name of the HDN company product
+        max_hdn_version:
+          type: number
+          description: The maximum HDN version until which this company is valid
+        min_hdn_version:
+          type: number
+          description: The minimum HDN version from which this company is valid
   responses:
     BadRequestResponse:
       description: Bad Request
@@ -9054,6 +9282,70 @@ components:
           examples:
             PaginatedSearchesResponseExample:
               $ref: '#/components/examples/PaginatedSearchesResponseExample'
+    HDNCompanyResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/HDNCompany'
+          examples:
+            HDNCompanyResponseExample:
+              $ref: '#/components/examples/HDNCompanyResponseExample'
+    PaginatedHDNCompaniesResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HDNCompany'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedHDNCompaniesResponseExample:
+              $ref: '#/components/examples/PaginatedHDNCompaniesResponseExample'
+    PaginatedHDNCompanyLabelsResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HDNCompanyLabel'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedHDNCompanyLabelsResponseExample:
+              $ref: '#/components/examples/PaginatedHDNCompanyLabelsResponseExample'
+    PaginatedHDNCompanyProductsResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HDNCompanyProduct'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedHDNCompanyProductsResponseExample:
+              $ref: '#/components/examples/PaginatedHDNCompanyProductsResponseExample'
     AXMessageResponse:
       description: OK
       headers: { }
@@ -11377,6 +11669,80 @@ components:
         is_current: true
         percentage_owner: 50
         address_type: "mail"
+    HDNCompanyResponseExample:
+      summary: A single HDN company
+      value:
+        data:
+          id: 123
+          hdn_code: "AA"
+          sender_name: "ABN Amro"
+          receiver_name: "ABN Amro"
+          is_sender: true
+          is_receiver: true
+          max_hdn_version: 21
+          min_hdn_version: 16
+    PaginatedHDNCompaniesResponseExample:
+      summary: Paginated HDN companies
+      value:
+        data:
+          - id: 123
+            hdn_code: "AA"
+            sender_name: "ABN Amro"
+            receiver_name: "ABN Amro"
+            is_sender: true
+            is_receiver: true
+            max_hdn_version: 21
+            min_hdn_version: 16
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
+    PaginatedHDNCompanyLabelsResponseExample:
+      summary: Paginated HDN company labels
+      value:
+        data:
+          - id: 345
+            company_id: 1
+            hdn_code: "AA"
+            name: "ABN AMRO Woninghypotheek"
+            product_id: 1
+            max_hdn_version: 21
+            min_hdn_version: 16
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
+    PaginatedHDNCompanyProductsResponseExample:
+      summary: Paginated HDN company products
+      value:
+        data:
+          - id: 345
+            company_id: 1
+            hdn_code: "AA"
+            name: "ABN AMRO Annuïteiten hypotheek"
+            product_id: 1
+            max_hdn_version: 21
+            min_hdn_version: 16
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
+    GetHDNCompanyByHDNCodeRequestExample:
+      summary: Find HDN company by HDN code
+      value:
+        hdn_code: "AA"
   parameters:
     PerPage:
       name: perPage
@@ -11687,6 +12053,14 @@ components:
       name: property_id
       in: path
       description: The id of the property
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    HDNCompanyId:
+      name: hdn_company_id
+      in: path
+      description: The id of the HDN company
       required: true
       example: "1"
       schema:
