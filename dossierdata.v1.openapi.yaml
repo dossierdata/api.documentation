@@ -4279,7 +4279,7 @@ paths:
           $ref: '#/components/responses/UnauthorizedResponse'
         404:
           $ref: '#/components/responses/NotFoundResponse'
-      summary: List all resources
+      summary: List all resources linked to HDN company
       description: Get a list of all HDN companies.
       tags:
         - HDN company product
