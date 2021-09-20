@@ -4237,7 +4237,7 @@ paths:
         404:
           $ref: '#/components/responses/NotFoundResponse'
       summary: List all resources linked to HDN company
-      description: Get a list of all HDN companies.
+      description: Get a list of labels of a HDN company.
       tags:
         - HDN company label
       parameters:
