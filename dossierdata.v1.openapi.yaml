@@ -4200,8 +4200,6 @@ paths:
         - HDN company
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
-        - $ref: '#/components/parameters/PerPage'
-        - $ref: '#/components/parameters/Page'
       requestBody:
         $ref: "#/components/requestBodies/GetHDNCompanyByHDNCodeRequest"
       security:
