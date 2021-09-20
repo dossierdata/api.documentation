@@ -4258,7 +4258,7 @@ paths:
         401:
           $ref: '#/components/responses/UnauthorizedResponse'
       summary: List all resources
-      description: Get a list of all HDN companies.
+      description: Get a list of all HDN company products.
       tags:
         - HDN company product
       parameters:
