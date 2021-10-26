@@ -102,21 +102,24 @@ paths:
                   description: The users username
                 password:
                   type: string
-                  description: The ussers password
+                  description: The users password
+                scope:
+                  type: string
+                  description: The requested scopes
               required:
                 - client_id
                 - client_secret
                 - grant_type
                 - username
                 - password
-                - scopes
+                - scope
               example:
                 client_id: d5fb86ec-60a0-49fe-95710-3615d74843ac
                 client_secret: 4d768389b2e9e9d5584a165204d72235c3c75401
                 grant_type: customer_password
                 username: johndoe
                 password: secret
-                scope: customer_api:customer, customer_api:tenant
+                scope: customer_api:customer customer_api:tenant
   /oauth/access_token#refresh_token:
     post:
       responses:
@@ -255,7 +258,7 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/Messages'
+          $ref: '#/components/responses/MessagesResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -272,7 +275,7 @@ paths:
     post:
       responses:
         200:
-          $ref: '#/components/responses/PostMessages'
+          $ref: '#/components/responses/PostMessageResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -291,7 +294,7 @@ paths:
     post:
       responses:
         200:
-          $ref: '#/components/responses/PostMessages'
+          $ref: '#/components/responses/PostMessageResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -323,7 +326,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:document
+            - customer_api:documents
   /document/upload:
     post:
       responses:
@@ -341,7 +344,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:document
+            - customer_api:documents
       requestBody:
         $ref: "#/components/requestBodies/CreateDocument"
   /document/:document_id:
@@ -362,7 +365,26 @@ paths:
         - $ref: '#/components/parameters/DocumentId'
       security:
         - oauth2:
-            - customer_api:document
+            - customer_api:documents
+
+  /living:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/LivingResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Living
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:living
 
   /mortgage:
     get:
@@ -381,7 +403,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_mortgages
+            - customer_api:mortgages
 
   /mortgage/:mortgage_id/document:
     get:
@@ -400,7 +422,8 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_mortgages, customer_api:customer_documents
+            - customer_api:mortgages
+            - customer_api:documents
 
 
 
@@ -421,7 +444,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_damages
+            - customer_api:damages
 
   /damage/:damage_id/document:
     get:
@@ -440,13 +463,14 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_damages, customer_api:customer_documents
+            - customer_api:damages
+            - customer_api:documents
 
   /policy:
     get:
       responses:
         200:
-          $ref: '#/components/responses/Policy'
+          $ref: '#/components/responses/PolicyResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -459,7 +483,7 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_damages
+            - customer_api:policies
 
   /policy/:policy_id/document:
     get:
@@ -478,26 +502,46 @@ paths:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_policies, customer_api:customer_documents
+            - customer_api:policies
+            - customer_api:documents
 
   /tenant:
     get:
       responses:
         200:
-          $ref: '#/components/responses/TenantInfo'
+          $ref: '#/components/responses/TenantInfoResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
-      summary: List all policies
-      description: Get a the current customers policies.
+      summary: Get tenant info
+      description: Get the current tenant info, e.g. name, logo's, slogans, etc.
       tags:
         - Tenant
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
       security:
         - oauth2:
-            - customer_api:customer_tenant
+            - customer_api:tenant
+
+  /task:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/TaskResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all tasks
+      description: Get the current customers tasks.
+      tags:
+        - Task
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:tasks
 
 tags:
   - name: Authentication
@@ -579,13 +623,22 @@ components:
           authorizationUrl: https://test.ddat.nl/api/v1/oauth/authorize
           tokenUrl: https://test.ddat.nl/api/v1/oauth/access_token
           scopes:
-            'customer_api:customer': Access to customer info
-            'customer_api:customer_messages': Access to message for customer
-            'customer_api:mortgages': Access to mortgages of customer
-            'customer_api:damages': Access to reported damages of customer
-            'customer_api:policies': Access to policies/insurances of customer
-            'customer_api:documents': Access to shared doucments fo customer
-            'customer_api:tenant': Access to customer api and tenant information
+            'customer_api:addresses': View addresses
+            'customer_api:customer': View customer info
+            'customer_api:customer_messages': View customer messages
+            'customer_api:damages': View damages
+            'customer_api:documents': View documents
+            'customer_api:income': View income
+            'customer_api:living': View current living condition
+            'customer_api:mortgages': View mortgages
+            'customer_api:notes': View notes
+            'customer_api:obligations': View obligations
+            'customer_api:policies': View policies
+            'customer_api:possessions': View posessions
+            'customer_api:retirement': View retirement
+            'customer_api:tasks': View tasks
+            'customer_api:tenant': View tenant info
+            'customer_api:update_customer': Update customer
   schemas:
     Created:
       type: object
@@ -1178,8 +1231,6 @@ components:
         A mortgage part is one of the parts that makes up the mortgage.
     User:
       type: object
-      required:
-        - username
       properties:
         id:
           type: number
@@ -1231,6 +1282,257 @@ components:
       description: >
         A search model contains a user defined query which can be used to find and export data. It can also be used as
         a data source for a signal.
+    Living:
+      type: object
+      properties:
+        type:
+          type: string
+          description: ''
+        type_description:
+          type: string
+          description: ''
+        real_estate_value:
+          type: string
+          description: ''
+        market_value:
+          type: string
+          description: ''
+        percentage_owner:
+          type: string
+          description: ''
+        leasehold_canon:
+          type: string
+          description: ''
+        property_type:
+          type: string
+          description: ''
+        property_type_description:
+          type: string
+          description: ''
+        property_purpose:
+          type: string
+          description: ''
+        property_purpose_description:
+          type: string
+          description: ''
+        sale_price:
+          type: string
+          description: ''
+        sale_costs:
+          type: string
+          description: ''
+        date_of_delivery:
+          type: string
+          description: ''
+        basic_rent:
+          type: string
+          description: ''
+        service_costs:
+          type: string
+          description: ''
+        rental_increase_rate:
+          type: string
+          description: ''
+        rental_costs:
+          type: string
+          description: ''
+        other_costs:
+          type: string
+          description: ''
+        contract_owner:
+          type: string
+          description: ''
+        living_together:
+          type: string
+          description: ''
+        energy_label:
+          type: string
+          description: ''
+        energy_label_end_date:
+          type: string
+          description: ''
+        country:
+          type: string
+          description: ''
+        province:
+          type: string
+          description: ''
+        county:
+          type: string
+          description: ''
+        city:
+          type: string
+          description: ''
+        district:
+          type: string
+          description: ''
+        neighborhood:
+          type: string
+          description: ''
+        street:
+          type: string
+          description: ''
+        postcode:
+          type: string
+          description: ''
+        number:
+          type: string
+          description: ''
+        number_addition:
+          type: string
+          description: ''
+        lat:
+          type: string
+          description: ''
+        lng:
+          type: string
+          description: ''
+        sale_status:
+          type: string
+          description: ''
+        for_sale:
+          type: string
+          description: ''
+        sold:
+          type: string
+          description: ''
+        price:
+          type: string
+          description: ''
+        price_type:
+          type: string
+          description: ''
+        price_kind:
+          type: string
+          description: ''
+        purchase_price:
+          type: string
+          description: ''
+        mortgage_original:
+          type: string
+          description: ''
+        mortgage_remaining:
+          type: string
+          description: ''
+        mortgage:
+          type: string
+          description: ''
+        debt_market_value_ratio_original:
+          type: string
+          description: ''
+        debt_market_value_ratio:
+          type: string
+          description: ''
+        basis_of_property_tax_rate:
+          type: string
+          description: ''
+        woz_value_home:
+          type: string
+          description: ''
+        property_tax_rate:
+          type: string
+          description: ''
+        notary_id:
+          type: string
+          description: ''
+        selling_broker_id:
+          type: string
+          description: ''
+        buying_agent_id:
+          type: string
+          description: ''
+        appraiser_id:
+          type: string
+          description: ''
+        waste_charges:
+          type: string
+          description: ''
+        sewage_charges:
+          type: string
+          description: ''
+        value_low:
+          type: string
+          description: ''
+        value_high:
+          type: string
+          description: ''
+        value_quality:
+          type: string
+          description: ''
+        built:
+          type: string
+          description: ''
+        size:
+          type: string
+          description: ''
+        plot_size:
+          type: string
+          description: ''
+        purpose:
+          type: string
+          description: ''
+        sub_purpose:
+          type: string
+          description: ''
+        apartment_type:
+          type: string
+          description: ''
+        apartment_sub_type:
+          type: string
+          description: ''
+        residential_building_type:
+          type: string
+          description: ''
+        residential_building_sub_type:
+          type: string
+          description: ''
+        acceptance:
+          type: string
+          description: ''
+        acceptance_addition:
+          type: string
+          description: ''
+        acceptance_date:
+          type: string
+          description: ''
+        label_class:
+          type: string
+          description: ''
+        label_type:
+          type: string
+          description: ''
+        performance_index:
+          type: string
+          description: ''
+        performance_coefficient:
+          type: string
+          description: ''
+        valid_until:
+          type: string
+          description: ''
+        for_sale_since:
+          type: string
+          description: ''
+        sold_since:
+          type: string
+          description: ''
+        last_check:
+          type: string
+          description: ''
+        since:
+          type: string
+          description: ''
+        rate_class:
+          type: string
+          description: ''
+        rate_class_original:
+          type: string
+          description: ''
+        structural_engineer_id:
+          type: number
+          description: ''
+      description: >
+        A current living condition of the customer
     NotFound:
       type: object
       properties:
@@ -1421,6 +1723,110 @@ components:
           - `null`: Unknown
           - `0`: Female
           - `1`: Male
+    TenantInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        logo:
+          type: string
+        header:
+          type: string
+        full_name:
+          type: string
+        website:
+          type: string
+        primary_color:
+          type: string
+        secondary_color:
+          type: string
+        tertiary_color:
+          type: string
+        use_slogan:
+          type: boolean
+        use_contact_email:
+          type: boolean
+        use_support_email:
+          type: boolean
+        slogan:
+          type: string
+        contact_email:
+          type: string
+        support_email:
+          type: string
+    Task:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        status:
+          type: integer
+        description:
+          type: string
+        date:
+          type: string
+        time:
+          type: string
+    Policy:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        descriptions:
+          type: string
+        is_package:
+          type: boolean
+        parent_id:
+          type: number
+        start_date:
+          type: string
+        expiration_date:
+          type: string
+        contract_expiration_date:
+          type: string
+        package_number:
+          type: string
+        contract_number:
+          type: string
+        tracking_number:
+          type: string
+        insured_amounts:
+          type: array
+          items:
+            type: number
+        claim_free_years:
+          type: number
+        mutation_code:
+          type: number
+        agency:
+          type: string
+        total_term_amount:
+          type: string
+        status:
+          type: object
+          properties:
+            description:
+              type: string
+            color:
+              type: string
+        description:
+          type: string
+        mutation_date:
+          type: string
+        mutation_reason:
+          type: string
+        duration:
+          type: number
+        active:
+          type: boolean
+        payment_term:
+          type: number
+        payment_term_description:
+          type: string
   responses:
     BadRequest:
       description: Bad Request
@@ -1569,52 +1975,6 @@ components:
             properties:
               data:
                 $ref: '#/components/schemas/Family'
-
-
-    PaginatedCustomers:
-      description: A paginated collection of the customer resource
-      headers: { }
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Customer'
-              meta:
-                $ref: '#/components/schemas/Pagination'
-          examples:
-            PaginatedCustomersExample:
-              $ref: '#/components/examples/PaginatedCustomersExample'
-    Dossier:
-      description: OK
-      headers: { }
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Dossier'
-          examples:
-            DossiersExample:
-              $ref: '#/components/examples/PaginatedDossiersExample'
-    PaginatedDossiers:
-      description: A paginated collection of the dossier resource
-      headers: { }
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Dossier'
-              meta:
-                $ref: '#/components/schemas/Pagination'
-          examples:
-            PaginatedDossiersExample:
-              $ref: '#/components/examples/PaginatedDossiersExample'
     Mortgage:
       description: OK
       headers: { }
@@ -1763,6 +2123,85 @@ components:
           examples:
             DocumentsTreeExample:
               $ref: '#/components/examples/DocumentsTreeExample'
+    LivingResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Living'
+          examples:
+            DocumentsTreeExample:
+              $ref: '#/components/examples/LivingExample'
+    TenantInfoResponse:
+      description: Tenant info response
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/TenantInfo'
+          examples:
+            TenantInfoResponseExample:
+              $ref: '#/components/examples/TenantInfoExample'
+    TaskResponse:
+      description: Task response
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Task'
+          examples:
+            TaskResponseExample:
+              $ref: '#/components/examples/TaskResponseExample'
+    MessagesResponse:
+      description: Messages response. Not implemented
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+          examples:
+            MessagesResponseExample:
+              value:
+                data:
+                  - id: 1
+    PostMessageResponse:
+      description: Post messages response. Not implemented
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+    PolicyResponse:
+      description: Policy response
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/Policy'
+          examples:
+            PolicyResponseExample:
+              $ref: '#/components/examples/PolicyResponseExample'
   examples:
     BadRequestExample:
       summary: 400 No access token
@@ -2286,6 +2725,40 @@ components:
       value:
         number: 'external_relation_number_123'
         relation_number_type_id: 1
+    LivingExample:
+      value:
+        data:
+    TenantInfoExample:
+      value:
+        data:
+          name: Test
+          logo: base64 encoded binary string
+          header: base64 encoded binary string
+          full_name:
+          website: test.nl
+          primary_color: red
+          secondary_color: blue
+          tertiary_color: green
+          use_slogan: true
+          use_contact_email: true
+          use_support_email: false
+          slogan: Awesome slogan
+          contact_email: contact@test.nl
+          support_email:
+    TaskResponseExample:
+      value:
+        data:
+          - id: 1
+            title: Task title
+            status: 0
+            description: Detailed description
+            date: '2021-10-26'
+            time: '12:00'
+    PolicyResponseExample:
+      value:
+        data:
+          - id: 1
+
   parameters:
     PerPage:
       name: perPage
