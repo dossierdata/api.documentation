@@ -425,8 +425,25 @@ paths:
             - customer_api:mortgages
             - customer_api:documents
 
-
-
+  /mortgage/:mortgage_id/progress:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/MortgageProgress'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+      summary: List all family members
+      description: Get a the current family.
+      tags:
+        - Mortgage
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - customer_api:customer
+            - customer_api:customer_mortgages
   /damage:
     get:
       responses:
@@ -1229,6 +1246,41 @@ components:
           description: Rate based on
       description: >
         A mortgage part is one of the parts that makes up the mortgage.
+    MortgageProgress:
+      type: object
+      required:
+        - mortgage_id
+      properties:
+        id:
+          type: number
+          description: Id of mortgage
+        mortgage_id:
+          type: string
+          description: The id of the mortgage
+        name:
+          type: string
+          description: The name of the progress item (e.g. document name)
+        received:
+          type: boolean
+          description: Boolean indicating if the progress item has been received from the customer
+        sent:
+          type: number
+          description: Boolean indicating if the progress item has been sent to the financier
+        completed:
+          type: string
+          description: Boolean indicating if the progress item has been approved by the financier
+        comment:
+          type: string
+          description: Optional comment on the progress item with a reason why a document was declined or optional requests.
+        created_at:
+          type: string
+          description: Timestamp of creation
+        updated_at:
+          type: string
+          description: Timestamp of latest update
+      description: >
+        A mortgage progress item is an item that keeps track of the progress of a document and for example the documents
+        still needs to supply.
     User:
       type: object
       properties:
@@ -2044,7 +2096,9 @@ components:
             type: object
             properties:
               data:
-                $ref: '#/components/schemas/MortgagePart'
+                type: array
+                items:
+                  $ref: '#/components/schemas/MortgageProgress'
           examples:
             MortgageProgressExample:
               $ref: '#/components/examples/MortgageProgressExample'
@@ -2583,16 +2637,16 @@ components:
     MortgageProgressExample:
       value:
         data:
-          id: 1
-          mortgage_id: 1
-          name: Testverklaring
-          sent: true
-          received: true
-          completed: true
-          comment: Comment
-          date: 01-01-2018
-          created_at: "2019-10-25T12:00:00+02:00"
-          updated_at: "2019-10-25T13:00:00+02:00"
+          - id: 1
+            mortgage_id: 1
+            name: Testverklaring
+            sent: true
+            received: true
+            completed: true
+            comment: Comment
+            date: 01-01-2018
+            created_at: "2019-10-25T12:00:00+02:00"
+            updated_at: "2019-10-25T13:00:00+02:00"
     PaginatedMortgageProgressExample:
       value:
         data:
