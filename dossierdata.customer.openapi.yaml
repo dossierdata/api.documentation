@@ -409,13 +409,13 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/Document'
+          $ref: '#/components/responses/DocumentResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
-      summary: List all family members
-      description: Get a the current family.
+      summary: List all documents
+      description: Get all publicized the documents linked to this mortgage.
       tags:
         - Mortgage
       parameters:
@@ -429,13 +429,13 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/MortgageProgress'
+          $ref: '#/components/responses/MortgageProgressResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/Unauthorized'
-      summary: List all family members
-      description: Get a the current family.
+      summary: List all progress items
+      description: Get all progress items linked to this mortgage.
       tags:
         - Mortgage
       parameters:
@@ -443,7 +443,7 @@ paths:
       security:
         - oauth2:
             - customer_api:customer
-            - customer_api:customer_mortgages
+            - customer_api:mortgages
   /damage:
     get:
       responses:
@@ -467,7 +467,7 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/Document'
+          $ref: '#/components/responses/DocumentResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -506,7 +506,7 @@ paths:
     get:
       responses:
         200:
-          $ref: '#/components/responses/Document'
+          $ref: '#/components/responses/DocumentResponse'
         400:
           $ref: '#/components/responses/BadRequest'
         401:
@@ -1984,13 +1984,6 @@ components:
               value:
                 data:
                   uri: "https://uri"
-    DocumentResponse:
-      description: OK
-      headers: { }
-      content:
-        application/octet-stream:
-          schema:
-            type: string
     PaginatedDocumentsResponse:
       description: OK
       headers: { }
@@ -2087,7 +2080,7 @@ components:
           examples:
             PaginatedMortgagePartsExample:
               $ref: '#/components/examples/PaginatedMortgagePartsExample'
-    MortgageProgress:
+    MortgageProgressResponse:
       description: OK
       headers: { }
       content:
@@ -2100,25 +2093,8 @@ components:
                 items:
                   $ref: '#/components/schemas/MortgageProgress'
           examples:
-            MortgageProgressExample:
-              $ref: '#/components/examples/MortgageProgressExample'
-    PaginatedMortgageProgress:
-      description: OK
-      headers: { }
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MortgagePart'
-              meta:
-                $ref: '#/components/schemas/Meta'
-          examples:
-            PaginatedMortgageProgressExample:
-              $ref: '#/components/examples/PaginatedMortgageProgressExample'
+            MortgageProgressResponseExample:
+              $ref: '#/components/examples/MortgageProgressResponseExample'
     Damage:
       description: OK
       headers: { }
@@ -2149,7 +2125,7 @@ components:
           examples:
             PaginatedDamagesExample:
               $ref: '#/components/examples/PaginatedDamagesExample'
-    Document:
+    DocumentResponse:
       description: OK
       headers: { }
       content:
@@ -2634,7 +2610,7 @@ components:
             current: 1
             total_pages: 1
             links: [ ]
-    MortgageProgressExample:
+    MortgageProgressResponseExample:
       value:
         data:
           - id: 1
