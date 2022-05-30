@@ -1,0 +1,836 @@
+---
+openapi: 3.0.1
+info:
+  title: Mint API
+  description: ''
+  contact:
+    name: Topicus Connected Finance
+    url: https://topicus.nl/finance
+    email: winxclub@topicus.nl
+  version: '1.0'
+paths:
+  "/api/FileUpload":
+    post:
+      tags:
+      - FileUpload
+      parameters:
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                style: form
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        '401':
+          description: Unauthorized
+  "/api/InterestRate":
+    post:
+      tags:
+      - InterestRate
+      parameters:
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.InterestRate.GetInterestRatesRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.InterestRate.GetInterestRatesRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.InterestRate.GetInterestRatesRequest"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.InterestRate.GetInterestRatesResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.InterestRate.GetInterestRatesResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.InterestRate.GetInterestRatesResponse"
+        '401':
+          description: Unauthorized
+  "/api/Lender":
+    post:
+      tags:
+      - Lender
+      parameters:
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.Lender.GetLendersRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.Lender.GetLendersRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.Lender.GetLendersRequest"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.Lender.GetLendersResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.Lender.GetLendersResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.Lender.GetLendersResponse"
+        '401':
+          description: Unauthorized
+  "/api/ModelUpload":
+    post:
+      tags:
+      - ModelUpload
+      parameters:
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.ModelUpload.ModelUploadRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.ModelUpload.ModelUploadRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.ModelUpload.ModelUploadRequest"
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        '401':
+          description: Unauthorized
+  "/api/ProductLine":
+    post:
+      tags:
+      - ProductLine
+      parameters:
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.ProductLine.GetProductLinesRequest"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.ProductLine.GetProductLinesRequest"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/Mint.Contract.ProductLine.GetProductLinesRequest"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.ProductLine.GetProductLinesResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.ProductLine.GetProductLinesResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.ProductLine.GetProductLinesResponse"
+        '401':
+          description: Unauthorized
+  "/Status":
+    get:
+      tags:
+      - Status
+      parameters:
+      - name: api-version
+        in: query
+        description: The requested API version
+        schema:
+          type: string
+          default: '1.0'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.Status.GetStatusResponse"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.Status.GetStatusResponse"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/Mint.Contract.Status.GetStatusResponse"
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    Microsoft.AspNetCore.Mvc.ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: []
+    Mint.Contract.InterestModifierType:
+      enum:
+      - PaymentAccountDiscount
+      - DailyInterest
+      - LowestInterestAtDeedPassing
+      - SustainabilityDiscount
+      - EnergyLabelB
+      - EnergyLabelC
+      - EnergyLabelD
+      - EnergyLabelE
+      - EnergyLabelF
+      - EnergyLabelG
+      - SelfEmploymentUnder3Years
+      - DeedPassingOver3Months
+      type: string
+    Mint.Contract.InterestRate.BuildingType:
+      enum:
+      - All
+      - NewBuild
+      - ExistingBuild
+      type: string
+    Mint.Contract.InterestRate.GetInterestRatesRequest:
+      type: object
+      properties:
+        hdn_code_lening_mij_types:
+          type: array
+          items:
+            type: string
+          nullable: true
+        product_line_identifiers:
+          type: array
+          items:
+            type: string
+          nullable: true
+        repayment_methods:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+          nullable: true
+        interest_periods:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        nhg:
+          "$ref": "#/components/schemas/Mint.Contract.InterestRate.NHGType"
+        ltv:
+          type: array
+          items:
+            type: number
+            format: double
+          nullable: true
+        interest_modifiers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestModifierType"
+          nullable: true
+        product_provisioning_status:
+          "$ref": "#/components/schemas/Mint.Contract.InterestRate.ProductProvisioningStatusType"
+        building_type:
+          "$ref": "#/components/schemas/Mint.Contract.InterestRate.BuildingType"
+        starting_date_after:
+          type: string
+          format: date-time
+          nullable: true
+        sustainability_loan:
+          type: boolean
+          nullable: true
+        only_h_d_n_products:
+          type: boolean
+          nullable: true
+        bridging_loan:
+          type: boolean
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.InterestRate.GetInterestRatesResponse:
+      type: object
+      properties:
+        lenders:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestRate.Lender"
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.InterestRate.InterestModifier:
+      type: object
+      properties:
+        interest_modifier_type:
+          "$ref": "#/components/schemas/Mint.Contract.InterestModifierType"
+        value:
+          type: number
+          format: double
+      additionalProperties: false
+    Mint.Contract.InterestRate.InterestRate:
+      type: object
+      properties:
+        rate:
+          type: number
+          format: double
+        nhg:
+          type: boolean
+        ltv_high:
+          type: number
+          format: double
+        ltv_low:
+          type: number
+          format: double
+        is_new_build:
+          type: boolean
+        is_existing_build:
+          type: boolean
+        is_prolongation_loan:
+          type: boolean
+        is_new_loan:
+          type: boolean
+        is_bridging_loan:
+          type: boolean
+        interest_period_in_months:
+          type: integer
+          format: int32
+        applied_interest_modifiers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestModifierType"
+          nullable: true
+        available_interest_modifiers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestRate.InterestModifier"
+          nullable: true
+        starting_date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    Mint.Contract.InterestRate.Lender:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        hdn_maatschappij_type:
+          type: string
+          nullable: true
+        is_active:
+          type: boolean
+        product_lines:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestRate.ProductLine"
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+        unique_identifier:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    Mint.Contract.InterestRate.NHGType:
+      enum:
+      - NHG
+      - NoNHG
+      type: string
+    Mint.Contract.InterestRate.Product:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        hdn_code_deel_mij_type:
+          type: string
+          nullable: true
+        repayment_method:
+          "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+        interest_rates:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestRate.InterestRate"
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+        is_sustainability_loan:
+          type: boolean
+      additionalProperties: false
+    Mint.Contract.InterestRate.ProductLine:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        hdn_code_lening_mij_type:
+          type: string
+          nullable: true
+        updated_on:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+        products:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.InterestRate.Product"
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+        unique_identifier:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    Mint.Contract.InterestRate.ProductProvisioningStatusType:
+      enum:
+      - All
+      - New
+      - Continuation
+      type: string
+    Mint.Contract.Lender.GetLendersRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        only_active_lenders:
+          type: boolean
+        only_h_d_n_lenders:
+          type: boolean
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.Lender.GetLendersResponse:
+      type: object
+      properties:
+        lenders:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.Lender.Lender"
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.Lender.Lender:
+      type: object
+      properties:
+        hdn_maatschappij_type:
+          type: string
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.ModelUpload.ModelUploadRequest:
+      required:
+      - mintModel
+      - startingDate
+      type: object
+      properties:
+        starting_date:
+          type: string
+          format: date-time
+        mint_model:
+          "$ref": "#/components/schemas/Mint.Data.MintModel"
+      additionalProperties: false
+    Mint.Contract.ProductLine.GetProductLinesRequest:
+      type: object
+      properties:
+        hdn_maatschappij_types:
+          type: array
+          items:
+            type: string
+          nullable: true
+        only_active_product_lines:
+          type: boolean
+        only_h_d_n_product_lines:
+          type: boolean
+          nullable: true
+        repayment_methods:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.ProductLine.GetProductLinesResponse:
+      type: object
+      properties:
+        lenders:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.ProductLine.Lender"
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.ProductLine.Lender:
+      type: object
+      properties:
+        hdn_maatschappij_type:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        product_lines:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.ProductLine.ProductLine"
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.ProductLine.ProductLine:
+      type: object
+      properties:
+        hdn_code_lening_mij_type:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        updated_on:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+        repayment_methods:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Mint.Contract.RepaymentMethodType:
+      enum:
+      - InterestOnly
+      - Annuity
+      - Linear
+      - Investment
+      - Hybrid
+      - Savings
+      - Credit
+      - LifeInsurance
+      - UnitLink
+      type: string
+    Mint.Contract.Status.GetStatusResponse:
+      type: object
+      properties:
+        build:
+          type: string
+          nullable: true
+        mint_model_ok:
+          type: boolean
+        mint_model_updated_on:
+          type: string
+          format: date-time
+          nullable: true
+        azure_blob_storage_ok:
+          type: boolean
+      additionalProperties: false
+    Mint.Data.DataSource:
+      enum:
+      - MoneyView
+      - ConnectedFinance
+      type: string
+    Mint.Data.InterestModifier:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        interest_modifier_type:
+          "$ref": "#/components/schemas/Mint.Data.InterestModifierType"
+        value:
+          type: number
+          format: double
+      additionalProperties: false
+    Mint.Data.InterestModifierType:
+      enum:
+      - PaymentAccountDiscount
+      - DailyInterest
+      - LowestInterestAtDeedPassing
+      - SustainabilityDiscount
+      - EnergyLabelB
+      - EnergyLabelC
+      - EnergyLabelD
+      - EnergyLabelE
+      - EnergyLabelF
+      - EnergyLabelG
+      - SelfEmploymentUnder3Years
+      - DeedPassingOver3Months
+      type: string
+    Mint.Data.InterestRate:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        entry_date:
+          type: string
+          format: date-time
+        starting_date:
+          type: string
+          format: date-time
+        rate:
+          type: number
+          format: double
+        nhg:
+          type: boolean
+        ltv_high:
+          type: number
+          format: double
+        ltv_low:
+          type: number
+          format: double
+        is_new_build:
+          type: boolean
+        is_existing_build:
+          type: boolean
+        is_prolongation_loan:
+          type: boolean
+        is_new_loan:
+          type: boolean
+        is_bridging_loan:
+          type: boolean
+        interest_period_in_months:
+          type: integer
+          format: int32
+        interest_modifiers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Data.InterestModifier"
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Mint.Data.Lender:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        hdn_maatschappij_type:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        product_lines:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Data.ProductLine"
+          nullable: true
+        is_active:
+          type: boolean
+        external_identifier:
+          type: string
+          nullable: true
+        data_source:
+          "$ref": "#/components/schemas/Mint.Data.DataSource"
+        unique_identifier:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    Mint.Data.MintModel:
+      type: object
+      properties:
+        updated_on:
+          type: string
+          format: date-time
+        lenders:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Data.Lender"
+          nullable: true
+      additionalProperties: false
+    Mint.Data.Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        hdn_code_deel_mij_type:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        repayment_method:
+          "$ref": "#/components/schemas/Mint.Data.RepaymentMethodType"
+        interest_rates:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Data.InterestRate"
+          nullable: true
+        external_identifier:
+          type: string
+          nullable: true
+        is_sustainability_loan:
+          type: boolean
+        unique_identifier:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    Mint.Data.ProductLine:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        updated_on:
+          type: string
+          format: date-time
+          nullable: true
+        hdn_code_lening_mij_type:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        products:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Mint.Data.Product"
+          nullable: true
+        is_active:
+          type: boolean
+        external_identifier:
+          type: string
+          nullable: true
+        unique_identifier:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    Mint.Data.RepaymentMethodType:
+      enum:
+      - InterestOnly
+      - Annuity
+      - Linear
+      - Investment
+      - Hybrid
+      - Savings
+      - Credit
+      - LifeInsurance
+      - UnitLink
+      type: string
+  securitySchemes:
+    Bearer:
+      type: http
+      description: |
+        This API uses JWT Authorization header using the Bearer scheme. <br/>
+        Enter 'Bearer' [space] and then your token in the text input below. <br/>
+        **Example:** 'Bearer 12345abcdef'
+
+        ## Obtaining a bearer token
+        To obtain a bearer token, send a request for a token to the IdentityServer Authority for this instance. [See this page](http://docs.identityserver.io/en/latest/endpoints/token.html) for more information information. <br/>
+        <br/>
+        AuthorityURL =  **https://auth.connected.topicusfinance.nl**
+         ```
+        POST  https://auth.connected.topicusfinance.nl/connect/token
+        formdata:
+            client_id = YOUR_CLIENT_ID_HERE
+            client_secret = YOUR_CLIENT_SECRET_HERE
+            grant_type = client_credentials
+            scope = A_SCOPE_FOR_THIS_API_HERE
+        ```
+
+        ## Sending a request to this API
+        Add the obtained token to the request header.
+        ```
+        POST /example/example
+
+        headers:
+            Authorization = Bearer YOUR_JWT_TOKEN_HERE
+        ```
+
+        ## Scopes for this API
+        * **mint.interestrates**
+        * **mint.upload.connectedfinance**
+        * **mint.upload.moneyview**
+      scheme: Bearer
+security:
+- Bearer: []
