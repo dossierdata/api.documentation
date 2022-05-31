@@ -1,0 +1,1002 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DossierData proxy for Mint API",
+    "description": "",
+    "contact": {
+      "name": "DossierData",
+      "url": "https://dossierdata.nl",
+      "email": "info@dossierdata.nl"
+    },
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/customer/cint/interest_rate": {
+      "post": {
+        "tags": [
+          "InterestRate"
+        ],
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.GetInterestRatesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.GetInterestRatesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.GetInterestRatesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.GetInterestRatesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.GetInterestRatesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.GetInterestRatesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/customer/cint/lender": {
+      "post": {
+        "tags": [
+          "Lender"
+        ],
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.Lender.GetLendersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.Lender.GetLendersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.Lender.GetLendersRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.Lender.GetLendersResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.Lender.GetLendersResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.Lender.GetLendersResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/customer/cint/product_line": {
+      "post": {
+        "tags": [
+          "ProductLine"
+        ],
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.GetProductLinesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.GetProductLinesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.GetProductLinesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.GetProductLinesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.GetProductLinesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.GetProductLinesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Microsoft.AspNetCore.Mvc.ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "Mint.Contract.RepaymentMethodType": {
+        "enum": [
+          "InterestOnly",
+          "Annuity",
+          "Linear",
+          "Investment",
+          "Hybrid",
+          "Savings",
+          "Credit",
+          "LifeInsurance",
+          "UnitLink"
+        ],
+        "type": "string"
+      },
+      "Mint.Contract.Status.GetStatusResponse": {
+        "type": "object",
+        "properties": {
+          "build": {
+            "type": "string",
+            "nullable": true
+          },
+          "mintModelOk": {
+            "type": "boolean"
+          },
+          "mintModelUpdatedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "azureBlobStorageOk": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.BuildingType": {
+        "enum": [
+          "All",
+          "NewBuild",
+          "ExistingBuild"
+        ],
+        "type": "string"
+      },
+      "Mint.Contract.V1.InterestRate.GetInterestRatesRequest": {
+        "type": "object",
+        "properties": {
+          "hdnCodeLeningMijTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "productLineIdentifiers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "repaymentMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+            },
+            "nullable": true
+          },
+          "interestPeriods": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "nhg": {
+            "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.NHGType"
+          },
+          "ltv": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "nullable": true
+          },
+          "interestModifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.InterestModifierType"
+            },
+            "nullable": true
+          },
+          "productProvisioningStatus": {
+            "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.ProductProvisioningStatusType"
+          },
+          "buildingType": {
+            "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.BuildingType"
+          },
+          "startingDateAfter": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "sustainabilityLoan": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "onlyHDNProducts": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "bridgingLoan": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.GetInterestRatesResponse": {
+        "type": "object",
+        "properties": {
+          "lenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.Lender"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.InterestModifier": {
+        "type": "object",
+        "properties": {
+          "interestModifierType": {
+            "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.InterestModifierType"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.InterestModifierType": {
+        "enum": [
+          "PaymentAccountDiscount",
+          "DailyInterest",
+          "LowestInterestAtDeedPassing",
+          "SustainabilityDiscount",
+          "EnergyLabelB",
+          "EnergyLabelC",
+          "EnergyLabelD",
+          "EnergyLabelE",
+          "EnergyLabelF",
+          "EnergyLabelG",
+          "SelfEmploymentUnder3Years",
+          "DeedPassingOver3Months"
+        ],
+        "type": "string"
+      },
+      "Mint.Contract.V1.InterestRate.InterestRate": {
+        "type": "object",
+        "properties": {
+          "rate": {
+            "type": "number",
+            "format": "double"
+          },
+          "nhg": {
+            "type": "boolean"
+          },
+          "ltvHigh": {
+            "type": "number",
+            "format": "double"
+          },
+          "ltvLow": {
+            "type": "number",
+            "format": "double"
+          },
+          "isNewBuild": {
+            "type": "boolean"
+          },
+          "isExistingBuild": {
+            "type": "boolean"
+          },
+          "isProlongationLoan": {
+            "type": "boolean"
+          },
+          "isNewLoan": {
+            "type": "boolean"
+          },
+          "isBridgingLoan": {
+            "type": "boolean"
+          },
+          "interestPeriodInMonths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "appliedInterestModifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.InterestModifierType"
+            },
+            "nullable": true
+          },
+          "availableInterestModifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.InterestModifier"
+            },
+            "nullable": true
+          },
+          "startingDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.Lender": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hdnMaatschappijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "productLines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.ProductLine"
+            },
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "uniqueIdentifier": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.NHGType": {
+        "enum": [
+          "NHG",
+          "NoNHG"
+        ],
+        "type": "string"
+      },
+      "Mint.Contract.V1.InterestRate.Product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hdnCodeDeelMijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "repaymentMethod": {
+            "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+          },
+          "interestRates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.InterestRate"
+            },
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSustainabilityLoan": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.ProductLine": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "hdnCodeLeningMijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.InterestRate.Product"
+            },
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "uniqueIdentifier": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.InterestRate.ProductProvisioningStatusType": {
+        "enum": [
+          "All",
+          "New",
+          "Continuation"
+        ],
+        "type": "string"
+      },
+      "Mint.Contract.V1.Lender.GetLendersRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "onlyActiveLenders": {
+            "type": "boolean"
+          },
+          "onlyHDNLenders": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.Lender.GetLendersResponse": {
+        "type": "object",
+        "properties": {
+          "lenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.Lender.Lender"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.Lender.Lender": {
+        "type": "object",
+        "properties": {
+          "hdnMaatschappijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.ModelUpload.ModelUploadRequest": {
+        "required": [
+          "mintModel",
+          "startingDate"
+        ],
+        "type": "object",
+        "properties": {
+          "startingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mintModel": {
+            "$ref": "#/components/schemas/Mint.Data.MintModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.ProductLine.GetProductLinesRequest": {
+        "type": "object",
+        "properties": {
+          "hdnMaatschappijTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "onlyActiveProductLines": {
+            "type": "boolean"
+          },
+          "onlyHDNProductLines": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "repaymentMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.ProductLine.GetProductLinesResponse": {
+        "type": "object",
+        "properties": {
+          "lenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.Lender"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.ProductLine.Lender": {
+        "type": "object",
+        "properties": {
+          "hdnMaatschappijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "productLines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.V1.ProductLine.ProductLine"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Contract.V1.ProductLine.ProductLine": {
+        "type": "object",
+        "properties": {
+          "hdnCodeLeningMijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "repaymentMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Contract.RepaymentMethodType"
+            },
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.DataSource": {
+        "enum": [
+          "MoneyView",
+          "ConnectedFinance"
+        ],
+        "type": "string"
+      },
+      "Mint.Data.InterestModifier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "interestModifierType": {
+            "$ref": "#/components/schemas/Mint.Data.InterestModifierType"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.InterestModifierType": {
+        "enum": [
+          "PaymentAccountDiscount",
+          "DailyInterest",
+          "LowestInterestAtDeedPassing",
+          "SustainabilityDiscount",
+          "EnergyLabelB",
+          "EnergyLabelC",
+          "EnergyLabelD",
+          "EnergyLabelE",
+          "EnergyLabelF",
+          "EnergyLabelG",
+          "SelfEmploymentUnder3Years",
+          "DeedPassingOver3Months",
+          "EnergyLabelAPPPP",
+          "EnergyLabelAPPP",
+          "EnergyLabelAPP",
+          "EnergyLabelAP",
+          "EnergyLabelA"
+        ],
+        "type": "string"
+      },
+      "Mint.Data.InterestRate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "entryDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rate": {
+            "type": "number",
+            "format": "double"
+          },
+          "nhg": {
+            "type": "boolean"
+          },
+          "ltvHigh": {
+            "type": "number",
+            "format": "double"
+          },
+          "ltvLow": {
+            "type": "number",
+            "format": "double"
+          },
+          "isNewBuild": {
+            "type": "boolean"
+          },
+          "isExistingBuild": {
+            "type": "boolean"
+          },
+          "isProlongationLoan": {
+            "type": "boolean"
+          },
+          "isNewLoan": {
+            "type": "boolean"
+          },
+          "isBridgingLoan": {
+            "type": "boolean"
+          },
+          "interestPeriodInMonths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestModifiers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Data.InterestModifier"
+            },
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.Lender": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "hdnMaatschappijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "productLines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Data.ProductLine"
+            },
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataSource": {
+            "$ref": "#/components/schemas/Mint.Data.DataSource"
+          },
+          "uniqueIdentifier": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.MintModel": {
+        "type": "object",
+        "properties": {
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lenders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Data.Lender"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "hdnCodeDeelMijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "repaymentMethod": {
+            "$ref": "#/components/schemas/Mint.Data.RepaymentMethodType"
+          },
+          "interestRates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Data.InterestRate"
+            },
+            "nullable": true
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "isSustainabilityLoan": {
+            "type": "boolean"
+          },
+          "uniqueIdentifier": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.ProductLine": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "updatedOn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "hdnCodeLeningMijType": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mint.Data.Product"
+            },
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "externalIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "uniqueIdentifier": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Mint.Data.RepaymentMethodType": {
+        "enum": [
+          "InterestOnly",
+          "Annuity",
+          "Linear",
+          "Investment",
+          "Hybrid",
+          "Savings",
+          "Credit",
+          "LifeInsurance",
+          "UnitLink"
+        ],
+        "type": "string"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "This API uses JWT Authorization header using the Bearer scheme. <br/>\nEnter 'Bearer' [space] and then your token in the text input below. <br/>\n**Example:** 'Bearer 12345abcdef'\n\n## Obtaining a bearer token\nTo obtain a bearer token, send a request for a token to the IdentityServer Authority for this instance. [See this page](http://docs.identityserver.io/en/latest/endpoints/token.html) for more information information. <br/>\n<br/>\nAuthorityURL =  **https://auth.connected.topicusfinance.nl**\n ```\nPOST  https://auth.connected.topicusfinance.nl/connect/token\nformdata:\n    client_id = YOUR_CLIENT_ID_HERE\n    client_secret = YOUR_CLIENT_SECRET_HERE\n    grant_type = client_credentials\n    scope = A_SCOPE_FOR_THIS_API_HERE\n```\n\n## Sending a request to this API\nAdd the obtained token to the request header.\n```\nPOST /example/example\n\nheaders:\n    Authorization = Bearer YOUR_JWT_TOKEN_HERE\n```\n\n## Scopes for this API\n* **mint.interestrates**\n* **mint.upload.connectedfinance**\n* **mint.upload.moneyview**\n",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}
