@@ -1,0 +1,2266 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "DossierData proxy for Fint API",
+    "description": "",
+    "contact": {
+      "name": "DossierData",
+      "url": "https://dossierdata.nl",
+      "email": "info@dossierdata.nl"
+    },
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/customer/fint/mortgage_construction/calculate_mortgage_construction": {
+      "post": {
+        "tags": [
+          "MortgageConstruction"
+        ],
+        "summary": "Het bepalen van de hypotheeksamenstelling op basis van een productstrategie (bijvoorbeeld een ASN energiebesparend leningdeel, of een standaard strategie).",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/customer/fint/pension/calculate_mortgage_payment_gap_after_pension": {
+      "post": {
+        "tags": [
+          "Pension"
+        ],
+        "summary": "Het berekenen van het pensioengat welke een consument heeft na zijn pensioen, op basis van zijn inkomen. Wanneer een consument met pensioen gaat, blijven zijn hypotheeklasten hetzelfde maar gaat zijn inkomen vaak omlaag, daardoor kan de situatie ontstaan dat hij met zijn pensioeninkomen zijn hypotheeklasten niet kan betalen. Deze berekening geeft terug welk bedrag hij voor zijn pensioen zou moeten opbouwen om zijn maandelijkse lasten na pensioen nog steeds te kunnen betalen. Deze berekening vind plaats op basis van de bruto maandlasten.",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/customer/fint/refinance/calculate_refinance_comparisons": {
+      "post": {
+        "tags": [
+          "Refinance"
+        ],
+        "summary": "Het doorrekenen van het oversluit-scenario op basis van de gegeven input.",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "description": "The requested API version",
+            "schema": {
+              "type": "string",
+              "default": "1.0"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Cint.Contract.V1.CalculateMaximumMortgage.ForIncome.AlimonyExPartnerObligationModel": {
+        "required": [
+          "yearlyAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "yearlyAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMaximumMortgage.ForIncome.ApplicantIncomeWithAlimonyObligationsModel": {
+        "required": [
+          "statePensionDate"
+        ],
+        "type": "object",
+        "properties": {
+          "statePensionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "annualEmploymentIncome": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "oldAgePensionIncome": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "statePensionIncome": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "alimonyExPartnerObligations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMaximumMortgage.ForIncome.AlimonyExPartnerObligationModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.AnnuityLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.ApplicantIncomeModel": {
+        "required": [
+          "statePensionDate"
+        ],
+        "type": "object",
+        "properties": {
+          "statePensionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "annualEmploymentIncome": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "oldAgePensionIncome": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "statePensionIncome": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment": {
+        "required": [
+          "amount",
+          "frequency",
+          "numberOfRepayments",
+          "startingMonth"
+        ],
+        "type": "object",
+        "properties": {
+          "startingMonth": {
+            "minimum": 0.01,
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "minimum": 0.01,
+            "type": "number",
+            "format": "double"
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FrequencyType"
+          },
+          "numberOfRepayments": {
+            "minimum": 0.01,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.FrequencyType": {
+        "enum": [
+          "Monthly",
+          "Annually"
+        ],
+        "type": "string"
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.InterestOnlyLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.InvestmentLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "returnRate": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.LifeInsuranceLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate",
+          "premium"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "premium": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.LinearLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.SavingsLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate",
+          "premium"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "premium": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.CalculateMortgageProgressSummary.StartersLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cint.Contract.V1.Shared.MonthlyObligation": {
+        "required": [
+          "deductibleMonthlyObligationsAmount",
+          "totalMonthlyObligationsAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "fromDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "totalMonthlyObligationsAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "deductibleMonthlyObligationsAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Fint.Contract.MortgageConstruction.LoanPart": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "description": "Bedrag van het leningdeel",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "type": "integer",
+            "description": "Looptijd van het leningdeel in maanden",
+            "format": "int32"
+          },
+          "interestRate": {
+            "type": "number",
+            "description": "Rente van het leningdeel (1% = 0.01, LET OP: Wijkt af van Raiju)",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "type": "integer",
+            "description": "Rentevastperiode van het leningdeel in maanden",
+            "format": "int32"
+          },
+          "box": {
+            "$ref": "#/components/schemas/Fint.Contract.V1.Shared.Box"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Leningdeel."
+      },
+      "Fint.Contract.Status.GetStatusResponse": {
+        "type": "object",
+        "properties": {
+          "build": {
+            "type": "string",
+            "description": "Build number of current running service",
+            "nullable": true
+          },
+          "mintConnection": {
+            "type": "boolean",
+            "description": "Mint connection status"
+          }
+        },
+        "additionalProperties": false,
+        "description": "GetStatusResponse"
+      },
+      "Fint.Contract.V1.DetermineInterestDifferentiation.DetermineInterestDifferentiationRequest": {
+        "required": [
+          "calculationDate",
+          "currentMarketValue",
+          "currentPropertyTaxValue",
+          "hdnCodeLeningMijType",
+          "loanParts",
+          "mortgageLenderMarketValue"
+        ],
+        "type": "object",
+        "properties": {
+          "calculationDate": {
+            "type": "string",
+            "description": "De datum waarvoor de wet en regelgeving aangehouden moet worden voor de berekening.",
+            "format": "date-time"
+          },
+          "hdnCodeLeningMijType": {
+            "type": "string",
+            "description": "HDN code van de aanbieder en productlijn waarvoor de rente bepaald moet worden"
+          },
+          "mortgageLenderMarketValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "De bij de geldverstrekker bekende marktwaarde van de woning",
+            "format": "double"
+          },
+          "currentMarketValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "De huidige marktwaarde",
+            "format": "double"
+          },
+          "currentPropertyTaxValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "De huidige WOZ-waarde",
+            "format": "double"
+          },
+          "loanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.DetermineInterestDifferentiation.LoanPart"
+            },
+            "description": "De leningdelen van de hypotheek"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request voor het berekenen van de risico opslag"
+      },
+      "Fint.Contract.V1.DetermineInterestDifferentiation.DetermineInterestDifferentiationResponse": {
+        "type": "object",
+        "properties": {
+          "oldMarketValueLTV": {
+            "type": "number",
+            "description": "De LoanToValue op basis van de oude marktwaarde 1% = 0,01",
+            "format": "double"
+          },
+          "newMarketValueLTV": {
+            "type": "number",
+            "description": "De LoanToValue op basis van de nieuwe marktwaarde 1% = 0,01",
+            "format": "double"
+          },
+          "newPropertyTaxValueLTV": {
+            "type": "number",
+            "description": "De LoanToValue op basis van de nieuwe WOZ-waarde 1% = 0,01",
+            "format": "double"
+          },
+          "loanPartsInterestResults": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.DetermineInterestDifferentiation.LoanPartInterestResults"
+            },
+            "description": "De leningdelen met de berekende rentes op basis van de huidige situatie",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response voor het berekenen van de risico opslag"
+      },
+      "Fint.Contract.V1.DetermineInterestDifferentiation.LoanPart": {
+        "required": [
+          "currentAmount",
+          "interestPeriodInMonths",
+          "interestRate",
+          "isNationalMortgageGuaranteeApplicable",
+          "isNewBuild",
+          "isSustainabilityLoan",
+          "loanPartId",
+          "originalAmount",
+          "repaymentMethod"
+        ],
+        "type": "object",
+        "properties": {
+          "loanPartId": {
+            "type": "string",
+            "description": "Het unieke ID van dit leningdeel"
+          },
+          "repaymentMethod": {
+            "$ref": "#/components/schemas/Fint.Contract.V1.RepaymentMethod"
+          },
+          "originalAmount": {
+            "type": "number",
+            "description": "Oorspronkelijke hoogte van het leningdeel",
+            "format": "double"
+          },
+          "currentAmount": {
+            "type": "number",
+            "description": "Huidige hoogte van het leningdeel",
+            "format": "double"
+          },
+          "interestRate": {
+            "type": "number",
+            "description": "Rente van het leningdeel 1% = 0,01",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "type": "integer",
+            "description": "Resterende rentevastperiode van het leningdeel in maanden",
+            "format": "int32"
+          },
+          "isNewBuild": {
+            "type": "boolean",
+            "description": "Geeft aan of er sprake is van een nieuwbouwwoning"
+          },
+          "isNationalMortgageGuaranteeApplicable": {
+            "type": "boolean",
+            "description": "Geeft aan of er NHG garantie van toepassing is"
+          },
+          "isSustainabilityLoan": {
+            "type": "boolean",
+            "description": "Geeft aan of het leningdeel een duurzaamheidsleningdeel is"
+          }
+        },
+        "additionalProperties": false,
+        "description": "LoanParts"
+      },
+      "Fint.Contract.V1.DetermineInterestDifferentiation.LoanPartInterestResults": {
+        "type": "object",
+        "properties": {
+          "loanPartId": {
+            "type": "string",
+            "description": "Het unieke ID van dit leningdeel",
+            "nullable": true
+          },
+          "currentMarketValueLtvInterestDifferentiation": {
+            "type": "number",
+            "description": "De berekende risico opslag op basis van de huidige marktwaarde 1% = 0,01",
+            "format": "double",
+            "nullable": true
+          },
+          "currentPropertyTaxValueLtvInterestDifferentiation": {
+            "type": "number",
+            "description": "De berekende risico opslag op basis van de huidige WOZ-waarde 1% = 0,01",
+            "format": "double",
+            "nullable": true
+          },
+          "calculatedMarketValueInterestRate": {
+            "type": "number",
+            "description": "Nieuw rentepercentage, bepaald op basis van de huidige marktwaarde en de berekende risico opslag 1% = 0,01",
+            "format": "double",
+            "nullable": true
+          },
+          "calculatedPropertyTaxValueInterestRate": {
+            "type": "number",
+            "description": "Nieuw rentepercentage, bepaald op basis van de huidige WOZ-waarde en de berekende risico opslag 1% = 0,01",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "De leningdelen met de berekende rentes op basis van de huidige situatie"
+      },
+      "Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionRequest": {
+        "required": [
+          "calculationDate",
+          "hdnCodeLeningMijType",
+          "interestPeriodInMonths",
+          "isNewBuild",
+          "loanAmount",
+          "marketValue",
+          "nationalMortgageGuaranteeApplicable",
+          "productStrategy",
+          "repaymentMethod"
+        ],
+        "type": "object",
+        "properties": {
+          "calculationDate": {
+            "type": "string",
+            "description": "Rekendatum.",
+            "format": "date-time"
+          },
+          "hdnCodeLeningMijType": {
+            "pattern": "[A-Z]{2}[0-9]{3}",
+            "type": "string",
+            "description": "HDN code van de aanbieder en productlijn waarvoor de rente bepaald moet worden."
+          },
+          "productStrategy": {
+            "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.ProductStrategy"
+          },
+          "applicableInterestComponents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.InterestComponent"
+            },
+            "description": "De voor dit product van toepassing zijnde rente componenten.",
+            "nullable": true
+          },
+          "loanAmount": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "Gewenst hypotheekbedrag.",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "minimum": 0.01,
+            "type": "integer",
+            "description": "Rentevastperiode in maanden.",
+            "format": "int32"
+          },
+          "repaymentMethod": {
+            "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.RepaymentMethodNewMortgage"
+          },
+          "energySavingFacilitiesCosts": {
+            "minimum": 0,
+            "type": "number",
+            "description": "EBV kosten, excl. EBB",
+            "format": "double",
+            "nullable": true
+          },
+          "energySavingBudget": {
+            "minimum": 0,
+            "type": "number",
+            "description": "EBB",
+            "format": "double",
+            "nullable": true
+          },
+          "marketValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "Marktwaarde van de woning. De hoogste waarde van MarketValue en MarketValueAfterRenovation wordt gebruikt om de LTV te bepalen.",
+            "format": "double"
+          },
+          "marketValueAfterRenovation": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "Marktwaarde van de woning na verbouwing. De hoogste waarde van MarketValue en MarketValueAfterRenovation wordt gebruikt om de LTV te bepalen.",
+            "format": "double",
+            "nullable": true
+          },
+          "isNewBuild": {
+            "type": "boolean",
+            "description": "Geeft aan of het om nieuwbouw gaat of niet."
+          },
+          "nationalMortgageGuaranteeApplicable": {
+            "type": "boolean",
+            "description": "NHG garantie toepassen"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Aanvraag voor berekenen van een hypotheek constructie"
+      },
+      "Fint.Contract.V1.MortgageConstruction.CalculateMortgageConstructionResponse": {
+        "type": "object",
+        "properties": {
+          "lenderName": {
+            "type": "string",
+            "description": "De naam van de geldverstrekker.",
+            "nullable": true
+          },
+          "productLineName": {
+            "type": "string",
+            "description": "De productnaam van de hypotheek.",
+            "nullable": true
+          },
+          "appliedProductStrategy": {
+            "$ref": "#/components/schemas/Fint.Contract.V1.MortgageConstruction.ProductStrategy"
+          },
+          "annuityLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.MortgageConstruction.LoanPart"
+            },
+            "description": "De annuïtaire leningdelen van de voorgestelde hypotheekconstructie op basis van de meegegeven strategie.",
+            "nullable": true
+          },
+          "linearLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.MortgageConstruction.LoanPart"
+            },
+            "description": "De lineaire leningdelen van de voorgestelde hypotheekconstructie op basis van de meegegeven strategie.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Antwoord voor berekenen van een hypotheek constructie"
+      },
+      "Fint.Contract.V1.MortgageConstruction.InterestComponent": {
+        "enum": [
+          "PaymentAccountDiscount",
+          "DailyInterest",
+          "LowestInterestAtDeedPassing",
+          "SustainabilityDiscount",
+          "EnergyLabelB",
+          "EnergyLabelC",
+          "EnergyLabelD",
+          "EnergyLabelE",
+          "EnergyLabelF",
+          "EnergyLabelG",
+          "SelfEmploymentUnder3Years",
+          "DeedPassingOver3Months",
+          "EnergyLabelAPPPP",
+          "EnergyLabelAPPP",
+          "EnergyLabelAPP",
+          "EnergyLabelAP",
+          "EnergyLabelA"
+        ],
+        "type": "string",
+        "description": "Toepasbare rente componenten."
+      },
+      "Fint.Contract.V1.MortgageConstruction.ProductStrategy": {
+        "enum": [
+          "Default",
+          "ASN",
+          "NationaleNederlanden",
+          "ASR"
+        ],
+        "type": "string",
+        "description": "De gekozen product strategie voor deze samenstelling. Strategie ASN vereist een SustainabilityLoan-rentepercentage en minimaal EBV-bedrag van 2.500. Indien hier niet aan voldaan wordt, hanteren wij alsnog de default strategie."
+      },
+      "Fint.Contract.V1.MortgageConstruction.RepaymentMethodNewMortgage": {
+        "enum": [
+          "Annuity",
+          "Linear"
+        ],
+        "type": "string",
+        "description": "Aflosvorm nieuwe hypotheek"
+      },
+      "Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionRequest": {
+        "required": [
+          "applicant",
+          "boxForPensionMaximumMonthlyPayments",
+          "calculationDate",
+          "propertyTaxValue"
+        ],
+        "type": "object",
+        "properties": {
+          "calculationDate": {
+            "type": "string",
+            "description": "De rekendatum. Dit wordt gebruikt om het verloop van de hypotheek vanaf \"nu\" uit te rekenen.",
+            "format": "date-time"
+          },
+          "applicant": {
+            "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMaximumMortgage.ForIncome.ApplicantIncomeWithAlimonyObligationsModel"
+          },
+          "partner": {
+            "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMaximumMortgage.ForIncome.ApplicantIncomeWithAlimonyObligationsModel"
+          },
+          "propertyTaxValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "De WOZ waarde van de woning.",
+            "format": "double"
+          },
+          "boxForPensionMaximumMonthlyPayments": {
+            "$ref": "#/components/schemas/Fint.Contract.V1.Shared.Box"
+          },
+          "monthlyObligations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.Shared.MonthlyObligation"
+            },
+            "description": "De maandelijkse verplichtingen die berekend zijn in de CalculateMonthlyObligations call.",
+            "nullable": true
+          },
+          "annuityLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.AnnuityLoanPartForMortgageProgress"
+            },
+            "description": "Alle annuïtaire leningdelen.",
+            "nullable": true
+          },
+          "interestOnlyLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.InterestOnlyLoanPartForMortgageProgress"
+            },
+            "description": "Alle aflossingsvrije leningdelen.",
+            "nullable": true
+          },
+          "guaranteedSavingsLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Pension.PensionGapGuaranteedSavingsLoanPartForMortgageProgress"
+            },
+            "description": "Alle banksparen leningdelen.",
+            "nullable": true
+          },
+          "investmentLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.InvestmentLoanPartForMortgageProgress"
+            },
+            "description": "Alle beleg leningdelen.",
+            "nullable": true
+          },
+          "lifeInsuranceLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.LifeInsuranceLoanPartForMortgageProgress"
+            },
+            "description": "Alle leven leningdelen.",
+            "nullable": true
+          },
+          "linearLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.LinearLoanPartForMortgageProgress"
+            },
+            "description": "Alle lineaire leningdelen.",
+            "nullable": true
+          },
+          "savingsLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.SavingsLoanPartForMortgageProgress"
+            },
+            "description": "Alle spaar leningdelen.",
+            "nullable": true
+          },
+          "startersLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.StartersLoanPartForMortgageProgress"
+            },
+            "description": "Alle spaar leningdelen.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Aanvraag voor het berekenen van het pensioen gat."
+      },
+      "Fint.Contract.V1.Pension.CalculateMortgagePaymentGapAfterPensionResponse": {
+        "type": "object",
+        "properties": {
+          "mortgagePaymentGapAfterPension": {
+            "type": "number",
+            "description": "Het totale betalingsgat tijdens pensioen voor hypotheeklasten.\r\nDe hypotheeklasten na pensioen in verhouding met de verantwoorde maandlasten van een consument",
+            "format": "double",
+            "readOnly": true
+          },
+          "mortgagePaymentGapAfterPensionProgressSummary": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Pension.MortgagePaymentGap"
+            },
+            "description": "Pensioen betalingsgat verloop.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Response"
+      },
+      "Fint.Contract.V1.Pension.MortgagePaymentGap": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "description": "Geeft aan in welk jaar het verloop plaats vindt",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "description": "Geeft aan in welke maand het verloop plaats vindt",
+            "format": "int32"
+          },
+          "grossMonthlyMortgagePayment": {
+            "type": "number",
+            "description": "De brutolasten van de hypotheek in deze maand",
+            "format": "double"
+          },
+          "monthlyMortgagePaymentGap": {
+            "type": "number",
+            "description": "Het tekort voor hypotheeklasten deze maand.",
+            "format": "double",
+            "readOnly": true
+          },
+          "maximumMonthlyPayments": {
+            "type": "number",
+            "description": "",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Het totale betalingsgat tijdens pensioen voor hypotheeklasten.\r\nDe hypotheeklasten na pensioen in verhouding met de verantwoorde maandlasten van een consument."
+      },
+      "Fint.Contract.V1.Pension.PensionGapGuaranteedSavingsLoanPartForMortgageProgress": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRateAfterInterestPeriod": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "accumulatedSavingsValue": {
+            "minimum": 0,
+            "type": "number",
+            "description": "Eerste inleg van het leningdeel",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Bankspaar leningdeel."
+      },
+      "Fint.Contract.V1.Refinance.AnnuityLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Annuïtair leningdeel."
+      },
+      "Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsRequest": {
+        "required": [
+          "applicant",
+          "calculationDate",
+          "financeRepaymentPenalty",
+          "nationalMortgageGuaranteeApplicable",
+          "newInterestPeriodInMonths",
+          "propertyTaxValue",
+          "repaymentPenalty"
+        ],
+        "type": "object",
+        "properties": {
+          "calculationDate": {
+            "type": "string",
+            "description": "De datum waarvoor de wet en regelgeving aangehouden moet worden voor de berekening.",
+            "format": "date-time"
+          },
+          "applicant": {
+            "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.ApplicantIncomeModel"
+          },
+          "partner": {
+            "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.ApplicantIncomeModel"
+          },
+          "propertyTaxValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "De WOZ-waarde van de woning.",
+            "format": "double"
+          },
+          "marketValue": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "De marktwaarde van de woning.",
+            "format": "double",
+            "nullable": true
+          },
+          "mortgageBrokerageCosts": {
+            "minimum": 0,
+            "type": "number",
+            "description": "Hypotheek afsluitkosten (advies).",
+            "format": "double",
+            "nullable": true
+          },
+          "notarialMortgageActCosts": {
+            "minimum": 0,
+            "type": "number",
+            "description": "Notariskosten hypotheekakte.",
+            "format": "double",
+            "nullable": true
+          },
+          "appraisalCosts": {
+            "minimum": 0,
+            "type": "number",
+            "description": "Taxatiekosten.",
+            "format": "double",
+            "nullable": true
+          },
+          "newInterestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "description": "De nieuw gekozen rentevastperiode in maanden, voor alle leningdelen.",
+            "format": "int32"
+          },
+          "nationalMortgageGuaranteeApplicable": {
+            "type": "boolean",
+            "description": "NHG garantie toepassen, dit geldt voor alle leningdelen."
+          },
+          "repaymentPenalty": {
+            "minimum": 0,
+            "type": "number",
+            "description": "Oversluitvergoeding (kan berekend worden in de CalculateTotalRepaymentPenalty call uit CINT.",
+            "format": "double"
+          },
+          "financeRepaymentPenalty": {
+            "type": "boolean",
+            "description": "Geeft aan of de de oversluitvergoeding meegefinancierd wordt, dit voegt een extra annuïtair leningdeel\r\ntoe in Box 3 met een looptijd van 30 jaar, ter hoogte van de oversluitvergoeding.\r\nIndien leeggelaten wordt de oversluitvergoeding niet meegefinancierd."
+          },
+          "annuityLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.AnnuityLoanPartForRefinance"
+            },
+            "description": "Alle annuïtaire leningdelen.",
+            "nullable": true
+          },
+          "interestOnlyLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.InterestOnlyLoanPartForRefinance"
+            },
+            "description": "Alle aflossingsvrije leningdelen.",
+            "nullable": true
+          },
+          "guaranteedSavingsLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.GuaranteedSavingsLoanPartForRefinance"
+            },
+            "description": "Alle banksparen leningdelen.",
+            "nullable": true
+          },
+          "investmentLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.InvestmentLoanPartForRefinance"
+            },
+            "description": "Alle beleg leningdelen.",
+            "nullable": true
+          },
+          "lifeInsuranceLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.LifeInsuranceLoanPartForRefinance"
+            },
+            "description": "Alle leven leningdelen.",
+            "nullable": true
+          },
+          "linearLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.LinearLoanPartForRefinance"
+            },
+            "description": "Alle lineaire leningdelen.",
+            "nullable": true
+          },
+          "savingsLoanParts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.SavingsLoanPartForRefinance"
+            },
+            "description": "Alle spaar leningdelen.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Aanvraag voor het doorrekenen van het oversluit-scenario op basis van de gegeven input."
+      },
+      "Fint.Contract.V1.Refinance.CalculateRefinanceComparisonsResponse": {
+        "type": "object",
+        "properties": {
+          "totalOneTimeRefinanceCosts": {
+            "type": "number",
+            "description": "Het totaal van de eenmalige kosten behorend bij oversluiten.",
+            "format": "double",
+            "nullable": true
+          },
+          "refinanceProposalPerProduct": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Fint.Contract.V1.Refinance.RefinanceProposal"
+            },
+            "description": "Lijst van oversluitvoorstellen per product.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Antwoord voor het doorrekenen van het oversluit-scenario op basis van de gegeven input."
+      },
+      "Fint.Contract.V1.Refinance.GuaranteedSavingsLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Bankspaar leningdeel."
+      },
+      "Fint.Contract.V1.Refinance.InterestOnlyLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Aflossingsvrij leningdeel."
+      },
+      "Fint.Contract.V1.Refinance.InvestmentLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "returnRate": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Investering leningdeel"
+      },
+      "Fint.Contract.V1.Refinance.LifeInsuranceLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate",
+          "premium"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "premium": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Leven leningdeel."
+      },
+      "Fint.Contract.V1.Refinance.LinearLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Lineaire leningdeel."
+      },
+      "Fint.Contract.V1.Refinance.RefinanceProposal": {
+        "type": "object",
+        "properties": {
+          "productLineName": {
+            "type": "string",
+            "description": "De productnaam van de hypotheek.",
+            "nullable": true
+          },
+          "productLineId": {
+            "type": "string",
+            "description": "HDN code van de productlijn.",
+            "nullable": true
+          },
+          "lenderName": {
+            "type": "string",
+            "description": "De naam van de geldverstrekker.",
+            "nullable": true
+          },
+          "lenderId": {
+            "type": "string",
+            "description": "HDN code van de geldverstrekker.",
+            "nullable": true
+          },
+          "grossMonthlyMortgagePayments": {
+            "type": "number",
+            "description": "De bruto maandlasten van dit oversluitvoorstel.",
+            "format": "double"
+          },
+          "netMonthlyMortgagePayments": {
+            "type": "number",
+            "description": "De netto maandlasten van de eerste maand van dit oversluitvoorstel.",
+            "format": "double"
+          },
+          "totalGrossMortgagePaymentsDifference": {
+            "type": "number",
+            "description": "Het totale bruto verschil in maandlasten gedurende de nieuwe RVP.",
+            "format": "double"
+          },
+          "totalGrossRefinanceDifference": {
+            "type": "number",
+            "description": "Het totale bruto verschil in kosten tussen de huidige hypotheek en dit oversluitvoorstel. Betreft het totale bruto maandlastverschil, minus de eenmalige kosten.",
+            "format": "double"
+          },
+          "totalNetMortgagePaymentsDifference": {
+            "type": "number",
+            "description": "Het totale netto verschil in maandlasten gedurende de nieuwe RVP.",
+            "format": "double"
+          },
+          "paybackTimeInMonths": {
+            "type": "number",
+            "description": "De terugverdientijd in maanden.",
+            "format": "double",
+            "nullable": true
+          },
+          "annuityLoanPartInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van annuïtaire leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          },
+          "interestOnlyLoanPartInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van aflossingsvrije leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          },
+          "guaranteedSavingsLoanPartInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van banksparen leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          },
+          "investmentLoanPartInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van beleg leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          },
+          "lifeInsuranceLoanPartsInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van leven leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          },
+          "linearLoanpartInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van lineaire leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          },
+          "savingsLoanPartInterestRate": {
+            "type": "number",
+            "description": "Het rentepercentage van spaar leningdelen in dit oversluitvoorstel.",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Oversluitvoorstel"
+      },
+      "Fint.Contract.V1.Refinance.SavingsLoanPartForRefinance": {
+        "required": [
+          "amount",
+          "deductiblePeriodInMonths",
+          "durationInMonths",
+          "interestPeriodInMonths",
+          "interestRate",
+          "premium"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "durationInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "interestPeriodInMonths": {
+            "maximum": 999,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "deductiblePeriodInMonths": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "fictitiousRepayments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cint.Contract.V1.CalculateMortgageProgressSummary.FictitiousRepayment"
+            },
+            "nullable": true
+          },
+          "premium": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "firstDepositAmount": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Spaar leningdeel."
+      },
+      "Fint.Contract.V1.RepaymentMethod": {
+        "enum": [
+          "InterestOnly",
+          "Annuity",
+          "Linear",
+          "Investment",
+          "Hybrid",
+          "Savings",
+          "Credit",
+          "LifeInsurance",
+          "UnitLink"
+        ],
+        "type": "string",
+        "description": "Aflosvorm nieuwe hypotheek"
+      },
+      "Fint.Contract.V1.Shared.Box": {
+        "enum": [
+          "Box1",
+          "Box3"
+        ],
+        "type": "string",
+        "description": "Type box van het leningdeel"
+      },
+      "Microsoft.AspNetCore.Mvc.ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "This API uses JWT Authorization header using the Bearer scheme. <br/>\nEnter 'Bearer' [space] and then your token in the text input below. <br/>\n**Example:** 'Bearer 12345abcdef'\n\n## Obtaining a bearer token\nTo obtain a bearer token, send a request for a token to the IdentityServer Authority for this instance. [See this page](http://docs.identityserver.io/en/latest/endpoints/token.html) for more information information. <br/>\n<br/>\nAuthorityURL =  **https://auth.test.connected.topicusfinance.nl**\n ```\nPOST  https://auth.test.connected.topicusfinance.nl/connect/token\nformdata:\n    client_id = YOUR_CLIENT_ID_HERE\n    client_secret = YOUR_CLIENT_SECRET_HERE\n    grant_type = client_credentials\n    scope = A_SCOPE_FOR_THIS_API_HERE\n```\n\n## Sending a request to this API\nAdd the obtained token to the request header.\n```\nPOST /example/example\n\nheaders:\n    Authorization = Bearer YOUR_JWT_TOKEN_HERE\n```\n\n## Scopes for this API\n* **fint**\n",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ]
+}
