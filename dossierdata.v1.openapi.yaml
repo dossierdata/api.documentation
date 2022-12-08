@@ -4291,6 +4291,134 @@ paths:
       security:
         - oauth2:
             - hdn_company_product:basic
+  /html_email_template:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedHtmlEmailTemplatesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+      summary: List all HTML email template
+      description: Get a paginated list of all HTML email templates.
+      tags:
+        - HTML email templates
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
+      security:
+        - oauth2:
+            - html_email_template:basic
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/CreatedResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityResponse'
+      summary: Create HTML email template
+      description: Create an HTML email template
+      tags:
+        - HTML email templates
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/CreateOrUpdateHtmlEmailTemplateRequest"
+      security:
+        - oauth2:
+            - html_email_template:create
+  /html_email_template/{html_email_template_id}:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/HtmlEmailTemplateResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+      summary: Get HTML email template
+      description: Get a single HTML email template
+      tags:
+        - HTML email templates
+      parameters:
+        - $ref: '#/components/parameters/HtmlEmailTemplateId'
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - html_email_template:basic
+    put:
+      responses:
+        200:
+          $ref: '#/components/responses/UpdatedResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityResponse'
+      summary: Update HTML email template
+      description: Update an HTML email template
+      tags:
+        - HTML email templates
+      parameters:
+        - $ref: '#/components/parameters/HtmlEmailTemplateId'
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/CreateOrUpdateHtmlEmailTemplateRequest"
+      security:
+        - oauth2:
+            - html_email_template:update
+    delete:
+      responses:
+        200:
+          $ref: '#/components/responses/DeletedResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+      summary: Delete HTML email template
+      description: Delete an HTML email template
+      tags:
+        - HTML email templates
+      parameters:
+        - $ref: '#/components/parameters/HtmlEmailTemplateId'
+        - $ref: '#/components/parameters/JsonHeader'
+      security:
+        - oauth2:
+            - html_email_template:delete
+  /html_email_template/send_test:
+    post:
+      responses:
+        200:
+          $ref: '#/components/responses/Success'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+        404:
+          $ref: '#/components/responses/NotFoundResponse'
+      summary: Send test for HTML email template
+      description: Get a single HTML email template
+      tags:
+        - HTML email templates
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+      requestBody:
+        $ref: "#/components/requestBodies/SendHtmlEmailTemplateTestRequest"
+      security:
+        - oauth2:
+            - html_email_template:basic
   /property:
     get:
       responses:
@@ -4515,6 +4643,8 @@ tags:
     description: Endpoint for HDN company labels
   - name: HDN company product
     description: Endpoint for HDN company products
+  - name: HTML email templates
+    description: Endpoint for HTML email templates
   - name: Letter
     description: Endpoint for Letter resource management
   - name: Lock
@@ -4930,12 +5060,62 @@ components:
                 description: The binary content of the file
           examples:
             CreateDocumentExample:
+              summary: Create document example
               value:
                 name: 'New document name'
                 customer_id: 2
                 user_id: 2
                 attachable_category_name: 'New category'
                 content: 'content'
+    CreateOrUpdateHtmlEmailTemplateRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+              - content
+            properties:
+              name:
+                type: string
+                description: Name of the template
+              pre_header:
+                type: string
+                description: The pre-header override
+              content:
+                type: string
+                description: The HTML content of the HTML email template containing the `{ inhoud }` and `{ pre_header }` tags
+          examples:
+            CreateOrUpdateHtmlEmailTemplateRequestExample:
+              summary: Create of update an HTML email template example
+              value:
+                name: Regular template
+                pre_header: Pre-header override
+                content: <html><head><title>{ pre_header }</title></head><body>{ inhoud }</body></html>
+    SendHtmlEmailTemplateTestRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - content
+            properties:
+              email:
+                type: string
+                description: The email address the test will be sent to
+              pre_header:
+                type: string
+                description: The pre-header override
+              content:
+                type: string
+                description: The HTML content of the HTML email template containing the `{ inhoud }` and `{ pre_header }` tags
+          examples:
+            SendHtmlEmailTemplateTestRequestExample:
+              summary: Send HTML email template example
+              value:
+                email: info@dossierdata.nl
+                content: <html><head><title>{ pre_header }</title></head><body>{ inhoud }</body></html>
     UpdateDocument:
       content:
         application/json:
@@ -5837,6 +6017,10 @@ components:
             'hdn_company:basic': HDN companies inzien
             'hdn_company_label:basic': HDN company labels inzien
             'hdn_company_product:basic': HDN company products inzien
+            'html_email_template:basic': HTML email templates inzien
+            'html_email_template:create': HTML email templates aanmaken
+            'html_email_template:update': HTML email templates wijzigen
+            'html_email_template:delete': HTML email templates verwijderen
             'letter:full': Brieven
             'lock:full': Locks
             'mortgage:basic': Basisgegevens hypotheek
@@ -8440,6 +8624,22 @@ components:
         min_hdn_version:
           type: number
           description: The minimum HDN version from which this company is valid
+    HtmlEmailTemplate:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The id of the HTML email template
+        name:
+          type: string
+          description: The name how the HTML template is displayed
+        pre_header:
+          type: string
+          description: The value used to override the pre-header in an email. The pre-header is content preview
+            that is shown in email clients.
+        content:
+          type: string
+          description: The content of the html template
   responses:
     BadRequestResponse:
       description: Bad Request
@@ -9397,6 +9597,36 @@ components:
           examples:
             PaginatedHDNCompanyProductsResponseExample:
               $ref: '#/components/examples/PaginatedHDNCompanyProductsResponseExample'
+    PaginatedHtmlEmailTemplatesResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HtmlEmailTemplate'
+              meta:
+                $ref: '#/components/schemas/Meta'
+          examples:
+            PaginatedHtmlEmailTemplatesResponseExample:
+              $ref: '#/components/examples/PaginatedHtmlEmailTemplatesResponseExample'
+    HtmlEmailTemplateResponse:
+      description: OK
+      headers: { }
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/HtmlEmailTemplate'
+          examples:
+            HTMLEmailTemplateResponseExample:
+              $ref: '#/components/examples/HTMLEmailTemplateResponseExample'
     AXMessageResponse:
       description: OK
       headers: { }
@@ -11790,6 +12020,34 @@ components:
             current: 1
             total_pages: 1
             links: [ ]
+    PaginatedHtmlEmailTemplatesResponseExample:
+      summary: Paginated HTML email templates
+      value:
+        data:
+          - id: 1
+            name: "Regular email template"
+            pre_header: null
+            content: "<html><head><title>{ pre_header }</title><body>{ inhoud }</body></head></html>"
+          - id: 2
+            name: "News letter email template"
+            pre_header: null
+            content: "<html><head><title>{ pre_header }</title><body>{ inhoud }</body></head></html>"
+        meta:
+          pagination:
+            total: 1
+            count: 1
+            per_page: 15
+            current: 1
+            total_pages: 1
+            links: [ ]
+    HTMLEmailTemplateResponseExample:
+      summary: A single HTML email template
+      value:
+        data:
+          id: 1
+          name: "Regular email template"
+          pre_header: null
+          content: "<html><head><title>{ pre_header }</title><body>{ inhoud }</body></head></html>"
     GetHDNCompanyByHDNCodeRequestExample:
       summary: Find HDN company by HDN code
       value:
@@ -12112,6 +12370,14 @@ components:
       name: hdn_company_id
       in: path
       description: The id of the HDN company
+      required: true
+      example: "1"
+      schema:
+        type: integer
+    HtmlEmailTemplateId:
+      name: html_email_template_id
+      in: path
+      description: The id of the HTML email template
       required: true
       example: "1"
       schema:
