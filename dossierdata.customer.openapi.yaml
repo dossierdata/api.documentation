@@ -366,7 +366,7 @@ paths:
       security:
         - oauth2:
             - customer_api:documents
-  /hdn/company/paginate:
+  /hdn/company:
     get:
       summary: Paginate companies
       description: Retrieve a paginated list of HDN companies.
@@ -1171,11 +1171,11 @@ components:
             first:
               type: string
               description: The URL of the first page.
-              example: "/hdn/company/paginate?page=1"
+              example: "/hdn/company?page=1"
             last:
               type: string
               description: The URL of the last page.
-              example: "/hdn/company/paginate?page=10"
+              example: "/hdn/company?page=10"
             prev:
               type: string
               nullable: true
@@ -1185,7 +1185,7 @@ components:
               type: string
               nullable: true
               description: The URL of the next page (if applicable).
-              example: "/hdn/company/paginate?page=2"
+              example: "/hdn/company?page=2"
       required:
         - data
         - meta
