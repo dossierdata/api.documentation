@@ -366,7 +366,169 @@ paths:
       security:
         - oauth2:
             - customer_api:documents
+  /hdn/company/paginate:
+    get:
+      summary: Paginate companies
+      description: Retrieve a paginated list of HDN companies.
+      tags:
+        - Company
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        200:
+          description: Paginated list of companies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCompanies'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
 
+  /hdn/company/{hdnCompanyId}:
+    get:
+      summary: Show a company by ID
+      description: Retrieve a specific company by its HDN Company ID (numeric or hashed).
+      tags:
+        - Company
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - name: hdnCompanyId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The HDN Company ID (supports both numeric and string IDs).
+      responses:
+        200:
+          description: A specific HDN company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /hdn/company/by_hdn_code/{hdnCode}:
+    get:
+      summary: Show a company by HDN code
+      description: Retrieve a specific company by its HDN code (2-3 letters).
+      tags:
+        - Company
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - name: hdnCode
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '[a-zA-Z]{2,3}'
+          description: The HDN code (2-3 letters).
+      responses:
+        200:
+          description: A specific company based on HDN code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
+
+  /hdn/company/{hdnCompanyId}/labels:
+    get:
+      summary: Paginate labels for a specific company by ID
+      description: Retrieve a paginated list of labels for a specific HDN company by ID.
+      tags:
+        - Company Labels
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - name: hdnCompanyId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The HDN Company ID (supports both numeric and string IDs).
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        200:
+          description: Paginated list of labels for a specific company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCompanyLabels'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+
+  /hdn/company/by_hdn_code/{hdnCode}/labels:
+    get:
+      summary: Paginate labels for a specific company by HDN code
+      description: Retrieve a paginated list of labels for a specific HDN company by its HDN code.
+      tags:
+        - Company Labels
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - name: hdnCode
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '[a-zA-Z]{2,3}'
+          description: The HDN code (2-3 letters).
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PerPage'
+      responses:
+        200:
+          description: Paginated list of labels for a specific company based on HDN code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCompanyLabels'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+
+  /hdn/company/labels/{hdnCompanyLabelId}:
+    get:
+      summary: Show a specific label by label ID
+      description: Retrieve a specific label by its HDN company label ID.
+      tags:
+        - Company Labels
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - name: hdnCompanyLabelId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The HDN Company Label ID (supports both numeric and string IDs).
+      responses:
+        200:
+          description: A specific company label
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyLabel'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
   /living:
     get:
       responses:
@@ -925,6 +1087,198 @@ components:
         link:
           type: string
           description: Document download link
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the company.
+          example: 123
+        hdn_code:
+          type: string
+          description: The HDN code associated with the company.
+          example: "AB12"
+        sender_name:
+          type: string
+          description: The name of the company as the sender.
+          example: "Sender Company Name"
+        receiver_name:
+          type: string
+          description: The name of the company as the receiver.
+          example: "Receiver Company Name"
+        is_sender:
+          type: boolean
+          description: Indicates if the company is a sender in HDN communications.
+          example: true
+        is_receiver:
+          type: boolean
+          description: Indicates if the company is a receiver in HDN communications.
+          example: true
+        max_hdn_version:
+          type: string
+          description: The maximum HDN version that the company supports.
+          example: "1.2"
+        min_hdn_version:
+          type: string
+          description: The minimum HDN version that the company supports.
+          example: "1.0"
+        active:
+          type: boolean
+          description: Indicates whether the company is active.
+          example: true
+        migrated_into_HDN:
+          type: string
+          description: Indicates if the company has been migrated into HDN.
+          example: "2023-01-01"
+      required:
+        - id
+        - hdn_code
+        - is_sender
+        - is_receiver
+        - max_hdn_version
+        - min_hdn_version
+        - active
+    PaginatedCompanies:
+      type: object
+      properties:
+        data:
+          type: array
+          description: A list of companies in the current page.
+          items:
+            $ref: '#/components/schemas/Company'
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+              description: The total number of companies.
+              example: 150
+            per_page:
+              type: integer
+              description: The number of companies per page.
+              example: 15
+            current_page:
+              type: integer
+              description: The current page number.
+              example: 1
+            total_pages:
+              type: integer
+              description: The total number of pages.
+              example: 10
+        links:
+          type: object
+          properties:
+            first:
+              type: string
+              description: The URL of the first page.
+              example: "/hdn/company/paginate?page=1"
+            last:
+              type: string
+              description: The URL of the last page.
+              example: "/hdn/company/paginate?page=10"
+            prev:
+              type: string
+              nullable: true
+              description: The URL of the previous page (if applicable).
+              example: null
+            next:
+              type: string
+              nullable: true
+              description: The URL of the next page (if applicable).
+              example: "/hdn/company/paginate?page=2"
+      required:
+        - data
+        - meta
+    CompanyLabel:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the company label.
+          example: 123
+        company_id:
+          type: integer
+          description: The ID of the company this label is associated with.
+          example: 456
+        hdn_code:
+          type: string
+          description: The HDN code associated with the label.
+          example: "AB12"
+        product_id:
+          type: integer
+          description: The product ID related to this label.
+          example: 789
+        name:
+          type: string
+          description: The name of the label.
+          example: "Mortgage Product Label"
+        max_hdn_version:
+          type: string
+          description: The maximum HDN version that the label supports.
+          example: "1.2"
+        min_hdn_version:
+          type: string
+          description: The minimum HDN version that the label supports.
+          example: "1.0"
+      required:
+        - id
+        - company_id
+        - hdn_code
+        - product_id
+        - name
+        - max_hdn_version
+        - min_hdn_version
+    PaginatedCompanyLabels:
+      type: object
+      properties:
+        data:
+          type: array
+          description: A list of company labels in the current page.
+          items:
+            $ref: '#/components/schemas/CompanyLabel'
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+              description: The total number of company labels.
+              example: 50
+            per_page:
+              type: integer
+              description: The number of company labels per page.
+              example: 15
+            current_page:
+              type: integer
+              description: The current page number.
+              example: 1
+            total_pages:
+              type: integer
+              description: The total number of pages.
+              example: 4
+        links:
+          type: object
+          properties:
+            first:
+              type: string
+              description: The URL of the first page.
+              example: "/hdn/company/123/labels?page=1"
+            last:
+              type: string
+              description: The URL of the last page.
+              example: "/hdn/company/123/labels?page=4"
+            prev:
+              type: string
+              nullable: true
+              description: The URL of the previous page (if applicable).
+              example: null
+            next:
+              type: string
+              nullable: true
+              description: The URL of the next page (if applicable).
+              example: "/hdn/company/123/labels?page=2"
+      required:
+        - data
+        - meta
     Mortgage:
       type: object
       required:
