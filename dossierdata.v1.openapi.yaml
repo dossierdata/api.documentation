@@ -4121,6 +4121,23 @@ paths:
       parameters:
         - $ref: '#/components/parameters/JsonHeader'
         - $ref: '#/components/parameters/SearchId'
+  /search/{search_id}/results:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/PaginatedSearchesResponse'
+        400:
+          $ref: '#/components/responses/BadRequestResponse'
+        401:
+          $ref: '#/components/responses/UnauthorizedResponse'
+      summary: Paginate the results for a search
+      description: "Gives back the paginated results of a search. The search model needs to be a customer"
+      tags:
+        - Search
+      parameters:
+        - $ref: '#/components/parameters/JsonHeader'
+        - $ref: '#/components/parameters/PerPage'
+        - $ref: '#/components/parameters/Page'
   /hdn/ax_message:
     post:
       responses:
